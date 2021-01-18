@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3627786051355592223
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3627786051355592222}
+  - component: {fileID: 3627786051355592289}
+  m_Layer: 0
+  m_Name: Normal_Electro
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3627786051355592222
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3627786051355592223}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3627786051355592289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3627786051355592223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d860d8fd50e1f544a92eaf58b772999, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonNormal: {fileID: 0}
+  buttonHighLight: {fileID: 0}
+  buttonOncurse: {fileID: 0}
+  buttonSelect: {fileID: 0}
+  buttonDisabled: {fileID: 0}
+  isHighLighted: 0
+  state: 0
+  cardName: Normal_Electro
+  type: 0
+  front: {fileID: 21300000, guid: c2dc3135290c49a46a16e5e562d7e324, type: 3}
+  back: {fileID: 21300000, guid: 74d218a0c66e5604fa34b1267583677d, type: 3}
+  backIfEnemy: {fileID: 21300000, guid: 3d10adfb6733963498c5756b3004d20e, type: 3}
+  sprites: {fileID: 0}
+  parent: {fileID: 0}
+  selected: 0
+  NormalPos: {x: 0, y: 0, z: 0}

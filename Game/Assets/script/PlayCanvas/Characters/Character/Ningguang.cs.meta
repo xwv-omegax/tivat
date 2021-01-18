@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 8738a82c2d4e2944db301867522f2c46
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - sprites: {instanceID: 0}
+  - appearance: {fileID: 21300000, guid: a1c46d2acf51576488c62f931caef6bc, type: 3}
+  - parent: {instanceID: 0}
+  - Area: {instanceID: 0}
+  - affected: {instanceID: 0}
+  - Card: {fileID: 21300000, guid: 2ed75e1c1af55b0468a9f839beceb20c, type: 3}
+  - Info: {fileID: 21300000, guid: 1e156b4273d487247988278251c61776, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

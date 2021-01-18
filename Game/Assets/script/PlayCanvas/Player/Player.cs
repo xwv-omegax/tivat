@@ -1,0 +1,818 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
+public class Player : MonoBehaviour//玩家类
+{
+
+    public GameObject round;//谁的回合
+
+    public GameObject InitialObject;//初始化所用对象
+
+    public string playerName;//名字
+
+    public Sprite apperence;//头像
+
+    public bool isPlayer;//是否是玩家
+
+    public GameObject sprites;//精灵集中
+
+    public GameObject battleArea;//战斗区域
+    public GameObject hand;//手牌
+    public GameObject deck;//牌库
+    public GameObject characterInfo;//卡牌信息
+
+    public int statueEnergy;//神像能量
+
+    public bool isMyRound;//是否是我的回合
+
+    public Character selectedCharacter;//选择的角色
+    public bool isCharacterSelected;//是否角色选择完成
+    public Vector2Int selectCharacterPosition;
+
+    public Card[] selectedCard;//选择的卡组
+    public int cardCount;//卡牌数
+
+    public bool isTargeting;//是否正在选择目标
+
+    public Vector2 selectedTarget;//选择的目标
+    public bool isTargetSelected;//是否目标选择完成
+
+    public Character[] myCharacters;//我的角色
+    public int characterCount;//角色数
+
+    public GameObject State; 
+
+    public void ShowState() 
+    {
+        if (State != null) DeleteState();
+        State = new GameObject();
+        State.transform.parent = transform;
+        State.transform.localPosition = new Vector3(-1.7f, -3.3f, 0);
+        State.transform.localRotation = new Quaternion(0, 0, 0, 0);
+        State.transform.localScale = new Vector3(0.8f, 0.8f, 1);
+
+        if (statueEnergy < 0)
+        {
+            if (isPlayer) battleArea.GetComponent<BattleArea>().Defeat();
+            else battleArea.GetComponent<BattleArea>().Win();
+        }
+
+        for (int i = 0; i < statueEnergy; i++)
+        {
+            GameObject obj = new GameObject();
+            obj.transform.parent = State.transform;
+            obj.transform.localScale = new Vector3(1, 1, 1);
+            obj.transform.localRotation = new Quaternion(0, 0, 0, 0);
+            obj.AddComponent<SpriteRenderer>().sprite = sprites.GetComponent<AllSprites>().Bar_Blue_Light;
+            obj.transform.localPosition = new Vector3(i, 0);
+        }
+        int index = 0;
+        if (statueEnergy > 1) index = statueEnergy - 1;
+        if (index > 4) index = 4;
+        GameObject objStatu = new GameObject();
+        objStatu.transform.parent = State.transform;
+        objStatu.transform.localScale = new Vector3(2, 2, 1);
+        objStatu.transform.localRotation = new Quaternion(0, 0, 0, 0);
+        objStatu.AddComponent<SpriteRenderer>().sprite = sprites.GetComponent<AllSprites>().Statu[index];
+        objStatu.transform.localPosition = new Vector3(-1, -0.15f);
+    }
+
+    public void DeleteState()
+    {
+        if (State != null)
+        {
+            int count = State.transform.childCount;
+            for (int i = 0; i < count; i++)
+            {
+                Destroy(State.transform.GetChild(i).gameObject);
+            }
+            Destroy(State);
+            State = null;
+        }
+    }
+
+    public void Initial()//初始化
+    {
+        selectedCard = new Card[10];
+        cardCount = 0;
+        myCharacters = new Character[10];
+        characterCount = 0;
+        statueEnergy = 6;
+        ShowState();
+    }
+
+    public bool InitFromString(string[] cards)
+    {
+        
+            Debug.Log("StringStart");
+            for (int i = 0; i < 4; i++)
+            {
+                hand.GetComponent<Hand>().AddCard(Card.GetCard(cards[i]));
+            }
+            Debug.Log("Point1");
+            for (int i = 0; i < 4; i++)
+            {
+                Hero hero = Hero.GetHeroWithString(cards[i]);
+                hero.Heroinit();
+                for (int j = 0; j < hero.BasicCardsCount; j++)
+                {
+                    deck.GetComponent<Deck>().PutCard(hero.BasicCards[j]);
+                }
+            }
+            Debug.Log("Point2");
+            for (int i = 4; i < 24; i++)
+            {
+                deck.GetComponent<Deck>().PutCard(cards[i]);
+            }
+            Debug.Log("InitSuccess");
+            hand.GetComponent<Hand>().Refresh();
+            return true;
+        
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        Initial();
+        InitUseCard();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    public void ChangeUseCardPositionState(UseCard useclass, ButtonState state)//改变位置状态
+    {
+        Debug.Log("StartChangeState");
+        if (useclass != null)
+        {
+            Vector2Int[] poses = useclass.postions;
+            Vector2Int[] posesback = new Vector2Int[poses.Length];
+            for(int i = 0; i < poses.Length; i++)
+            {
+                posesback[i].x = poses[i].x;
+                posesback[i].y = poses[i].y;
+            }
+            if (isCharacterSelected)//如果有卡牌备选
+            {
+                for (int i = 0; i < posesback.Length; i++)
+                {
+                    posesback[i] += selectCharacterPosition;
+                }
+            }
+            battleArea.GetComponent<BattleArea>().ButtonState(posesback, state, isPlayer);
+        }
+    }
+
+    public void UseButtonDown()//按下使用按钮
+    {
+        if (isTargeting)
+        {
+            Debug.Log("请选择使用顺序");
+            ResetButtonDown();
+            return;
+        }
+        if (isMyRound && !isTargeting)//在我的回合
+        {
+            UpdateCard();
+            if (isCharacterSelected)//如果有角色被选中
+            {
+                Debug.Log(selectedCharacter.UsingCardDic);
+                if (!selectedCharacter.UsingCardDic.TryGetValue(GetCardString(), out UseCard useclass))
+                {
+                    Debug.Log("卡牌搭配错误");
+                    ResetButtonDown();
+                    return;
+                }
+                if (!useclass.CanUse())
+                {
+                    ResetButtonDown();
+                    Debug.Log("当前无法使用该牌");
+                    return;
+                }
+                if (!useclass.needTarget)
+                {
+                    Debug.Log("直接使用");
+                    UseCard(new Vector2Int(-1, -1));
+                    return;
+                }
+                ChangeUseCardPositionState(useclass, ButtonState.HighLight);
+            }
+            else//玩家用牌
+            {
+                if(!UsingCardDic.TryGetValue(GetCardString(),out UseCard useclass))
+                {
+                    Debug.Log("卡牌搭配错误");
+                    ResetButtonDown();
+                    return;
+                }
+                if (!useclass.CanUse())
+                {
+                    ResetButtonDown();
+                    Debug.Log("当前无法使用该牌");
+                    return;
+                }
+                if (!useclass.needTarget)
+                {
+                    Debug.Log("直接使用");
+                    UseCard(new Vector2Int(-1, -1));
+                    return;
+                }
+                ChangeUseCardPositionState(useclass, ButtonState.HighLight);
+            }
+            isTargeting = true;
+        }
+        else//不在我的回合
+        {
+            Debug.Log("不在我的回合");
+            ResetButtonDown();
+        }
+    }
+
+    public SortedDictionary<string, UseCard> UsingCardDic = new SortedDictionary<string, UseCard>();
+
+    public SortedDictionary<string, NorEff> NormalEffect = new SortedDictionary<string, NorEff>();
+
+    public void UseCard(Vector2Int position) //用卡
+    {
+        Debug.Log("StartUse");
+            if ((isCharacterSelected && selectedCharacter.UsingCardDic.TryGetValue(GetCardString(), out UseCard useCard) && useCard.Use(position)) ||//选定了角色，则通过角色使用卡牌
+                ((!isCharacterSelected) && UsingCardDic.TryGetValue(GetCardString(), out UseCard useCard1) && useCard1.Use(position))//未选定角色，则通过自身使用卡牌
+                )//如果正常使用卡牌, 删除掉手牌中的对应卡牌
+            {
+                Debug.Log("StartClearHandCard");
+                Hand hands = hand.GetComponent<Hand>();
+                battleArea.GetComponent<BattleArea>().CardUsed(selectedCard, cardCount);
+                for (int i = 0; i < cardCount; i++)
+                {
+                    hands.DeleteCard(selectedCard[i]);
+                }
+                hands.Refresh();
+                Debug.Log("UseCardSuccess");
+            }
+            else//使用卡牌出错
+            {
+                Debug.Log("位置出错");
+            }
+        ResetButtonDown();
+        if (isCharacterSelected) selectedCharacter.ShowNormalState();
+    }
+
+    public void ResetButtonDown()//按下重置按钮
+    {
+        if (isTargeting)
+        {
+            if (isCharacterSelected)//将高亮地块恢复正常
+            {
+                if (!selectedCharacter.UsingCardDic.TryGetValue(GetCardString(), out UseCard useCard))
+                {
+                    Debug.Log("ResetError");
+                    return;
+                }
+                ChangeUseCardPositionState(useCard, ButtonState.Normal);
+            }
+            else
+            {
+                if (!UsingCardDic.TryGetValue(GetCardString(), out UseCard useCard))
+                {
+                    Debug.Log("ResetError");
+                    return;
+                }
+                ChangeUseCardPositionState(useCard, ButtonState.Normal);
+            }
+            isTargeting = false;
+        }
+        selectedCharacter = null;
+        isCharacterSelected = false;
+        hand.GetComponent<Hand>().Refresh();
+        if (isPlayer)
+        {
+            characterInfo.GetComponent<CharacterInfo>().show(null);
+        }
+    }
+
+    public void SelectCard(int index) {
+        Hand obj = hand.GetComponent<Hand>();
+        if (index >= obj.count) return;
+        Card card =  obj.cardObjects[index].GetComponent<Card>();
+        card.ForceChangeState(ButtonState.Selected);
+    }//选择一张卡
+
+    public void DeSelectCard(int index)
+    {
+        Hand obj = hand.GetComponent<Hand>();
+        if (index >= obj.selectCount) return;
+        Card card = obj.selectCards[index].GetComponent<Card>();
+        card.ForceChangeState(ButtonState.Normal);
+    }//取消选择一张卡
+
+    public bool GetCard(int index) {
+        return hand.GetComponent<Hand>().GetCard(index);
+    }//抽取一张卡
+
+    public void UpdateCard()//更新选择卡牌的情况
+    {
+        Card[] selectedCardtmp = hand.GetComponent<Hand>().selectCards;
+        cardCount = hand.GetComponent<Hand>().selectCount;
+        selectedCard = new Card[cardCount];
+        for(int i = 0; i < cardCount; i++)
+        {
+            selectedCard[i] = selectedCardtmp[i];
+        }
+    }
+
+    public string GetCardString()//获取选择的卡牌的序列
+    {
+        string str = "#";
+        for(int i = 0; i < cardCount; i++)
+        {
+            str += "+";
+            str += selectedCard[i].name;
+        }
+        Debug.Log(str);
+        return str;
+    }
+
+    public void AddCharacter(GameObject character)//添加角色
+    {
+        myCharacters[characterCount++] = character.GetComponent<Character>();
+    }
+
+    public int TeaLimit = 0;
+
+    public void DeleteTeaLimit()
+    {
+        TeaLimit--;
+        if (TeaLimit < 1)
+        {
+            NormalEffect.Remove("TeaLimit");
+        }
+    }
+
+    public void RemoveCharacter(Character character)
+    {
+        int index = characterCount - 1;
+        for (; index > -1; index--)
+        {
+            if (myCharacters[index] == character) break;
+        }
+        if (index > -1)
+        {
+            for (; index < characterCount-1; index++)
+            {
+                myCharacters[index] = myCharacters[index + 1];
+            }
+            characterCount--;
+        }
+    }
+
+    public void CharacterDead(GameObject character)//角色死亡
+    {
+        if(character.transform.parent = this.gameObject.transform)
+        {
+            Character cha = character.GetComponent<Character>();
+            if (TeaLimit < 1 && hand.GetComponent<Hand>().FindCard("Item_Tea") > -1)
+            {
+                cha.HP = 1;
+                cha.state = CharacterState.Alive;
+                TeaLimit = 1;
+                hand.GetComponent<Hand>().DeleteCard("Item_Tea");
+                NormalEffect.Add("TeaLimit", DeleteTeaLimit);
+            }
+            else
+            {
+                if(selectedCharacter == cha)
+                {
+                    selectedCharacter = null;
+                    isCharacterSelected = false;
+                }
+                RemoveCharacter(cha);
+                statueEnergy--;
+                ShowState();
+                hand.GetComponent<Hand>().ForceAddCard(cha.characterName);
+                Destroy(character);
+            }
+        }
+    }
+
+    public void NextRoundDown()//下一回合按下
+    {
+        if (isMyRound)
+        {
+            isMyRound = false;
+            ResetButtonDown();
+            if (isPlayer)
+            {
+                round.GetComponent<Text>().text = "对方回合";
+            }
+        }
+        else
+        {
+
+        }
+    }
+
+    public void MyRound()//我的回合
+    {
+        if (isMyRound == false)
+        {
+            isMyRound = true;
+            hand.GetComponent<Hand>().GetCard();
+            if (isPlayer)
+            {
+                round.GetComponent<Text>().text = "我的回合";
+            }
+            for(int i = 0; i < characterCount; i++)
+            {
+                myCharacters[i].NewRoundSettle();
+                List<NorEff> norEffs = new List<NorEff>(NormalEffect.Values);
+                foreach(NorEff norEff in norEffs)
+                {
+                    norEff();
+                }
+            }
+        }
+    }
+
+    public Hero GetCharacterWithPos(int row, int col) {
+        Hero hero;
+        for (int i = 0; i < characterCount; i++)
+        {
+            if (row == myCharacters[i].position.y && col == myCharacters[i].position.x)
+            {
+                hero = myCharacters[i] as Hero;
+                return hero;
+            }
+        }
+        return null;
+    }
+    public void AreaButtonDown(int row, int col)//当按钮按下时
+    {
+        if (isTargeting)
+        {
+            Vector2Int target = new Vector2Int(col, row);
+            if (isCharacterSelected)
+            {
+                target -= selectedCharacter.position;
+            }
+            UseCard(target);
+        }
+        else
+        {
+            Hero select = GetCharacterWithPos(row, col);
+            if (select != null)
+            {
+                selectedCharacter = select;
+                isCharacterSelected = true;
+                selectCharacterPosition = selectedCharacter.position;
+                if (isPlayer)
+                {
+                    characterInfo.GetComponent<CharacterInfo>().show(select);
+                }
+            }
+            else
+            {
+                Hero selectEnemy = battleArea.GetComponent<BattleArea>().GetEnemyCharacterWithPos(row, col,isPlayer);
+                selectedCharacter = null;
+                isCharacterSelected = false;
+                if (isPlayer)
+                {
+                    characterInfo.GetComponent<CharacterInfo>().show(selectEnemy);
+                }
+            }
+        }
+    }
+
+    public bool Send(string msg)
+    {
+        return battleArea.GetComponent<BattleArea>().Send(msg);
+    }
+
+    public void InitUseCard()
+    {
+        Vector2Int[] Poses = new Vector2Int[12];
+        for(int i =1; i < 3; i++)
+        {
+            for(int j = 1; j < 7; j++)
+            {
+                Poses[(i - 1) * 6 + j - 1] = new Vector2Int(j, i);
+            }
+        }
+
+        Vector2Int[] AllPosition = new Vector2Int[37];
+
+        for(int i = 1; i < 7; i++)
+        {
+            for(int j = 1; j < 7; j++)
+            {
+                AllPosition[(i - 1) * 6 + j - 1] = new Vector2Int(j, i);
+            }
+        }
+        AllPosition[36] = new Vector2Int(-1, -1);
+
+        Vector2Int[] NeutalPositions = new Vector2Int[24];
+        for (int i = 1; i < 5; i++)
+        {
+            for (int j = 1; j < 7; j++)
+            {
+                NeutalPositions[(i - 1) * 6 + j - 1] = new Vector2Int(j, i);
+            }
+        }
+
+        void add(string str, UseFunc func, Vector2Int[] poses,bool needTag=true)
+        {
+            UseCard noelle = new UseCard
+            {
+                func = func,
+                postions = poses,
+                CanUse = DefaultCanUse,
+                needTarget = needTag
+            };
+            UsingCardDic.Add(str, noelle);
+        }
+
+        add("#+Character_Noelle", PutNoelle, Poses);
+        add("#+Character_Ningguang", PutNingguang, Poses);
+        add("#+Character_Diluc", PutDiluc, Poses);
+        add("#+Character_Lisa", PutLisa, Poses);
+        add("#+Character_Keaya", PutKeaya, Poses);
+        add("#+Character_Keqing", PutKeqing, Poses);
+        add("#+Character_Amber", PutAmber, Poses);
+        add("#+Character_Jean", PutJean, Poses);
+
+        add("#+Item_Sunsettia", UseSunsettia, AllPosition);
+        add("#+Item_Clock", UseClock, AllPosition);
+        add("#+Item_Teaport", UseTeaport, AllPosition,false);
+        add("#+Item_Trap", UseTrap, NeutalPositions);
+        add("#+Item_Advice", UseAdvice, AllPosition,false);
+        add("#+Item_Chill", UseChill, AllPosition);
+        add("#+Item_Book", UseBook, AllPosition);
+        add("#+Item_Sigil", UseSigl, AllPosition);
+    }
+    public bool TryGetCharacter(Vector2Int pos, out Hero hero)
+    {
+        hero = GetCharacterWithPos(pos.y, pos.x);
+        if (hero == null) return false;
+        return true;
+    }
+    public bool TryGetEnemy(Vector2Int pos, out Hero hero)
+    {
+        hero = null;
+        pos.x = 7 - pos.x;
+        pos.y = 7 - pos.y;
+        Character[] characters = GetEnemyCharacters();
+        foreach(Character character in characters)
+        {
+            if(character.position == pos)
+            {
+                hero = character as Hero;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool UseSunsettia(Vector2Int pos)
+    {
+        if (!TryGetCharacter(pos, out Hero hero)) return false;
+        if (hero.SunsettiaLimit > 0) return false;
+
+        hero.SelfHeal(1, 0);
+        hero.AddSunsettiaLimit();
+        return true;
+    }
+
+    public bool UseClock(Vector2Int pos)
+    {
+        if (!TryGetCharacter(pos, out Hero hero)) return false;
+        hand.GetComponent<Hand>().GetCard();
+        hero.stamina++;
+        hero.AddClockLimit();
+        return true;
+    }
+
+    public bool UseTeaport(Vector2Int pos)
+    {
+        Character[] characters = GetAllCharacters();
+        foreach(Character character in characters)
+        {
+            character.SelfHeal(1, 0);
+        }
+
+        return true;
+    }
+
+    public bool DefaultCanUse()
+    {
+        return true;
+    }
+
+    public bool UseTrap(Vector2Int pos)
+    {
+        if (TryGetEnemy(pos, out Hero hero)) return false;
+        Trap.CreatTrap(this.gameObject, pos).name = "Trap";
+        return true;
+    }
+
+    public GameObject[] DisabledCards = new GameObject[6];
+    public int disabledCardsCount = 0;
+
+    public bool UseAdvice(Vector2Int pos)
+    {
+        Hand ha = hand.GetComponent<Hand>();
+        ha.GetCard();
+        DisabledCards[disabledCardsCount++] = ha.cardObjects[ha.count - 1];
+        ha.GetCard();
+        DisabledCards[disabledCardsCount++] = ha.cardObjects[ha.count - 1];
+        DisabledCards[disabledCardsCount-2].GetComponent<Card>().ForceChangeState(ButtonState.Disabled);
+        DisabledCards[disabledCardsCount-1].GetComponent<Card>().ForceChangeState(ButtonState.Disabled);
+        NormalEffect.Add("Advice", EnableCard);
+        return true;
+    }
+    public void EnableCard()
+    {
+        for(int i = 0; i < disabledCardsCount; i++)
+        {
+            if(DisabledCards[i]!=null) DisabledCards[i].GetComponent<Card>().ForceChangeState(ButtonState.Normal);
+        }
+        disabledCardsCount = 0;
+        NormalEffect.Remove("Advice");
+    }
+
+    public bool UseChill(Vector2Int pos)
+    {
+        if (!TryGetEnemy(pos, out Hero hero)) return false;
+        hero.affected = new ElementalAffect
+        {
+            affectElemental = ElementType.Pyro
+        };
+        return true;
+    }
+
+    public bool UseBook(Vector2Int pos)
+    {
+        if (!TryGetCharacter(pos, out Hero hero)) return false;
+
+        if (hero.heroType != HeroType.Mage) return false;
+
+        string cardName;
+        switch (hero.element)
+        {
+            case ElementType.Anemo:
+                cardName = "Normal_Anemo";
+                break;
+            case ElementType.Geo:
+                cardName = "Normal_Geo";
+                break;
+            case ElementType.Hydro:
+                cardName = "Normal_Hydro";
+                break;
+            case ElementType.Pyro:
+                cardName = "Normal_Pyro";
+                break;
+            case ElementType.Electro:
+                cardName = "Normal_Electro";
+                break;
+            case ElementType.Cryo:
+                cardName = "Normal_Cyro";
+                break;
+            case ElementType.Dendro:
+                cardName = "Normal_Dendro";
+                break;
+            default:
+                cardName = "";
+                break;
+        }
+        hand.GetComponent<Hand>().GetCard(cardName);
+        hand.GetComponent<Hand>().GetCard(cardName);
+        return true;
+    }
+
+    public bool UseSword(Vector2Int pos)
+    {
+        if (!TryGetEnemy(pos, out Hero hero)) return false;
+
+        foreach(Character character in myCharacters)
+        {
+            Hero hero1 = character as Hero;
+            if(hero1.heroType == HeroType.Sword)
+            {
+                hero1.TryNormalAttack(new Vector2Int(7, 7) - hero.position - hero1.position);
+            }
+        }
+        return true;
+    }
+
+    public bool UseSigl(Vector2Int pos)
+    {
+        Sigil.CreatSigil(gameObject, pos);
+        return true;
+    }
+
+    public bool PutNoelle(Vector2Int pos)
+    {
+        if (TryGetCharacter(pos, out Hero _)) return false;
+        if (TryGetEnemy(pos, out Hero _)) return false;
+        GameObject obj = GameBase.CreatObject<Noelle>(gameObject);
+        PutHero(pos, "Character_Noelle", obj);
+        return true;
+    }
+
+    public bool PutNingguang(Vector2Int pos)
+    {
+        if (TryGetCharacter(pos, out Hero _)) return false;
+        if (TryGetEnemy(pos, out Hero _)) return false;
+        GameObject obj = GameBase.CreatObject<Ningguang>(gameObject);
+        PutHero(pos, "Character_Ningguang", obj);
+
+        return true;
+    }
+
+    public bool PutDiluc(Vector2Int pos)
+    {
+        if (TryGetCharacter(pos, out Hero _)) return false;
+        if (TryGetEnemy(pos, out Hero _)) return false;
+        GameObject obj = GameBase.CreatObject<Diluc>(gameObject);
+        PutHero(pos, "Character_Diluc", obj);
+        return true;
+    }
+
+    public bool PutLisa(Vector2Int pos)
+    {
+        if (TryGetCharacter(pos, out Hero _)) return false;
+        if (TryGetEnemy(pos, out Hero _)) return false;
+        GameObject obj = GameBase.CreatObject<Lisa>(gameObject);
+        PutHero(pos, "Character_Lisa", obj);
+        return true;
+    }
+
+    public bool PutKeaya(Vector2Int pos)
+    {
+        if (TryGetCharacter(pos, out Hero _)) return false;
+        if (TryGetEnemy(pos, out Hero _)) return false;
+        GameObject obj = GameBase.CreatObject<Keaya>(gameObject);
+        PutHero(pos, "Character_Keaya", obj);
+        return true;
+    }
+
+    public bool PutKeqing(Vector2Int pos)
+    {
+        if (TryGetCharacter(pos, out Hero _)) return false;
+        if (TryGetEnemy(pos, out Hero _)) return false;
+        GameObject obj = GameBase.CreatObject<Keqing>(gameObject);
+        PutHero(pos, "Character_Keqing", obj);
+        return true;
+    }
+
+    public bool PutAmber(Vector2Int pos)
+    {
+        if (TryGetCharacter(pos, out Hero _)) return false;
+        if (TryGetEnemy(pos, out Hero _)) return false;
+        GameObject obj = GameBase.CreatObject<Amber>(gameObject);
+        PutHero(pos, "Character_Amber", obj);
+        return true;
+    }
+
+    public bool PutJean(Vector2Int pos)
+    {
+        if (TryGetCharacter(pos, out Hero _)) return false;
+        if (TryGetEnemy(pos, out Hero _)) return false;
+        GameObject obj = GameBase.CreatObject<Jean>(gameObject);
+        PutHero(pos, "Character_Jean", obj);
+        return true;
+    }
+
+    public void PutHero(Vector2Int pos, string name, GameObject obj)
+    {
+        obj.transform.parent = this.gameObject.transform;
+        obj.name = name;
+        Hero hero = obj.GetComponent<Hero>();
+        hero.Init(Hero.GetHeroWithString(name));
+        hero.parent = this.gameObject;
+        hero.Heroinit();
+        hero.transform.localPosition = new Vector3(pos.x - 3.5f, pos.y - 3.5f, -1.0f);
+        hero.MoveTo(pos);
+        SpriteRenderer rend = obj.GetComponent<SpriteRenderer>();
+        rend.sprite = hero.appearance;
+        obj.transform.localScale = new Vector3(1, 1, 1);
+        obj.transform.localRotation = new Quaternion(0, 0, 0, 0);
+        AddCharacter(obj);
+        hero.ShowNormalState();
+    }
+
+    public Character[] GetAllCharacters()
+    {
+        return battleArea.GetComponent<BattleArea>().GetAllCharacters();
+    }
+
+    public Character[] GetEnemyCharacters()
+    {
+        return battleArea.GetComponent<BattleArea>().GetEnemyCharacters(isPlayer);
+    }
+
+}

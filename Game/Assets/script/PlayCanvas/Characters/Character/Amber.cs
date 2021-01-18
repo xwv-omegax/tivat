@@ -1,0 +1,304 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Amber : Hero
+{
+    public override void Heroinit()
+    {
+        if (Inited) return;
+        Inited = true;
+        Initial("Character_Amber", 4, 1);
+
+        heroType = HeroType.Bow;
+        element = ElementType.Pyro;
+
+        poses = posBow;
+
+        BasicCardsCount = 15;
+        BasicCards = new string[15]
+        {
+            "Normal_Attack",
+            "Normal_Attack",
+            "Normal_Attack",
+            "Normal_Attack",
+            "Normal_Attack",
+            "Normal_Move",
+            "Normal_Move",
+            "Normal_Move",
+            "Normal_Defence",
+            "Normal_Burst",
+            "Normal_Pyro",
+            "Normal_Pyro",
+            "Normal_Pyro",
+            "Normal_Pyro",
+            "Normal_Pyro"
+        };
+
+        NormalEffects.Add("InitMovingEffect", InitMovingEffect);
+        DefenceEffects.Add("CheckIsTarget", CheckIsTarget);
+
+        AddUseCard("#+Normal_Attack", NormalAttack, poses);
+        AddUseCard("#+Item_Bow", BowNormal, posAll);
+
+        AddUseCard("#+Normal_Attack+Normal_Pyro", ChargeAttack, posAll);
+        AddUseCard("#+Normal_Pyro+Normal_Attack", ChargeAttack, posAll);
+
+        AddUseCard("#+Item_Bow+Normal_Pyro", BowCharge, posAll);
+        AddUseCard("#+Normal_Pyro+Item_Bow", BowCharge, posAll);
+
+        AddUseCard("#+Normal_Attack+Item_Chill", ChargeAttack, posAll);
+        AddUseCard("#+Item_Chill+Normal_Attack", ChargeAttack, posAll);
+
+        AddUseCard("#+Item_Bow+Item_Chill", BowCharge, posAll);
+        AddUseCard("#+Item_Chill+Item_Bow", BowCharge, posAll);
+
+        AddUseCard("#+Normal_Attack+Item_CrystalCore", CrystalCharge, posAll);
+        AddUseCard("#+Item_CrystalCore+Normal_Attack", CrystalCharge, posAll);
+
+        AddUseCard("#+Item_Bow+Item_CrystalCore", BowCrystalCharge, posAll);
+        AddUseCard("#+Item_CrystalCore+Item_Bow", BowCrystalCharge, posAll);
+
+        AddUseCard("#+Normal_Pyro+Normal_Defence", RabbitCreate, poses);
+        AddUseCard("#+Normal_Defence+Normal_Pyro", RabbitCreate, poses);
+
+        AddUseCard("#+Item_Chill+Normal_Defence", RabbitCreate, poses);
+        AddUseCard("#+Normal_Defence+Item_Chill", RabbitCreate, poses);
+
+        AddUseCard("#+Normal_Defence+Item_CrystalCore", CrystalSkill, poses);
+        AddUseCard("#+Item_CrystalCore+Normal_Defence", CrystalSkill, poses);
+
+        AddUseCard("#+Normal_Burst+Normal_Pyro", Burst, poses);
+        AddUseCard("#+Normal_Pyro+Normal_Burst", Burst, poses);
+
+        AddUseCard("#+Normal_Burst+Item_Chill", Burst, poses);
+        AddUseCard("#+Item_Chill+Normal_Burst", Burst, poses);
+
+        AddUseCard("#+Normal_Burst+Item_CrystalCore", CrystalBurst, poses);
+        AddUseCard("#+Item_CrystalCore+Normal_Burst", CrystalBurst, poses);
+
+        AddUseCard("#+Normal_Move", Move, posesMove,CanMove);
+
+    }
+    // Start is called before the first frame update
+    void Start()
+    {
+        //Heroinit();
+    }
+
+    public bool moved = false;//是否移动
+    public Sprite notTargetSprite;
+
+    public Rabbit rabbit = null;
+
+    public void RabbitNewRound()
+    {
+        if(rabbit != null)
+        {
+            rabbit.NewRound();
+        }
+    }
+
+    public void RabbitDestroy()
+    {
+        if(rabbit != null)
+        {
+            Destroy(rabbit.gameObject);
+            rabbit = null;
+            NormalEffects.Remove("RabbitNewRount");
+        }
+    }
+
+    public bool RabbitCreate(Vector2Int pos)
+    {
+        if (stamina<1 || rabbit != null) return false;
+        pos += position;
+        GameObject obj = Rabbit.CreatRabbit(parent, pos, this);
+        rabbit = obj.GetComponent<Rabbit>();
+        NormalEffects.Add("RabbitNewRount", RabbitNewRound);
+
+        return true;
+    }
+
+    public void InitMovingEffect()
+    {
+        moved = false;
+        isTarget = true;
+    }
+
+    public void CheckIsTarget(Attack atk)//如果不可选中，所有伤害归0，元素清空
+    {
+        if (!isTarget)
+        {
+            atk.Damage = 0;
+            atk.attackelemental = ElementType.Physics;
+        }
+    }
+
+    public bool CanMove()
+    {
+        return true;
+    }
+
+    public override bool Move(Vector2Int pos)//移动被动
+    {
+        pos += position;
+        MoveTo(pos);
+        if (!moved)
+        {
+            moved = true;
+            isTarget = false;
+        }
+        else
+        {
+            isTarget = true;
+        }
+        return true;
+    }
+
+    public override bool NormalAttack(Vector2Int pos)
+    {
+        if (stamina < 1)
+        {
+            return false;
+        }
+        
+        CreateAttack(pos, 1, AttackType.NormalAttack, ElementType.Physics);
+
+        stamina--;
+        return true;
+    }
+
+
+    public bool ChargeAttack(Vector2Int pos)
+    {
+        if (stamina < 1)
+        {
+            return false;
+        }
+        CreateAttack(pos, 2, AttackType.ChargedAttack, ElementType.Pyro);
+        stamina--;
+        return true;
+    }
+
+    public int BurnTimeRemain = 0;
+    public Vector2Int BurnPos;
+
+    public void BurstNewRoundBurn()
+    {
+        BurnTimeRemain--;
+        if (BurnTimeRemain < 1)
+        {
+            NormalEffects.Remove("BurstNewRoundBurn");
+        }
+        else
+        {
+            BurstBurn(BurnPos);
+        }
+    }
+
+    public bool Burst(Vector2Int pos)
+    {
+        if (stamina < 1 || BurnTimeRemain>0) return false;
+        pos += position;
+        BurstBurn(pos);
+        BurnPos = pos;
+        BurnTimeRemain = 3;
+        NormalEffects.Add("BurstNewRoundBurn", BurstNewRoundBurn);
+        stamina--;
+        return true;
+    }
+
+    public void BurstBurn(Vector2Int pos)
+    {
+        for (int i = -1; i < 2; i++)
+        {
+            for (int j = -1; j < 2; j++)
+            {
+                GameObject obj = CreatObject<Attack>(parent);
+                Attack atk = obj.GetComponent<Attack>();
+                atk.Initial(new Vector2Int(i, j) + pos, 1, AttackType.ElementalBurst, ElementType.Pyro, this);
+                atk.transform.position = new Vector3(pos.x - 3.5f + i, pos.y - 3.5f + j, -1);
+            }
+        }
+    }
+
+    public bool CrystalCharge(Vector2Int pos)
+    {
+        if (stamina < 1)
+        {
+            return false;
+        }
+        CreateAttack(pos, 2, AttackType.ChargedAttack, ElementType.Physics);
+        stamina--;
+        return true;
+    }
+
+    public bool CrystalSkill(Vector2Int pos)
+    {
+        return RabbitCreate(pos);
+    }
+
+    public bool CrystalBurst(Vector2Int pos)
+    {
+        return Burst(pos);
+    }
+
+    public bool BowNormal(Vector2Int pos)
+    {
+        if (stamina < 1)
+        {
+            return false;
+        }
+
+        CreateAttack(pos, 2, AttackType.NormalAttack, ElementType.Physics);
+
+        stamina--;
+        return true;
+    }
+
+    public bool BowCharge(Vector2Int pos)
+    {
+        if (stamina < 1)
+        {
+            return false;
+        }
+        CreateAttack(pos, 3, AttackType.ChargedAttack, ElementType.Pyro);
+        stamina--;
+        return true;
+    }
+
+    public bool BowCrystalCharge(Vector2Int pos)
+    {
+        if (stamina < 1)
+        {
+            return false;
+        }
+        CreateAttack(pos, 3, AttackType.ChargedAttack, ElementType.Physics);
+        stamina--;
+        return true;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        NewFrameSettle();
+    }
+
+    public override void OnDestroy()
+    {
+        base.OnDestroy();
+        if (rabbit != null)
+        {
+            Destroy(rabbit.gameObject);
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent<Character>(out Character character))
+        {
+            CharacterCollision(character);
+        }
+    }
+
+}
