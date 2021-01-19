@@ -227,6 +227,17 @@ public class BattleArea : MonoBehaviour
         }
     }
 
+    public void FreeMoveClick()
+    {
+        playerObject.GetComponent<Player>().MoveButtonDown();
+        Send("BABD");
+    }
+
+    public void EnemyMoveClick()
+    {
+        enemyPlayerObject.GetComponent<Player>().MoveButtonDown();
+    }
+
     public GameObject cardUsed;
 
     public void ShowMessage(string msg)

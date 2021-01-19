@@ -169,6 +169,43 @@ public class Player : MonoBehaviour//玩家类
         }
     }
 
+    public void MoveButtonDown()
+    {
+        if (isTargeting)
+        {
+            ResetButtonDown();
+            return;
+        }
+        if (isMyRound && !isTargeting)
+        {
+            if (isCharacterSelected)
+            {
+                selectedCard = new Card[1];
+                selectedCard[0] = Card.GetCard("FreeMove");
+                if (!selectedCharacter.UsingCardDic.TryGetValue(GetCardString(), out UseCard useclass))
+                {
+                    Debug.Log("卡牌搭配错误");
+                    ResetButtonDown();
+                    return;
+                }
+                if (!useclass.CanUse())
+                {
+                    ResetButtonDown();
+                    Debug.Log("当前无法使用该牌");
+                    return;
+                }
+                if (!useclass.needTarget)
+                {
+                    Debug.Log("直接使用");
+                    UseCard(new Vector2Int(-1, -1));
+                    return;
+                }
+                ChangeUseCardPositionState(useclass, ButtonState.HighLight);
+                isTargeting = true;
+            }
+        }
+    }
+
     public void UseButtonDown()//按下使用按钮
     {
         if (isTargeting)
@@ -182,7 +219,6 @@ public class Player : MonoBehaviour//玩家类
             UpdateCard();
             if (isCharacterSelected)//如果有角色被选中
             {
-                Debug.Log(selectedCharacter.UsingCardDic);
                 if (!selectedCharacter.UsingCardDic.TryGetValue(GetCardString(), out UseCard useclass))
                 {
                     Debug.Log("卡牌搭配错误");
@@ -422,6 +458,7 @@ public class Player : MonoBehaviour//玩家类
         if (isMyRound == false)
         {
             isMyRound = true;
+            hand.GetComponent<Hand>().GetCard();
             hand.GetComponent<Hand>().GetCard();
             if (isPlayer)
             {

@@ -24,12 +24,16 @@ public class Screen : Creator
         }
         if(parent.TryGetComponent<Player>(out Player player))
         {
-            foreach(Character character in player.myCharacters)
+            for(int i=0;i<player.characterCount;i++)
             {
-                if (Abs(character.position.x - transform.localPosition.x-3.5f) < 2 && Abs(character.position.y - transform.localPosition.y-3.5f) < 1)
+                Character character = player.myCharacters[i];
+                if (Abs(character.position.x - transform.localPosition.x-3.5f) <= 2.2 && Abs(character.position.y - transform.localPosition.y-3.5f) <= 1.2)
                 {
-                    character.SelfHeal(0, 1);
-                    break;
+                    if (character.shield < character.MAXShield)
+                    {
+                        character.SelfHeal(0, 1);
+                        break;
+                    }
                 }
             }
         }

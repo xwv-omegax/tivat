@@ -23,9 +23,8 @@ public class Ningguang : Hero
     public void ScreenDestroy()
     {
         if (screen == null) return;
-        Destroy(screen);
+        Destroy(screen.gameObject);
         screen = null;
-        NormalEffects.Remove("Screen");
     }//摧毁璇玑屏
 
     public bool ScreenCreate(Vector2Int pos)
@@ -38,13 +37,12 @@ public class Ningguang : Hero
         GameObject obj =  Screen.CreatScreen(parent,this);
         screen = obj.GetComponent<Screen>();
         obj.transform.localPosition = new Vector3(-3.5f + pos.x, -3.5f + pos.y, -1.0f);
-        NormalEffects.Add("Screen", UpdateScreen);
         screen.ChangeApprence(parent.GetComponent<Player>().sprites.GetComponent<AllSprites>().Creator_Screen);
-
+        screen.Init();
+        screen.ShowNormalState();
         stamina--;
         GeoUsed();
         return true;
-
     }//创造璇玑屏
 
     public void UpdateScreen()
@@ -90,43 +88,26 @@ public class Ningguang : Hero
 
         poses = posesNormal;
 
+        NormalEffects.Add("ChargedAttackLimit", ChargedAttackLimit);
+        NormalEffects.Add("ScreenUpdate", UpdateScreen);
         Vector2Int[] posDontNeedTag = new Vector2Int[] { new Vector2Int(-1, -1) };
-        normalAttackDamege = 1;
-        normalAttackElemental = ElementType.Geo;
 
-        UseCard normalAtk = new UseCard();
-        normalAtk.postions = posesNormal;
-        normalAtk.func = NormalAttack;
+        AddUseCard("#+Normal_Defence+Normal_Geo", ScreenCreate, posesNormal);
+        AddUseCard("#+Normal_Geo+Normal_Defence", ScreenCreate, posesNormal);
 
-        UsingCardDic.Add("#+Normal_Geo", normalAtk);
+        AddUseCard("#+Normal_Burst+Normal_Geo", Burst, posDontNeedTag, false);
+        AddUseCard("#+Normal_Geo+Normal_Burst", Burst, posDontNeedTag, false);
 
-        AddChargeAttack();
+        AddUseCard("#+Normal_Move", Move, posesMove);
 
-        UseCard skill = new UseCard();
-        skill.postions = posesNormal;
-        skill.func = ScreenCreate;
-
-        UsingCardDic.Add("#+Normal_Defence+Normal_Geo", skill);
-        UsingCardDic.Add("#+Normal_Geo+Normal_Defence", skill);
-
-        UseCard burst = new UseCard();
-        burst.postions = posDontNeedTag;
-        burst.func = Burst;
-        burst.CanUse = DefaultCanUse;
-        burst.needTarget = false;
-        UsingCardDic.Add("#+Normal_Burst+Normal_Geo", burst);
-        UsingCardDic.Add("#+Normal_Geo+Normal_Burst", burst);
-
-        UseCard move = new UseCard();
-        move.postions = posesMove;
-        move.func = Move;
-
-        UsingCardDic.Add("#+Normal_Move", move);
-
+        AddUseCard("#+Normal_Geo", NormalAttack, posesNormal);
         AddUseCard("#+Item_CrystalCore", CrystalNormal, posesNormal);
 
-        AddUseCard("#+Item_CrystalCore+Normal_Attack", CrystalCharge, posesNormal);
-        AddUseCard("#+Normal_Attack+Item_CrystalCore", CrystalCharge, posesNormal);
+        AddUseCard("#+Item_CrystalCore+Normal_Attack", CrystalCharge, posesNormal,CanCharge);
+        AddUseCard("#+Normal_Attack+Item_CrystalCore", CrystalCharge, posesNormal,CanCharge);
+
+        AddUseCard("#+Normal_Attack+Normal_Geo", ChargeAttack, posesNormal, CanCharge);
+        AddUseCard("#+Normal_Geo+Normal_Attack", ChargeAttack, posesNormal, CanCharge);
 
         AddUseCard("#+Item_CrystalCore+Normal_Defence", CrystalSkill, posesNormal);
         AddUseCard("#+Normal_Defence+Item_CrystalCore", CrystalSkill, posesNormal);
@@ -155,7 +136,11 @@ public class Ningguang : Hero
 
     public int ChargeAttackLimit = 0;
 
-
+    public bool CanCharge()
+    {
+        if (ChargeAttackLimit < 1) return true;
+        return false;
+    }
     public bool ChargeAttack(Vector2Int pos)
     {
         if (stamina < 1 || ChargeAttackLimit>0)
@@ -169,7 +154,6 @@ public class Ningguang : Hero
         Attack atk = obj.GetComponent<Attack>();
         atk.Initial(pos, 2, AttackType.ChargedAttack, ElementType.Geo, this);
         ChargeAttackLimit = 2;
-        NormalEffects.Add("ChargedAttackLimit", ChargedAttackLimit);
         atk.ChangeApprence(sprites.GetComponent<AllSprites>().Attack_Ningguang_Normal);
         atk.activeSprite = sprites.GetComponent<AllSprites>().Attack_Ningguang_Normal_Actived;
         stamina--;
@@ -177,32 +161,11 @@ public class Ningguang : Hero
         return true;
     }//重击
 
-    public void DeleteChargeAttack()
-    {
-        UsingCardDic.Remove("#+Normal_Geo+Normal_Attack");
-        UsingCardDic.Remove("#+Normal_Attack+Normal_Geo");
-    }//删除重击
-
-    public void AddChargeAttack()
-    {
-        UseCard charge = new UseCard();
-        charge.postions = posesNormal;
-        charge.func = ChargeAttack;
-
-        UsingCardDic.Add("#+Normal_Geo+Normal_Attack", charge);
-        UsingCardDic.Add("#+Normal_Attack+Normal_Geo", charge);
-    }//添加重击
-
     public void ChargedAttackLimit()
     {
         if(ChargeAttackLimit > 0)
         {
             ChargeAttackLimit--;
-        }
-        else
-        {
-            AddChargeAttack();
-            NormalEffects.Remove("ChargedAttackLimit");
         }
     }//重击限制
 

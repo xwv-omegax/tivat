@@ -205,6 +205,9 @@ public class PlayCanvas : MonoBehaviour
             case 'C':
                 battleArea.GetComponent<BattleArea>().EnemyUIButtonClick(UIButtonType.Use);
                 break;
+            case 'D':
+                battleArea.GetComponent<BattleArea>().EnemyMoveClick();
+                break;
             default:
                 break;
         }
@@ -366,16 +369,15 @@ public class PlayCanvas : MonoBehaviour
         try
         {
             client = new FileSocket();
-            client.Connect(client.serverIP, client.serverPort);
+            client.Connect(client.serverIP, 12346);
             client.Send("AA"+Version);
         }
         catch
         {
             ChangeMessage("服务器出错，请退出重试");
         }
-
         /*if (ReadFile(out string[] str, "save/build/select")) InitPlayer(str, str);
-         player.GetComponent<Player>().hand.GetComponent<Hand>().GetCard("Normal_Electro");
+         player.GetComponent<Player>().hand.GetComponent<Hand>().GetCard("Normal_Geo");
          player.GetComponent<Player>().hand.GetComponent<Hand>().GetCard("Normal_Pyro");
          player.GetComponent<Player>().hand.GetComponent<Hand>().GetCard("Normal_Burst");
          player.GetComponent<Player>().hand.GetComponent<Hand>().GetCard("Normal_Defence");

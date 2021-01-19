@@ -41,6 +41,8 @@ public class Character : GameBase
 
         UsingCardDic.Add("NormalAttack", normal);
         UsingCardDic.Add("ChargedAttack", charge);
+
+        AddUseCard("#+FreeMove", FreeMove, posesMove, CanFreeMove);
     }
 
     public virtual void InitStamina()//体力初始化
@@ -763,6 +765,26 @@ public class Character : GameBase
         new Vector2Int(1,0),new Vector2Int(-1,0),
         new Vector2Int(0,1),new Vector2Int(0,-1)
     };
+
+    public int FreeMoveCount=1;
+    public int MaxFreeMove = 1;
+    public void UpdateFreeMoveCount()
+    {
+        FreeMoveCount = MaxFreeMove;
+    }
+    public virtual bool CanFreeMove()
+    {
+        if (FreeMoveCount < 1) return false;
+        return true;
+    }
+    public virtual bool FreeMove(Vector2Int pos)
+    {
+        if (FreeMoveCount < 1) return false;
+        pos += position;
+        MoveTo(pos);
+        FreeMoveCount--;
+        return true;
+    }
 
     public virtual bool Move(Vector2Int pos)
     {
