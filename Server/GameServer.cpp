@@ -68,9 +68,16 @@ void GameServer::MessageTypeA(MyClient* sock, char* msg, int lenth)
 	switch (msg[1])
 	{
 	case 'A':
-		if (MatchListFind(sock) < 0) {
-			sock->Send("AA", 3);
-			MatchListAdd(sock);
+		if (CheckVersion(msg, lenth)) {
+			if (MatchListFind(sock) < 0) {
+				sock->Send("AA", 3);
+				MatchListAdd(sock);
+			}
+		}
+		else
+		{
+			sock->Send("S",2);
+			MessageTypeS(sock, nullptr, 0);
 		}
 		break;
 	case 'B':
@@ -92,6 +99,19 @@ void GameServer::MessageTypeA(MyClient* sock, char* msg, int lenth)
 	default:
 		break;
 	}
+}
+
+bool GameServer::CheckVersion(char* msg, int lenth)
+{
+	if (lenth < 7)return false;
+	else
+	{
+		for (int i = 0; i < 4; i++) {
+			if (msg[i + 2] != version[i])
+				return false;
+		}
+	}
+	return true;
 }
 
 void GameServer::MessageTypeB(MyClient* sock, char* msg, int lenth)

@@ -13,6 +13,8 @@ public:
 
 	void MessageTypeA(MyClient* sock, char* msg, int lenth);
 
+	bool CheckVersion(char* msg, int lenth);
+
 	void MessageTypeB(MyClient* sock, char* msg, int lenth);
 
 	void MessageTypeS(MyClient* sock, char* msg, int lenth);
@@ -39,4 +41,6 @@ private:
 	std::map<MyClient*, MyClient*> playingPair;
 	std::string ip;
 	int port;
+
+	std::string version = "1001";
 };
