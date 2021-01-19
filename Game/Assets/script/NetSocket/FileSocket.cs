@@ -13,7 +13,7 @@ public class FileSocket
 
     public string serverIP = "139.224.131.58";
 
-    public int serverPort = 12345;
+    public int serverPort = 23456;
 
     public bool reciveFlag;
     Thread reciveThread;
@@ -75,6 +75,7 @@ public class FileSocket
         if (socket != null)
         {
             socket.Send(buffer);
+            Debug.Log("Send:" + msg);
             return true;
         }
         return false;

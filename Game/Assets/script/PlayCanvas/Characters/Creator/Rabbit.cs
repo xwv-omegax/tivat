@@ -17,7 +17,7 @@ public class Rabbit : GameBase
 
         Rabbit rabbit = obj.GetComponent<Rabbit>();
         rabbit.sprites = parent.GetComponent<Player>().sprites;
-        rabbit.ChangeApprence(rabbit.sprites.GetComponent<AllSprites>().characterAvatar_Bennete);
+        rabbit.ChangeApprence(rabbit.sprites.GetComponent<AllSprites>().Creator_Rabbit);
         rabbit.position = pos;
         rabbit.timeRemain = 1;
         rabbit.amber = owner;

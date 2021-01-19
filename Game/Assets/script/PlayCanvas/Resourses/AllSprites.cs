@@ -114,6 +114,8 @@ public class AllSprites : MonoBehaviour
     public Sprite Creator_Screen;//璇玑屏
     public Sprite Creator_Trap;
     public Sprite Creator_Sigil;
+    public Sprite Creator_Rose;
+    public Sprite Creator_Rabbit;
 
     public Sprite Bar_Red;
     public Sprite Bar_Blue;

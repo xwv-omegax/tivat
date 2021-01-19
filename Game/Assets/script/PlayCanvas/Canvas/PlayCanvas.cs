@@ -11,6 +11,8 @@ using UnityEngine.SceneManagement;
 public enum GameState {Start, Match, Play }//未加入匹配/匹配/游戏中
 public class PlayCanvas : MonoBehaviour
 {
+    public string Version = "1001";
+
     public GameObject player;
     public GameObject enemyPlayer;
     
@@ -278,7 +280,7 @@ public class PlayCanvas : MonoBehaviour
     }//客户端信号/敌方操作
 
     public void MessageTypeS(string msg) {
-        
+        ChangeMessage("服务器拒绝，请检查版本更新");
     }//停止信号
     public bool InitPlayer(string[] plyer, string[] enemy)//从字符串数组初始化两个player的数据
     {
@@ -365,7 +367,7 @@ public class PlayCanvas : MonoBehaviour
         {
             client = new FileSocket();
             client.Connect(client.serverIP, client.serverPort);
-            client.Send("AA");
+            client.Send("AA"+Version);
         }
         catch
         {
@@ -373,8 +375,8 @@ public class PlayCanvas : MonoBehaviour
         }
 
         if (ReadFile(out string[] str, "save/build/select")) InitPlayer(str, str);
-         player.GetComponent<Player>().hand.GetComponent<Hand>().GetCard("Normal_Geo");
-         player.GetComponent<Player>().hand.GetComponent<Hand>().GetCard("Normal_Geo");
+         player.GetComponent<Player>().hand.GetComponent<Hand>().GetCard("Normal_Electro");
+         player.GetComponent<Player>().hand.GetComponent<Hand>().GetCard("Normal_Pyro");
          player.GetComponent<Player>().hand.GetComponent<Hand>().GetCard("Normal_Burst");
          player.GetComponent<Player>().hand.GetComponent<Hand>().GetCard("Normal_Defence");
         

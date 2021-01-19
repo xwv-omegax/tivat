@@ -17,7 +17,7 @@ public class Rose : Creator
         GameObject obj = GameBase.CreatObject<Rose>(lisa.parent);
         obj.transform.localPosition = new Vector3(pos.x - 3.5f, pos.y - 3.5f, -1);
         SpriteRenderer render = obj.GetComponent<SpriteRenderer>();
-        render.sprite = lisa.parent.GetComponent<Player>().sprites.GetComponent<AllSprites>().characterAvatar_Fischl;
+        render.sprite = lisa.parent.GetComponent<Player>().sprites.GetComponent<AllSprites>().Creator_Rose;
         Rose rose = obj.GetComponent<Rose>();
         rose.sprites = lisa.parent.GetComponent<Player>().sprites;
         rose.Init();

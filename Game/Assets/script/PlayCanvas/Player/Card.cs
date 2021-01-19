@@ -58,7 +58,7 @@ public class ButtonBase:MonoBehaviour, IPointerEnterHandler,IPointerExitHandler,
 
     public virtual void OnPointerEnter(PointerEventData eventData)
     {
-        if (state == ButtonState.Normal || state == ButtonState.HighLight)
+        if (state == ButtonState.Normal)
         {
             ChangeState(ButtonState.OnCurse);
         }
@@ -86,7 +86,7 @@ public class ButtonBase:MonoBehaviour, IPointerEnterHandler,IPointerExitHandler,
         {
             ChangeState(ButtonState.OnCurse);
         }
-        else if(state == ButtonState.OnCurse)
+        else if(state == ButtonState.OnCurse || state == ButtonState.HighLight)
         {
             ChangeState(ButtonState.Selected);
         }

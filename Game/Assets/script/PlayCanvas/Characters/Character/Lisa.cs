@@ -98,7 +98,7 @@ public class Lisa : Hero
             foreach(Character character in characters)
             {
                 Vector2Int tpos =new Vector2Int(7,7)- character.position;
-                if ((tpos - pos).sqrMagnitude < 2  && (tpos - pos).sqrMagnitude>0.2f)
+                if ((tpos - pos).sqrMagnitude <= 2  && (tpos - pos).sqrMagnitude>0.2f)
                 {
                     getPos = true;
                     targ = tpos;
@@ -107,7 +107,7 @@ public class Lisa : Hero
             }
             if (getPos)
             {
-                Attack.CreateAttack(parent, targ, 1, AttackType.ChargedAttack, ElementType.Electro, this).transform.localPosition = atk.transform.localPosition;
+                Attack.CreateAttack(parent, targ-position, 1, AttackType.ChargedAttack, ElementType.Electro, this).transform.localPosition = atk.transform.localPosition;
             }
         }
     }

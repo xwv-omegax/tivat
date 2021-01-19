@@ -45,26 +45,35 @@ public class BattleButton : ButtonBase
         Debug.Log("row:" + row.ToString() + "col:" + col.ToString());
     }
 
+    public void ChangeAnimatorState(int state)
+    {
+        if (gameObject.TryGetComponent<Animator>(out Animator animator))
+        {
+            animator.SetInteger("state", state);
+        }
+    }
+
     public void UpdateState()//更新state的状态
     {
         switch (state)
         {
             case ButtonState.Disabled:
-                this.gameObject.GetComponent<Image>().color = new Color(25f / 255, 25f / 255, 25f / 255, 255f / 255);
+                ChangeAnimatorState(0);
                 break;
             case ButtonState.Selected:
-                this.gameObject.GetComponent<Image>().color = new Color(255f / 255, 215f / 255, 215f / 255, 255f / 255);
+                ChangeAnimatorState(2);
                 break;
             case ButtonState.HighLight:
-                this.gameObject.GetComponent<Image>().color = new Color(255f / 255, 215f / 255, 215f / 255, 255f / 255);
+                ChangeAnimatorState(1);
                 break;
             case ButtonState.Normal:
-                this.gameObject.GetComponent<Image>().color = new Color(1, 1, 1, 1);
+                ChangeAnimatorState(0);
                 break;
             case ButtonState.OnCurse:
-                this.gameObject.GetComponent<Image>().color = new Color(253.0f / 255, 173.0f / 255, 173.0f / 255, 1.0f);
+                ChangeAnimatorState(3);
                 break;
             default:
+                ChangeAnimatorState(0);
                 break;
         }
     }
