@@ -38,6 +38,7 @@ public class Rose : Creator
         }
 
         Character[] characters = lisa.parent.GetComponent<Player>().GetEnemyCharacters();
+        if (characters.Length < 1) return;
         Character cha = characters[0];
         foreach(Character character in characters)
         {
@@ -45,8 +46,14 @@ public class Rose : Creator
             {
                 cha = character;
             }
+            else if (character.HP == cha.HP)
+            {
+                if(character.shield < cha.shield)
+                {
+                    cha = character;
+                }
+            }
         }
-
         Attack.CreateAttack(parent, new Vector2Int(7, 7) - cha.position, 1, AttackType.ElementalBurst, ElementType.Electro, lisa).transform.localPosition = transform.localPosition;
         ShowNormalState();
     }

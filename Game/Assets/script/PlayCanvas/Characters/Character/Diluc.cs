@@ -76,8 +76,8 @@ public class Diluc : Hero
 
     }
     // Start is called before the first frame update
-    public int AttackUsedCount;
-    public int PyroUsedCount;
+    public int AttackUsedCount=0;
+    public int PyroUsedCount=0;
 
     public override bool NormalAttack(Vector2Int pos)
     {

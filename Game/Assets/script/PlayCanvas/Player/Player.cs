@@ -4,6 +4,8 @@ using UnityEngine;
 
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.Text;
+
 public class Player : MonoBehaviour//玩家类
 {
 
@@ -182,6 +184,7 @@ public class Player : MonoBehaviour//玩家类
             {
                 selectedCard = new Card[1];
                 selectedCard[0] = Card.GetCard("FreeMove");
+                cardCount = 1;
                 if (!selectedCharacter.UsingCardDic.TryGetValue(GetCardString(), out UseCard useclass))
                 {
                     Debug.Log("卡牌搭配错误");
@@ -297,6 +300,34 @@ public class Player : MonoBehaviour//玩家类
             }
         ResetButtonDown();
         if (isCharacterSelected) selectedCharacter.ShowNormalState();
+    }
+
+    public void SendHash()
+    {
+        uint hash = MyHash();
+        Debug.Log("Sendhash=" + hash.ToString());
+        string hashstr = "";
+        for (int i = 0; i < 8; i++)
+        {
+            uint tmp = hash%10;
+            hashstr += (char)(tmp + '0');
+            hash /= 10;
+        }
+        Debug.Log(hashstr);
+        Send("BD" +  hashstr);
+    }
+
+    public bool IsHashRight(string msg)
+    {
+        uint hash=(uint) (msg[9]-'0');
+        for(int i = 0; i < 7; i++)
+        {
+            hash *= 10;
+            hash += (uint)(msg[8 - i] - '0');
+        }
+        Debug.Log("getedHash=" + hash.ToString());
+        if (hash == MyHash()) return true;
+        return false;
     }
 
     public void ResetButtonDown()//按下重置按钮
@@ -590,6 +621,7 @@ public class Player : MonoBehaviour//玩家类
         add("#+Item_Chill", UseChill, AllPosition);
         add("#+Item_Book", UseBook, AllPosition);
         add("#+Item_Sigil", UseSigl, AllPosition);
+        add("#+Item_Sword", UseSword, AllPosition);
     }
     public bool TryGetCharacter(Vector2Int pos, out Hero hero)
     {
@@ -684,10 +716,21 @@ public class Player : MonoBehaviour//玩家类
     public bool UseChill(Vector2Int pos)
     {
         if (!TryGetEnemy(pos, out Hero hero)) return false;
-        hero.affected = new ElementalAffect
+        if (hero.affected == null)
         {
-            affectElemental = ElementType.Pyro
-        };
+            hero.affected = new ElementalAffect
+            {
+                affectElemental = ElementType.Pyro
+            };
+        }
+        else
+        {
+            GameObject obj = GameBase.CreatObject<Attack>(gameObject);
+            Attack atk = obj.GetComponent<Attack>();
+            atk.attackelemental = ElementType.Pyro;
+            Character.ElementalReactionFunc(hero, atk);
+            Destroy(obj);
+        }
         return true;
     }
 
@@ -734,8 +777,9 @@ public class Player : MonoBehaviour//玩家类
     {
         if (!TryGetEnemy(pos, out Hero hero)) return false;
 
-        foreach(Character character in myCharacters)
+        for(int i=0;i<characterCount;i++)
         {
+            Character character = myCharacters[i];
             Hero hero1 = character as Hero;
             if(hero1.heroType == HeroType.Sword)
             {
@@ -831,6 +875,7 @@ public class Player : MonoBehaviour//玩家类
         Hero hero = obj.GetComponent<Hero>();
         hero.Init(Hero.GetHeroWithString(name));
         hero.parent = this.gameObject;
+        hero.sprites = sprites;
         hero.Heroinit();
         hero.transform.localPosition = new Vector3(pos.x - 3.5f, pos.y - 3.5f, -1.0f);
         hero.MoveTo(pos);
@@ -840,6 +885,20 @@ public class Player : MonoBehaviour//玩家类
         obj.transform.localRotation = new Quaternion(0, 0, 0, 0);
         AddCharacter(obj);
         hero.ShowNormalState();
+    }
+
+    public uint MyHash()
+    {
+        
+        int hash = hand.GetComponent<Hand>().myHash();
+        for(int i = 0; i < characterCount; i++)
+        {
+            hash += myCharacters[i].position.GetHashCode();
+            hash += myCharacters[i].HP.GetHashCode();
+            hash += myCharacters[i].shield.GetHashCode();
+        }
+        return (uint)(hash%100000000);
+        
     }
 
     public Character[] GetAllCharacters()

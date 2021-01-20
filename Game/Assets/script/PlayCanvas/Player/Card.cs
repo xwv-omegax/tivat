@@ -171,7 +171,7 @@ public class Card : ButtonBase {
         switch (state)
         {
             case ButtonState.OnCurse:
-                gameObject.transform.localPosition = NormalPos + new Vector3(0f, 0.1f, 0.0f);
+                gameObject.transform.localPosition = NormalPos + new Vector3(0f, 0.1f, -0.9f);
                 if (parent.transform.parent.GetComponent<Player>().isPlayer)
                 {
                     SelfShow();

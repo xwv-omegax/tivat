@@ -52,7 +52,7 @@ public class Keqing : Hero
 
         AddUseCard("#+Normal_Electro", ActionBonus, poses,ElementCanUse);
 
-        AddUseCard("#+Item_Crystal", CrystalActionBonus, poses,ElementCanUse);
+        AddUseCard("#+Item_CrystalCore", CrystalActionBonus, poses,ElementCanUse);
 
     }
 
@@ -98,7 +98,9 @@ public class Keqing : Hero
         if (stamina < 1) return false;
         Vector2Int targ = pos + position;
         MoveTo(targ);
-        transform.localPosition = new Vector3(targ.x - 3.5f, targ.y - 3.5f, -1);
+        Vector2 dis = pos;
+        dis.Normalize();
+        transform.localPosition = new Vector3(targ.x - 3.5f-dis.x*0.5f, targ.y - 3.5f-dis.y*0.5f, -1);
         CreateAttack(new Vector2Int(1, 0), 1, AttackType.ElementalSkill, ElementType.Electro);
         CreateAttack(new Vector2Int(-1, 0), 1, AttackType.ElementalSkill, ElementType.Electro);
         CreateAttack(new Vector2Int(0, 1), 1, AttackType.ElementalSkill, ElementType.Electro);

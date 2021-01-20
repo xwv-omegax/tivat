@@ -24,6 +24,10 @@ public class PlayCanvas : MonoBehaviour
 
     public string playerPath = "save/build/select";
 
+    public AudioSource audioSource;
+    public AudioClip qingce;
+    public AudioClip bar;
+
     public GameObject ShowMessage(string msg, Vector3 localPos, float scale = 0.01f, float liveTime = 0.5f)
     {
         return Massage.CreateMsg(msg, localPos, battleArea, scale, liveTime);
@@ -46,6 +50,7 @@ public class PlayCanvas : MonoBehaviour
                 if(state == GameState.Start)
                 {
                     this.state = state;
+                    audioSource.clip = bar;
                 }
                 break;
             case GameState.Play:
@@ -63,6 +68,7 @@ public class PlayCanvas : MonoBehaviour
                         }
                         client.Send(msg);
                     }
+                    audioSource.clip = qingce;
                 }
                 break;
             case GameState.Start:
@@ -276,11 +282,40 @@ public class PlayCanvas : MonoBehaviour
             case 'C':
                 InitialMsg(msg);
                 break;
+            case 'D':
+                HashCompare(msg);
+                break;
             default:
                 break;
         }
 
     }//客户端信号/敌方操作
+
+    public bool hashIncorrect = false;
+    public void HashCompare(string msg)
+    {
+        uint hash = battleArea.GetComponent<BattleArea>().MyHash();
+        Debug.Log("MyHash=" + hash.ToString());
+        bool is1 = battleArea.GetComponent<BattleArea>().IsHashRight(msg);
+        Debug.Log("IsHashRight=" + is1.ToString());
+        if (!is1)
+        {
+            if (hashIncorrect)
+            {
+                ChangeMessage("失去同步.....");
+            }
+            else
+                hashIncorrect = true;
+        }
+        else
+        {
+            if (hashIncorrect)
+            {
+                ChangeMessage("重新同步");
+                hashIncorrect = false;
+            }
+        }
+    }
 
     public void MessageTypeS(string msg) {
         ChangeMessage("服务器拒绝，请检查版本更新");
@@ -377,10 +412,10 @@ public class PlayCanvas : MonoBehaviour
             ChangeMessage("服务器出错，请退出重试");
         }
         /*if (ReadFile(out string[] str, "save/build/select")) InitPlayer(str, str);
-         player.GetComponent<Player>().hand.GetComponent<Hand>().GetCard("Normal_Geo");
+         player.GetComponent<Player>().hand.GetComponent<Hand>().GetCard("Item_Chill");
+         player.GetComponent<Player>().hand.GetComponent<Hand>().GetCard("Normal_Electro");
          player.GetComponent<Player>().hand.GetComponent<Hand>().GetCard("Normal_Pyro");
-         player.GetComponent<Player>().hand.GetComponent<Hand>().GetCard("Normal_Burst");
-         player.GetComponent<Player>().hand.GetComponent<Hand>().GetCard("Normal_Defence");
+         player.GetComponent<Player>().hand.GetComponent<Hand>().GetCard("Normal_Attack");
         
         //ShowImage(player.GetComponent<Player>().sprites.GetComponent<AllSprites>().cardback_Anemo, new Vector3(0, 0,-1),1,1000);
         //ShowMessage("测试", new Vector3(0, 0, -1), 0.1f, 1000);*/

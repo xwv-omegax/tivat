@@ -64,6 +64,7 @@ public class BattleArea : MonoBehaviour
         char rowchar = (char)('0' + row);
         char columnchar =(char)('0' + column);
         Send("BAA" + rowchar+ columnchar);
+        SendHash();
     }
     public void EnemyAreaSelect(int row, int column) {//敌方按钮选择
         enemyPlayerObject.GetComponent<Player>().AreaButtonDown(row, column);
@@ -225,12 +226,14 @@ public class BattleArea : MonoBehaviour
             default:
                 break;
         }
+        SendHash();
     }
 
     public void FreeMoveClick()
     {
         playerObject.GetComponent<Player>().MoveButtonDown();
         Send("BABD");
+        SendHash();
     }
 
     public void EnemyMoveClick()
@@ -303,6 +306,38 @@ public class BattleArea : MonoBehaviour
     public bool Send(string msg)
     {
         return playCanvas.GetComponent<PlayCanvas>().client.Send(msg);
+    }
+
+    public bool IsHashRight(string msg)
+    {
+        uint hash = (uint)(msg[9] - '0');
+        for (int i = 0; i < 7; i++)
+        {
+            hash *= 10;
+            hash += (uint)(msg[8 - i] - '0');
+        }
+        Debug.Log("getedHash=" + hash.ToString());
+        if (hash == MyHash()) return true;
+        return false;
+    }
+
+    public void SendHash()
+    {
+        uint hash = MyHash();
+        Debug.Log("Sendhash=" + hash.ToString());
+        string hashstr = "";
+        for (int i = 0; i < 8; i++)
+        {
+            uint tmp = hash % 10;
+            hashstr += (char)(tmp + '0');
+            hash /= 10;
+        }
+        Debug.Log(hashstr);
+        Send("BD" + hashstr);
+    }
+    public uint MyHash()
+    {
+        return (playerObject.GetComponent<Player>().MyHash() + enemyPlayerObject.GetComponent<Player>().MyHash())%(uint)1000000;
     }
 
     public GameObject ShowMessage(string msg, Vector3 localPos, float scale = 0.01f, float liveTime = 0.5f)

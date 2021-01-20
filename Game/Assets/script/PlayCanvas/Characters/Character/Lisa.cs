@@ -91,7 +91,7 @@ public class Lisa : Hero
     {
         if(atk.attackOwner==this && atk.type == AttackType.ChargedAttack)
         {
-            Vector2Int pos = atk.attackTarget.position;
+            Vector2Int pos = new Vector2Int(7, 7)- atk.attackTarget.position;
             Character[] characters = parent.GetComponent<Player>().GetEnemyCharacters();
             bool getPos=false;
             Vector2Int targ = new Vector2Int(0,0);
@@ -107,7 +107,7 @@ public class Lisa : Hero
             }
             if (getPos)
             {
-                Attack.CreateAttack(parent, targ-position, 1, AttackType.ChargedAttack, ElementType.Electro, this).transform.localPosition = atk.transform.localPosition;
+                Attack.CreateAttack(parent, targ, 1, AttackType.NormalAttack, ElementType.Electro, this).transform.localPosition = atk.transform.localPosition;
             }
         }
     }
@@ -210,6 +210,12 @@ public class Lisa : Hero
     void Update()
     {
         NewFrameSettle();
+    }
+
+    public override void OnDestroy()
+    {
+        base.OnDestroy();
+        DestroyRose();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

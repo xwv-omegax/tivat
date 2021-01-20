@@ -285,6 +285,17 @@ public class Amber : Hero
         NewFrameSettle();
     }
 
+    public override void ShowNormalState()
+    {
+        base.ShowNormalState();
+        int i = 0;
+        if (!isTarget)
+        {
+            AddImgOfNormalState(sprites.GetComponent<AllSprites>().Buff_Move, new Vector3(i * 1.5f, 0.6f, 0), new Vector3(1.6f, 1.0f, 1));
+            i++;
+        }
+    }
+
     public override void OnDestroy()
     {
         base.OnDestroy();

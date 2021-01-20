@@ -29,6 +29,7 @@ public class Character : GameBase
     {
         NormalEffects.Add("SpecialStateSettle", SpecialStateSettle);
         NormalEffects.Add("_InitStamina", InitStamina);
+        NormalEffects.Add("UpdateFreeMoveCount", UpdateFreeMoveCount);
 
         normal = new UseCard();
         charge = new UseCard();
@@ -429,10 +430,10 @@ public class Character : GameBase
     public static void Swirl(Character target, Attack atkack)//扩散反应, 给自己和周围1个单位以内的角色附加元素
     {
         ElementType type = atkack.attackelemental;
-        Vector2Int pos = new Vector2Int(7, 7) - target.position;
+        Vector2Int pos =  target.position;
         void Creat(Vector2Int position)
         {
-            GameObject obj = Attack.CreatObject<ElementalReaction>(atkack.attackOwner.parent);
+            GameObject obj = Attack.CreatObject<ElementalReaction>(target.parent);
             ElementalReaction atk = obj.GetComponent<ElementalReaction>();
             atk.target = position;
             atk.Damage = 0;
@@ -484,10 +485,10 @@ public class Character : GameBase
 
     public static void Overloaded(Character Target, Attack attack)//超载反应，自己以及周围一格所有角色受到1元素反应伤害
     {
-        Vector2Int pos =new Vector2Int(7,7)- Target.position;
+        Vector2Int pos = Target.position;
         void Creat(Vector2Int position)
         {
-            GameObject obj = CreatObject<ElementalReaction>(attack.attackOwner.parent);
+            GameObject obj = CreatObject<ElementalReaction>(Target.parent);
             ElementalReaction atk = obj.GetComponent<ElementalReaction>();
             atk.target = position;
             atk.Damage = 1;

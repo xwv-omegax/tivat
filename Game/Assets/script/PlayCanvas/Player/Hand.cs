@@ -12,6 +12,17 @@ public class Hand : MonoBehaviour
 
     public Card[] selectCards = new Card[10];//选择的卡
     public int selectCount;
+
+    public int myHash()
+    {
+        int hash = 0;
+        for(int i = 0; i < count; i++)
+        {
+            hash += cardObjects[i].GetComponent<Card>().cardName.GetHashCode();
+        }
+        return hash;
+    }
+
     public void SelectCard(Card card)//选择一张卡
     {
         selectCards[selectCount++] = card;
@@ -21,6 +32,7 @@ public class Hand : MonoBehaviour
             Send("BBAA" + (char)(index + '0'));
         }
     }
+
     public void DeSelect(Card card)//取消选择一张卡
     {
         int index=selectCount-1;

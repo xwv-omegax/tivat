@@ -53,7 +53,7 @@ public class Noelle: Hero
         AddUseCard("#+Item_Claymore+Normal_Attack", ChargedAttack, poses);
 
         AddUseCard("#+Normal_Attack+Item_Claymore", ChargedAttack, poses);
-        AddUseCard("#+Normal_Defence+ItemClaymore", ChargedAttack, poses);
+        AddUseCard("#+Normal_Defence+Item_Claymore", ChargedAttack, poses);
 
         AddUseCard("#+Normal_Defence+Normal_Geo", Skill, posDontNeedTag,false);
         AddUseCard("#+Normal_Geo+Normal_Defence", Skill, posDontNeedTag,false);

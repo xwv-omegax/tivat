@@ -3718,6 +3718,7 @@ GameObject:
   - component: {fileID: 706740643}
   - component: {fileID: 706740642}
   - component: {fileID: 706740646}
+  - component: {fileID: 706740647}
   m_Layer: 5
   m_Name: MainCanvas
   m_TagString: Untagged
@@ -3828,7 +3829,107 @@ MonoBehaviour:
   enemyPlayer: {fileID: 1760706507}
   battleArea: {fileID: 1024673728}
   state: 0
-  playerPath: 
+  playerPath: save/build/select
+  audioSource: {fileID: 706740647}
+  qingce: {fileID: 8300000, guid: 642c1679cd872394b9e31f91acd45126, type: 3}
+  bar: {fileID: 8300000, guid: c0880b0d337ca3e4e8cdee5e8f75d8ac, type: 3}
+  hashIncorrect: 0
+--- !u!82 &706740647
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 706740641}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 642c1679cd872394b9e31f91acd45126, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0.207
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!4 &726178086 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 623497107644544539, guid: b1cf8c544e06d044298b66f99b293de2, type: 3}
@@ -10490,7 +10591,7 @@ MonoBehaviour:
   Creator_Trap: {fileID: 21300000, guid: 267636709e8f514488640e7e074d7873, type: 3}
   Creator_Sigil: {fileID: 21300000, guid: 1ab12c823f7434c44ac72659a5cf454c, type: 3}
   Creator_Rose: {fileID: 21300000, guid: b78b7a384f9dc1742a573239d6544664, type: 3}
-  Creator_Rabbit: {fileID: 21300000, guid: e7dc775bf36612b439ba598feb5e4d7f, type: 3}
+  Creator_Rabbit: {fileID: 21300000, guid: 6fe588124e233e548a735e83ae1cd377, type: 3}
   Bar_Red: {fileID: 21300000, guid: 1133edce5b190174bb44e4a7db931afa, type: 3}
   Bar_Blue: {fileID: 21300000, guid: 7894040288d8a3e4db98d643beca29ed, type: 3}
   Bar_Yellow: {fileID: 21300000, guid: 4f6dc4f2bbbae454a89727230902f76a, type: 3}
