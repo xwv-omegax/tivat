@@ -117,7 +117,6 @@ public class Ningguang : Hero
         AddUseCard("#+Normal_Burst+Item_CrystalCore", CrystalBurst, posDontNeedTag,false);
         AddUseCard("#+Item_CrystalCore+Normal_Burst", CrystalBurst, posDontNeedTag,false);
     }//初始化
-
     public override bool NormalAttack(Vector2Int pos)
     {
         if(stamina < 1)
@@ -259,11 +258,10 @@ public class Ningguang : Hero
         obj.name = "Ningguang_Charged_Attack";
         obj.transform.localScale = new Vector3(1.5f, 1.5f, 1);
         Attack atk = obj.GetComponent<Attack>();
-        atk.Initial(pos, 2, AttackType.ChargedAttack, ElementType.Geo, this);
+        atk.Initial(pos, 2, AttackType.ChargedAttack, ElementType.Physics, this);
         atk.ChangeApprence(sprites.GetComponent<AllSprites>().Attack_Ningguang_Normal);
         atk.activeSprite = sprites.GetComponent<AllSprites>().Attack_Ningguang_Normal_Actived;
         ChargeAttackLimit = 2;
-        NormalEffects.Add("ChargedAttackLimit", ChargedAttackLimit);
         stamina--;
         return true;
     }//用晶核的重击

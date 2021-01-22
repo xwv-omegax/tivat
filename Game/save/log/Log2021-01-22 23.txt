@@ -1,0 +1,224 @@
+
+ 敌方玩家:  使用了卡  #+Character_Diluc
+ 敌方玩家:  使用了卡  #+Character_Lisa
+ 敌方玩家:  使用了卡  #+Character_Ningguang
+ 敌方玩家:  使用了卡  #+Character_Noelle
+ 玩家:  使用了卡  #+Character_Diluc
+ 玩家:  使用了卡  #+Character_Lisa
+ 玩家:  使用了卡  #+Character_Ningguang
+ 玩家:  使用了卡  #+Character_Noelle
+ 玩家:  使用了卡  #+Normal_Geo
+Character_Ningguang 使用 NormalAttack 对 Character_Lisa 造成了 1 点 Geo 伤害
+ 敌方玩家:  使用了卡  #+FreeMove
+ 敌方玩家:  使用了卡  #+Normal_Attack+Item_Chill
+Character_Diluc 使用 ElementalSkill 对 Character_Noelle 造成了 2 点 Pyro 伤害
+ 玩家:  使用了卡  #+Normal_Attack+Normal_Electro
+Character_Lisa 使用 ChargedAttack 对 Character_Ningguang 造成了 2 点 Electro 伤害
+Character_Lisa 使用 NormalAttack 对 Character_Lisa 造成了 1 点 Electro 伤害
+ 敌方玩家:  使用了卡  #+Normal_Burst+Normal_Pyro
+Character_Diluc 使用 ElementalBurst 对 Character_Noelle 造成了 2 点 Pyro 伤害
+ 敌方玩家:  使用了卡  #+Normal_Attack
+Character_Diluc 使用 NormalAttack 对 Character_Noelle 造成了 2 点 Pyro 伤害
+ 敌方玩家:  使用了卡  #+Normal_Electro
+Character_Lisa 使用 NormalAttack 对 Character_Ningguang 造成了 1 点 Electro 伤害
+ 玩家:  使用了卡  #+Normal_Burst+Normal_Pyro
+Character_Diluc 使用 ElementalBurst 对 Character_Noelle 造成了 2 点 Pyro 伤害
+ 敌方玩家:  使用了卡  #+Normal_Attack+Normal_Electro
+Character_Lisa 使用 ChargedAttack 对 Character_Ningguang 造成了 3 点 Electro 伤害
+Character_Lisa 使用 NormalAttack 对 Character_Lisa 造成了 1 点 Electro 伤害
+ 玩家:  使用了卡  #+Character_Ningguang
+ 玩家:  使用了卡  #+FreeMove
+ 玩家:  使用了卡  #+Item_CrystalCore
+Character_Lisa 使用 NormalAttack 对 Character_Ningguang 造成了 2 点 Physics 伤害
+ 敌方玩家:  使用了卡  #+Character_Ningguang
+ 敌方玩家:  使用了卡  #+Normal_Attack+Normal_Pyro
+Character_Diluc 使用 ElementalSkill 对 Character_Noelle 造成了 2 点 Pyro 伤害
+ 玩家:  使用了卡  #+Character_Noelle
+ 玩家:  使用了卡  #+Normal_Attack+Item_Chill
+Character_Diluc 使用 ElementalSkill 对 Character_Noelle 造成了 2 点 Pyro 伤害
+ 敌方玩家:  使用了卡  #+Normal_Attack+Normal_Geo
+Character_Ningguang 使用 ChargedAttack 对 Character_Diluc 造成了 2 点 Geo 伤害
+ 玩家:  使用了卡  #+Normal_Attack
+Character_Diluc 使用 NormalAttack 对 Character_Noelle 造成了 1 点 Physics 伤害
+ 敌方玩家:  使用了卡  #+Normal_Geo
+Character_Ningguang 使用 NormalAttack 对 Character_Lisa 造成了 1 点 Geo 伤害
+Character_Ningguang 使用 NormalAttack 对 Character_Noelle 造成了 1 点 Geo 伤害
+ 玩家:  使用了卡  #+Normal_Attack+Normal_Electro
+Character_Lisa 使用 ChargedAttack 对 Character_Ningguang 造成了 2 点 Electro 伤害
+Character_Lisa 使用 NormalAttack 对 Character_Lisa 造成了 2 点 Electro 伤害
+ 敌方玩家:  使用了卡  #+Character_Lisa
+ 敌方玩家:  使用了卡  #+FreeMove
+ 敌方玩家:  使用了卡  #+Normal_Attack+Normal_Geo
+Character_Ningguang 使用 ChargedAttack 对 Character_Lisa 造成了 2 点 Geo 伤害
+ 玩家:  使用了卡  #+Character_Lisa
+ 玩家:  使用了卡  #+FreeMove
+ 玩家:  使用了卡  #+Normal_Burst+Normal_Geo
+Character_Ningguang 使用 NormalAttack 对 Character_Ningguang 造成了 1 点 Geo 伤害
+Character_Ningguang 使用 ElementalBurst 对 Character_Ningguang 造成了 1 点 Geo 伤害
+Character_Ningguang 使用 ElementalBurst 对 Character_Noelle 造成了 1 点 Geo 伤害
+Character_Ningguang 使用 ElementalBurst 对 Character_Noelle 造成了 1 点 Geo 伤害
+Character_Ningguang 使用 ElementalBurst 对 Character_Noelle 造成了 1 点 Geo 伤害
+ 玩家:  使用了卡  #+FreeMove
+ 敌方玩家:  使用了卡  #+Item_Book
+ 敌方玩家:  使用了卡  #+Character_Noelle
+ 敌方玩家:  使用了卡  #+Normal_Electro+Normal_Burst
+ 玩家:  使用了卡  #+Normal_Attack+Normal_Defence
+Character_Noelle 使用 ChargedAttack 对 Character_Diluc 造成了 2 点 Physics 伤害
+Character_Lisa 使用 ElementalBurst 对 Character_Diluc 造成了 1 点 Electro 伤害
+ 敌方玩家:  使用了卡  #+Normal_Geo+Normal_Burst
+Character_Ningguang 使用 ElementalBurst 对 Character_Diluc 造成了 1 点 Geo 伤害
+Character_Ningguang 使用 ElementalBurst 对 Character_Diluc 造成了 1 点 Geo 伤害
+Character_Ningguang 使用 ElementalBurst 对 Character_Ningguang 造成了 1 点 Geo 伤害
+Character_Ningguang 使用 ElementalBurst 对 Character_Ningguang 造成了 1 点 Geo 伤害
+Character_Ningguang 使用 NormalAttack 对 Character_Noelle 造成了 1 点 Geo 伤害
+ 玩家:  使用了卡  #+Character_Diluc
+ 玩家:  使用了卡  #+Item_Book
+ 玩家:  使用了卡  #+Normal_Attack+Normal_Electro
+Character_Lisa 使用 ChargedAttack 对 Character_Ningguang 造成了 2 点 Electro 伤害
+Character_Lisa 使用 NormalAttack 对 Character_Noelle 造成了 1 点 Electro 伤害
+ 玩家:  使用了卡  #+Normal_Geo
+Character_Ningguang 使用 NormalAttack 对 Character_Diluc 造成了 1 点 Geo 伤害
+Character_Lisa 使用 ElementalBurst 对 Character_Ningguang 造成了 1 点 Electro 伤害
+ 敌方玩家:  使用了卡  #+FreeMove
+ 敌方玩家:  使用了卡  #+Normal_Attack
+Character_Diluc 使用 NormalAttack 对 Character_Ningguang 造成了 2 点 Physics 伤害
+ 玩家:  使用了卡  #+Character_Ningguang
+ 玩家:  使用了卡  #+FreeMove
+ 玩家:  使用了卡  #+Normal_Electro
+Character_Lisa 使用 NormalAttack 对 Character_Noelle 造成了 2 点 Electro 伤害
+ 玩家:  使用了卡  #+Normal_Geo
+Character_Ningguang 使用 NormalAttack 对 Character_Diluc 造成了 1 点 Geo 伤害
+Character_Ningguang 使用 NormalAttack 对 Character_Lisa 造成了 1 点 Geo 伤害
+Character_Lisa 使用 ElementalBurst 对 Character_Lisa 造成了 1 点 Electro 伤害
+ 敌方玩家:  使用了卡  #+Character_Ningguang
+ 敌方玩家:  使用了卡  #+Normal_Attack+Normal_Electro
+Character_Lisa 使用 ChargedAttack 对 Character_Noelle 造成了 2 点 Electro 伤害
+Character_Lisa 使用 NormalAttack 对 Character_Diluc 造成了 1 点 Electro 伤害
+ 玩家:  使用了卡  #+Normal_Attack+Normal_Defence
+Character_Noelle 使用 ChargedAttack 对 Character_Diluc 造成了 2 点 Physics 伤害
+Character_Lisa 使用 ElementalBurst 对 Character_Lisa 造成了 2 点 Electro 伤害
+ 敌方玩家:  使用了卡  #+Normal_Attack+Normal_Electro
+Character_Lisa 使用 ChargedAttack 对 Character_Noelle 造成了 3 点 Electro 伤害
+Character_Lisa 使用 NormalAttack 对 Character_Diluc 造成了 2 点 Electro 伤害
+ 敌方玩家:  使用了卡  #+Normal_Attack
+Character_Diluc 使用 NormalAttack 对 Character_Noelle 造成了 1 点 Physics 伤害
+ 玩家:  使用了卡  #+Character_Noelle
+ 玩家:  使用了卡  #+Normal_Geo
+Character_Ningguang 使用 NormalAttack 对 Character_Diluc 造成了 1 点 Geo 伤害
+ 玩家:  使用了卡  #+FreeMove
+ 敌方玩家:  使用了卡  #+Character_Diluc
+ 敌方玩家:  使用了卡  #+FreeMove
+ 敌方玩家:  使用了卡  #+Normal_Electro
+Character_Lisa 使用 NormalAttack 对 Character_Diluc 造成了 2 点 Electro 伤害
+
+ 玩家:  使用了卡  #+Character_Diluc
+ 玩家:  使用了卡  #+Character_Lisa
+ 玩家:  使用了卡  #+Character_Ningguang
+ 玩家:  使用了卡  #+Character_Noelle
+ 敌方玩家:  使用了卡  #+Character_Diluc
+ 敌方玩家:  使用了卡  #+Character_Lisa
+ 敌方玩家:  使用了卡  #+Character_Ningguang
+ 敌方玩家:  使用了卡  #+Character_Noelle
+ 敌方玩家:  使用了卡  #+Normal_Geo
+Character_Ningguang 使用 NormalAttack 对 Character_Lisa 造成了 1 点 Geo 伤害
+ 玩家:  使用了卡  #+FreeMove
+ 玩家:  使用了卡  #+Normal_Attack+Item_Chill
+Character_Diluc 使用 ElementalSkill 对 Character_Noelle 造成了 2 点 Pyro 伤害
+ 敌方玩家:  使用了卡  #+Normal_Attack+Normal_Electro
+Character_Lisa 使用 ChargedAttack 对 Character_Ningguang 造成了 2 点 Electro 伤害
+Character_Lisa 使用 NormalAttack 对 Character_Lisa 造成了 1 点 Electro 伤害
+ 玩家:  使用了卡  #+Normal_Burst+Normal_Pyro
+Character_Diluc 使用 ElementalBurst 对 Character_Noelle 造成了 2 点 Pyro 伤害
+ 玩家:  使用了卡  #+Normal_Attack
+Character_Diluc 使用 NormalAttack 对 Character_Noelle 造成了 2 点 Pyro 伤害
+ 玩家:  使用了卡  #+Normal_Electro
+Character_Lisa 使用 NormalAttack 对 Character_Ningguang 造成了 1 点 Electro 伤害
+ 敌方玩家:  使用了卡  #+Normal_Burst+Normal_Pyro
+Character_Diluc 使用 ElementalBurst 对 Character_Noelle 造成了 2 点 Pyro 伤害
+ 玩家:  使用了卡  #+Normal_Attack+Normal_Electro
+Character_Lisa 使用 ChargedAttack 对 Character_Ningguang 造成了 3 点 Electro 伤害
+Character_Lisa 使用 NormalAttack 对 Character_Lisa 造成了 1 点 Electro 伤害
+ 敌方玩家:  使用了卡  #+Character_Ningguang
+ 敌方玩家:  使用了卡  #+FreeMove
+ 敌方玩家:  使用了卡  #+Item_CrystalCore
+Character_Lisa 使用 NormalAttack 对 Character_Ningguang 造成了 2 点 Physics 伤害
+ 玩家:  使用了卡  #+Character_Ningguang
+ 玩家:  使用了卡  #+Normal_Attack+Normal_Pyro
+Character_Diluc 使用 ElementalSkill 对 Character_Noelle 造成了 2 点 Pyro 伤害
+ 敌方玩家:  使用了卡  #+Character_Noelle
+ 敌方玩家:  使用了卡  #+Normal_Attack+Item_Chill
+Character_Diluc 使用 ElementalSkill 对 Character_Noelle 造成了 2 点 Pyro 伤害
+ 玩家:  使用了卡  #+Normal_Attack+Normal_Geo
+Character_Ningguang 使用 ChargedAttack 对 Character_Diluc 造成了 2 点 Geo 伤害
+ 敌方玩家:  使用了卡  #+Normal_Attack
+Character_Diluc 使用 NormalAttack 对 Character_Noelle 造成了 1 点 Physics 伤害
+ 玩家:  使用了卡  #+Normal_Geo
+Character_Ningguang 使用 NormalAttack 对 Character_Lisa 造成了 1 点 Geo 伤害
+Character_Ningguang 使用 NormalAttack 对 Character_Noelle 造成了 1 点 Geo 伤害
+ 敌方玩家:  使用了卡  #+Normal_Attack+Normal_Electro
+Character_Lisa 使用 ChargedAttack 对 Character_Ningguang 造成了 2 点 Electro 伤害
+Character_Lisa 使用 NormalAttack 对 Character_Lisa 造成了 2 点 Electro 伤害
+ 玩家:  使用了卡  #+Character_Lisa
+ 玩家:  使用了卡  #+FreeMove
+ 玩家:  使用了卡  #+Normal_Attack+Normal_Geo
+Character_Ningguang 使用 ChargedAttack 对 Character_Lisa 造成了 2 点 Geo 伤害
+ 敌方玩家:  使用了卡  #+Character_Lisa
+ 敌方玩家:  使用了卡  #+FreeMove
+ 敌方玩家:  使用了卡  #+Normal_Burst+Normal_Geo
+Character_Ningguang 使用 NormalAttack 对 Character_Ningguang 造成了 1 点 Geo 伤害
+Character_Ningguang 使用 ElementalBurst 对 Character_Ningguang 造成了 1 点 Geo 伤害
+Character_Ningguang 使用 ElementalBurst 对 Character_Noelle 造成了 1 点 Geo 伤害
+Character_Ningguang 使用 ElementalBurst 对 Character_Noelle 造成了 1 点 Geo 伤害
+Character_Ningguang 使用 ElementalBurst 对 Character_Noelle 造成了 1 点 Geo 伤害
+ 敌方玩家:  使用了卡  #+FreeMove
+ 玩家:  使用了卡  #+Item_Book
+ 玩家:  使用了卡  #+Character_Noelle
+ 玩家:  使用了卡  #+Normal_Electro+Normal_Burst
+ 敌方玩家:  使用了卡  #+Normal_Attack+Normal_Defence
+Character_Noelle 使用 ChargedAttack 对 Character_Diluc 造成了 2 点 Physics 伤害
+Character_Lisa 使用 ElementalBurst 对 Character_Diluc 造成了 1 点 Electro 伤害
+ 玩家:  使用了卡  #+Normal_Geo+Normal_Burst
+Character_Ningguang 使用 ElementalBurst 对 Character_Diluc 造成了 1 点 Geo 伤害
+Character_Ningguang 使用 ElementalBurst 对 Character_Diluc 造成了 1 点 Geo 伤害
+Character_Ningguang 使用 NormalAttack 对 Character_Noelle 造成了 1 点 Geo 伤害
+Character_Ningguang 使用 ElementalBurst 对 Character_Ningguang 造成了 1 点 Geo 伤害
+Character_Ningguang 使用 ElementalBurst 对 Character_Ningguang 造成了 1 点 Geo 伤害
+ 敌方玩家:  使用了卡  #+Character_Diluc
+ 敌方玩家:  使用了卡  #+Item_Book
+ 敌方玩家:  使用了卡  #+Normal_Attack+Normal_Electro
+Character_Lisa 使用 ChargedAttack 对 Character_Ningguang 造成了 2 点 Electro 伤害
+Character_Lisa 使用 NormalAttack 对 Character_Noelle 造成了 1 点 Electro 伤害
+ 敌方玩家:  使用了卡  #+Normal_Geo
+Character_Ningguang 使用 NormalAttack 对 Character_Diluc 造成了 1 点 Geo 伤害
+Character_Lisa 使用 ElementalBurst 对 Character_Ningguang 造成了 1 点 Electro 伤害
+ 玩家:  使用了卡  #+FreeMove
+ 玩家:  使用了卡  #+Normal_Attack
+Character_Diluc 使用 NormalAttack 对 Character_Ningguang 造成了 2 点 Physics 伤害
+ 敌方玩家:  使用了卡  #+Character_Ningguang
+ 敌方玩家:  使用了卡  #+FreeMove
+ 敌方玩家:  使用了卡  #+Normal_Electro
+Character_Lisa 使用 NormalAttack 对 Character_Noelle 造成了 2 点 Electro 伤害
+ 敌方玩家:  使用了卡  #+Normal_Geo
+Character_Ningguang 使用 NormalAttack 对 Character_Diluc 造成了 1 点 Geo 伤害
+Character_Ningguang 使用 NormalAttack 对 Character_Lisa 造成了 1 点 Geo 伤害
+Character_Lisa 使用 ElementalBurst 对 Character_Lisa 造成了 1 点 Electro 伤害
+ 玩家:  使用了卡  #+Character_Ningguang
+ 玩家:  使用了卡  #+Normal_Attack+Normal_Electro
+Character_Lisa 使用 ChargedAttack 对 Character_Noelle 造成了 2 点 Electro 伤害
+Character_Lisa 使用 NormalAttack 对 Character_Diluc 造成了 1 点 Electro 伤害
+ 敌方玩家:  使用了卡  #+Normal_Attack+Normal_Defence
+Character_Noelle 使用 ChargedAttack 对 Character_Diluc 造成了 2 点 Physics 伤害
+Character_Lisa 使用 ElementalBurst 对 Character_Lisa 造成了 2 点 Electro 伤害
+ 玩家:  使用了卡  #+Normal_Attack+Normal_Electro
+Character_Lisa 使用 ChargedAttack 对 Character_Noelle 造成了 3 点 Electro 伤害
+Character_Lisa 使用 NormalAttack 对 Character_Diluc 造成了 2 点 Electro 伤害
+ 玩家:  使用了卡  #+Normal_Attack
+Character_Diluc 使用 NormalAttack 对 Character_Noelle 造成了 1 点 Physics 伤害
+ 敌方玩家:  使用了卡  #+Character_Noelle
+ 敌方玩家:  使用了卡  #+Normal_Geo
+Character_Ningguang 使用 NormalAttack 对 Character_Diluc 造成了 1 点 Geo 伤害
+ 敌方玩家:  使用了卡  #+FreeMove
+ 玩家:  使用了卡  #+Character_Diluc
+ 玩家:  使用了卡  #+FreeMove
+ 玩家:  使用了卡  #+Normal_Electro
+Character_Lisa 使用 NormalAttack 对 Character_Diluc 造成了 2 点 Electro 伤害

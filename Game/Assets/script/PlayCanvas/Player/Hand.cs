@@ -148,7 +148,9 @@ public class Hand : MonoBehaviour
         parent.GetComponent<Player>().ResetButtonDown();
         if (count >= maxCards)
         {
-            DeleteCard(cardObjects[count -1].GetComponent<Card>());
+            int index = count - 1;
+            while (string.CompareOrdinal(cardObjects[index].GetComponent<Card>().cardName, 0, "Character", 0, 9) == 0 && index>0)index--;
+            DeleteCard(cardObjects[index].GetComponent<Card>());
         }
         AddCard(card);
     }

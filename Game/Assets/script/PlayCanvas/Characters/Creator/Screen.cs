@@ -60,7 +60,7 @@ public class Screen : Creator
             }
             else if(collision.gameObject.TryGetComponent<Attack>(out Attack atk))//如果是攻击
             {
-                if (atk.Damage > blood)
+                if (atk.Damage >= blood)
                 {
                     owner.ScreenDestroy();//碎裂
                     Destroy(this.gameObject);

@@ -214,6 +214,9 @@ public class PlayCanvas : MonoBehaviour
             case 'D':
                 battleArea.GetComponent<BattleArea>().EnemyMoveClick();
                 break;
+            case 'E':
+                battleArea.GetComponent<BattleArea>().EnemyDeleteClick();
+                break;
             default:
                 break;
         }
@@ -388,9 +391,22 @@ public class PlayCanvas : MonoBehaviour
         player.GetComponent<Player>().round.GetComponent<Text>().text = msg;
     }
 
+    public string log;
+    public string logpath;
+    public void Log(string msg) {
+        log += '\n'+msg;
+    }
+
     ~PlayCanvas()
     {
         client.Send("S");
+        string path = logpath;
+        var filename = $"Log{System.DateTime.Now:yyyy-MM-dd HH}.txt";
+        if (!Directory.Exists(path))
+            Directory.CreateDirectory(path);
+        TextWriter tw = new StreamWriter(Path.Combine(path, filename), true); //true在文件末尾添加数据
+        tw.WriteLine(log);
+        tw.Close();
     }
 
     public void ExitScene()
@@ -401,6 +417,7 @@ public class PlayCanvas : MonoBehaviour
 
     private void Start()
     {
+        log = "";
         try
         {
             client = new FileSocket();
@@ -411,12 +428,15 @@ public class PlayCanvas : MonoBehaviour
         {
             ChangeMessage("服务器出错，请退出重试");
         }
-        /*if (ReadFile(out string[] str, "save/build/select")) InitPlayer(str, str);
+         /*if (ReadFile(out string[] str, "save/build/select")) InitPlayer(str, str);
          player.GetComponent<Player>().hand.GetComponent<Hand>().GetCard("Normal_Burst");
-         player.GetComponent<Player>().hand.GetComponent<Hand>().GetCard("Normal_Anemo");
-         player.GetComponent<Player>().hand.GetComponent<Hand>().GetCard("Item_Chill");
+         player.GetComponent<Player>().hand.GetComponent<Hand>().GetCard("Normal_Pyro");
+         player.GetComponent<Player>().hand.GetComponent<Hand>().GetCard("Item_Clock");
          player.GetComponent<Player>().hand.GetComponent<Hand>().GetCard("Normal_Geo");
-        
+        /*enemyPlayer.GetComponent<Player>().hand.GetComponent<Hand>().GetCard("Normal_Burst");
+        enemyPlayer.GetComponent<Player>().hand.GetComponent<Hand>().GetCard("Normal_Pyro");
+        enemyPlayer.GetComponent<Player>().hand.GetComponent<Hand>().GetCard("Item_Clock");
+        enemyPlayer.GetComponent<Player>().hand.GetComponent<Hand>().GetCard("Normal_Geo");
         //ShowImage(player.GetComponent<Player>().sprites.GetComponent<AllSprites>().cardback_Anemo, new Vector3(0, 0,-1),1,1000);
         //ShowMessage("测试", new Vector3(0, 0, -1), 0.1f, 1000);*/
     }

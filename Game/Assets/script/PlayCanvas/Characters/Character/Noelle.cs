@@ -79,7 +79,19 @@ public class Noelle: Hero
 
     public void SheildBonus()
     {
-        if (shield == 0) SelfHeal(0,1);
+        if (shield == 0)
+        {
+            SelfHeal(0, 1);
+            if(parent.TryGetComponent(out Player player))
+            {
+                string log = "";
+                if (player.isPlayer) log += "友方 ";
+                else log += " 敌方 ";
+                log += characterName;
+                log += " 被动 恢复 1 护盾";
+                player.Log(log);
+            }
+        }
     }
 
     public override bool NormalAttack(Vector2Int targ)

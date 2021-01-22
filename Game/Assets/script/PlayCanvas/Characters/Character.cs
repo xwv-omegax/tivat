@@ -107,6 +107,11 @@ public class Character : GameBase
 
     public GameObject normalState;
 
+    public void Log(string msg)
+    {
+        if (parent.TryGetComponent<Player>(out Player player)) player.Log(msg);
+    }
+
     public GameObject AddImgOfNormalState(Sprite sprite, Vector3 pos, Vector3 Scale)
     {
         GameObject obj = new GameObject();
@@ -261,12 +266,74 @@ public class Character : GameBase
     public virtual void HealSettle(Heal heal)//受治疗结算
     {
         SelfHeal(heal.HPHeal, heal.shieldHeal);
+        LogHeal(heal);
         ShowNormalState();
+    }
+
+    public void LogHeal(Heal heal)
+    {
+        string log = "";
+        if (heal.healOwner != null)
+        {
+            if(heal.healOwner.parent.TryGetComponent<Player>(out Player player))
+            {
+                if (player.isPlayer) log += "友方 ";
+                else log+="敌方 ";
+            }
+            log += heal.healOwner.characterName;
+        }
+        if (heal.healTarget != null)
+        {
+            log += " 为 " ;
+            if (heal.healTarget.parent.TryGetComponent<Player>(out Player player))
+            {
+                if (player.isPlayer) log += "友方 ";
+                else log += "敌方 ";
+            }
+            log +=  heal.healTarget.characterName;
+        }
+        if (heal.HPHeal > 0)
+        {
+            log += " 治疗了 " + heal.HPHeal.ToString() + " 点生命值";
+        }
+        if (heal.shieldHeal > 0)
+        {
+            log += " 恢复了 " + heal.shieldHeal.ToString() + " 点护盾";
+        }
+        Log(log);
+    }
+
+    public void LogAtk(Attack atk)
+    {
+        string log = "";
+        if (atk.attackOwner != null)
+        {
+            if(atk.attackOwner.parent.TryGetComponent<Player>(out Player player))
+            {
+                if (player.isPlayer) log += "友方 ";
+                else log += "敌方 ";
+            }
+            log += atk.attackOwner.characterName;
+        }
+        log += " 使用 " + atk.type.ToString();
+        if (atk.attackTarget != null)
+        {
+            log += " 对 ";
+            if (atk.attackTarget.parent.TryGetComponent<Player>(out Player player))
+            {
+                if (player.isPlayer) log += "友方 ";
+                else log += "敌方 ";
+            }
+            log += atk.attackTarget.characterName;
+        }
+        log += " 造成了 "+atk.Damage.ToString() + " 点 " + atk.attackelemental.ToString()+" 伤害";
+        Log(log);
     }
 
     public virtual void DefenceSettle(Attack atk) //受击结算
     {
         SelfDamege(atk.Damage);
+        LogAtk(atk);
         if (atk.attackelemental != ElementType.Physics) //当攻击类型不是元素反应，且不是物理伤害时，触发元素反应与附着 
         {
             if (affected != null) //当已有元素附着时，触发元素反应
@@ -786,6 +853,15 @@ public class Character : GameBase
         pos += position;
         MoveTo(pos);
         FreeMoveCount--;
+        string log = "";
+        if(parent.TryGetComponent(out Player player))
+        {
+            if (player.isPlayer) log += " 我方 ";
+            else log += " 敌方 ";
+        }
+        log += characterName;
+        log += " 移动到 " + pos.ToString();
+        Log(log);
         return true;
     }
 

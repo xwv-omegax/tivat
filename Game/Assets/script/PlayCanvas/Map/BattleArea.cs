@@ -117,13 +117,15 @@ public class BattleArea : MonoBehaviour
     }
     void Start()
     {
-        canvasState = CanvasState.Main;
         Initial();
     }
 
     public GameObject mainCamera;
 
-    CanvasState canvasState;
+    public void Log(string msg)
+    {
+        playCanvas.GetComponent<PlayCanvas>().Log(msg);
+    }
 
     void ChangeCanvas(CanvasState state)
     {
@@ -233,6 +235,15 @@ public class BattleArea : MonoBehaviour
     public void EnemyMoveClick()
     {
         enemyPlayerObject.GetComponent<Player>().MoveButtonDown();
+    }
+
+    public void DeleteCardClick() {
+        playerObject.GetComponent<Player>().DeleteButtonDown();
+        Send("BABE");
+        SendHash();
+    }
+    public void EnemyDeleteClick() {
+        enemyPlayerObject.GetComponent<Player>().DeleteButtonDown();
     }
 
     public GameObject cardUsed;

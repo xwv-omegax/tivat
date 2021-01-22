@@ -47,6 +47,11 @@ public class Player : MonoBehaviour//玩家类
 
     public GameObject State; 
 
+    public void Log(string msg)
+    {
+        battleArea.GetComponent<BattleArea>().Log(msg);
+    }
+
     public void ShowState() 
     {
         if (State != null) DeleteState();
@@ -288,7 +293,8 @@ public class Player : MonoBehaviour//玩家类
                 ((!isCharacterSelected) && UsingCardDic.TryGetValue(GetCardString(), out UseCard useCard1) && useCard1.Use(position))//未选定角色，则通过自身使用卡牌
                 )//如果正常使用卡牌, 删除掉手牌中的对应卡牌
             {
-                Debug.Log("StartClearHandCard");
+            UseCardLog();
+            Debug.Log("StartClearHandCard");
                 Hand hands = hand.GetComponent<Hand>();
                 battleArea.GetComponent<BattleArea>().CardUsed(selectedCard, cardCount);
                 for (int i = 0; i < cardCount; i++)
@@ -459,6 +465,12 @@ public class Player : MonoBehaviour//玩家类
                 TeaLimit = 1;
                 hand.GetComponent<Hand>().DeleteCard("Item_Tea");
                 NormalEffect.Add("TeaLimit", DeleteTeaLimit);
+
+                string log = "";
+                if (isPlayer) log += "玩家 ";
+                else log += "敌方玩家";
+                log += " 对 " + cha.characterName + " 使用了 " + "Item_Tea";
+                Log(log);
             }
             else
             {
@@ -472,6 +484,12 @@ public class Player : MonoBehaviour//玩家类
                 ShowState();
                 hand.GetComponent<Hand>().ForceAddCard(cha.characterName);
                 Destroy(character);
+
+                string log = "";
+                if (isPlayer) log += "友方 ";
+                else log += "敌方 ";
+                log += cha.characterName + " 死亡 " ;
+                Log(log);
             }
         }
     }
@@ -485,6 +503,7 @@ public class Player : MonoBehaviour//玩家类
             if (isPlayer)
             {
                 round.GetComponent<Text>().text = "对方回合";
+                Log("=====================对方回合======================");
             }
         }
         else
@@ -503,6 +522,7 @@ public class Player : MonoBehaviour//玩家类
             if (isPlayer)
             {
                 round.GetComponent<Text>().text = "我的回合";
+                Log("=====================我的回合======================");
             }
             for(int i = 0; i < characterCount; i++)
             {
@@ -514,6 +534,19 @@ public class Player : MonoBehaviour//玩家类
                 }
             }
         }
+    }
+
+    public void DeleteButtonDown()
+    {
+        UpdateCard();
+        Debug.Log("DeleteButtonDown");
+        for(int i = 0; i < cardCount; i++)
+        {
+            if(string.CompareOrdinal(selectedCard[i].cardName, 0, "Character", 0, 9)==0)break;
+            hand.GetComponent<Hand>().DeleteCard(selectedCard[i]);
+        }
+        hand.GetComponent<Hand>().Refresh();
+        cardCount = 0;
     }
 
     public Hero GetCharacterWithPos(int row, int col) {
@@ -683,13 +716,26 @@ public class Player : MonoBehaviour//玩家类
         return true;
     }
 
+    public void UseCardLog()
+    {
+        string log = "";
+        if (isPlayer) log += " 玩家: ";
+        else log += " 敌方玩家: ";
+        log += " 使用了卡  "+GetCardString();
+        Log(log);
+    }
+
     public bool UseClock(Vector2Int pos)
     {
         if (!TryGetCharacter(pos, out Hero hero)) return false;
+        UseCardLog();
+        hand.GetComponent<Hand>().DeleteCard("Item_Clock");
+        hand.GetComponent<Hand>().Refresh();
+        battleArea.GetComponent<BattleArea>().CardUsed("Item_Clock");
         hand.GetComponent<Hand>().GetCard();
         hero.stamina++;
         hero.AddClockLimit();
-        return true;
+        return false;
     }
 
     public bool UseTeaport(Vector2Int pos)
@@ -721,6 +767,10 @@ public class Player : MonoBehaviour//玩家类
     public bool UseAdvice(Vector2Int pos)
     {
         Hand ha = hand.GetComponent<Hand>();
+        UseCardLog();
+        ha.DeleteCard("Item_Advice");
+        hand.GetComponent<Hand>().Refresh();
+        battleArea.GetComponent<BattleArea>().CardUsed("Item_Advice");
         ha.GetCard();
         DisabledCards[disabledCardsCount++] = ha.cardObjects[ha.count - 1];
         ha.GetCard();
@@ -728,7 +778,7 @@ public class Player : MonoBehaviour//玩家类
         DisabledCards[disabledCardsCount-2].GetComponent<Card>().ForceChangeState(ButtonState.Disabled);
         DisabledCards[disabledCardsCount-1].GetComponent<Card>().ForceChangeState(ButtonState.Disabled);
         NormalEffect.Add("Advice", EnableCard);
-        return true;
+        return false;
     }
     public void EnableCard()
     {
@@ -795,9 +845,13 @@ public class Player : MonoBehaviour//玩家类
                 cardName = "";
                 break;
         }
+        UseCardLog();
+        hand.GetComponent<Hand>().DeleteCard("Item_Book");
+        hand.GetComponent<Hand>().Refresh();
+        battleArea.GetComponent<BattleArea>().CardUsed("Item_Book");
         hand.GetComponent<Hand>().GetCard(cardName);
         hand.GetComponent<Hand>().GetCard(cardName);
-        return true;
+        return false;
     }
 
     public bool UseSword(Vector2Int pos)

@@ -20,6 +20,10 @@ public class Attack : GameBase//攻击类
 
     public float activeTime;//激活的时间点
 
+    public void Log(string msg)
+    {
+        if (parent.TryGetComponent<Player>(out Player player)) player.Log(msg);
+    }
     public static GameObject CreateAttack(GameObject parent, Vector2Int target, int Damage, AttackType type, ElementType elementType,Character owner,Sprite Normal=null,Sprite Active = null)
     {
         GameObject obj = CreatObject<Attack>(parent);
