@@ -19,9 +19,9 @@ public class Keqing : Hero
             "Normal_Attack",
             "Normal_Attack",
             "Normal_Attack",
-            "Normal_Move",
-            "Normal_Move",
-            "Normal_Move",
+            "Normal_Attack",
+            "Normal_Attack",
+            "Normal_Attack",
             "Normal_Burst",
             "Normal_Burst",
             "Normal_Electro",
@@ -38,11 +38,11 @@ public class Keqing : Hero
 
         AddUseCard("#+Normal_Attack", NormalAttack, poses);
 
-        AddUseCard("#+Normal_Move+Normal_Electro", Skill, posSkill);
-        AddUseCard("#+Normal_Electro+Normal_Move", Skill, posSkill);
+        AddUseCard("#+Normal_Attack+Normal_Electro", Skill, posSkill);
+        AddUseCard("#+Normal_Electro+Normal_Attack", Skill, posSkill);
 
-        AddUseCard("#+Item_CrystalCore+Normal_Move", CrystalSkill, posSkill);
-        AddUseCard("#+Normal_Move+Item_CrystalCore", CrystalSkill, posSkill);
+        AddUseCard("#+Item_CrystalCore+Normal_Attack", CrystalSkill, posSkill);
+        AddUseCard("#+Normal_Attack+Item_CrystalCore", CrystalSkill, posSkill);
 
         AddUseCard("#+Normal_Burst+Normal_Electro", Burst, poses);
         AddUseCard("#+Normal_Electro+Normal_Burst", Burst, poses);
@@ -107,6 +107,7 @@ public class Keqing : Hero
         CreateAttack(new Vector2Int(0, -1), 1, AttackType.ElementalSkill, ElementType.Electro);
         isAfterAction = true;
         ShowNormalState();
+        gameObject.GetComponent<AudioSource>().PlayOneShot(audios.Keqing_Skill);
         stamina--;
         return true;
     }
@@ -122,6 +123,7 @@ public class Keqing : Hero
         CreateAttack(new Vector2Int(0, 1), 1, AttackType.ElementalSkill, ElementType.Physics);
         CreateAttack(new Vector2Int(0, -1), 1, AttackType.ElementalSkill, ElementType.Physics);
         isAfterAction = true;
+        gameObject.GetComponent<AudioSource>().PlayOneShot(audios.Keqing_Skill);
         ShowNormalState();
         stamina--;
         return true;
@@ -141,6 +143,7 @@ public class Keqing : Hero
                 CreateAttack(new Vector2Int(j, i), 1, AttackType.ElementalBurst, ElementType.Electro);
             }
         }
+        gameObject.GetComponent<AudioSource>().PlayOneShot(audios.Keqing_Burst);
         stamina--;
         return true;
     }
@@ -158,6 +161,7 @@ public class Keqing : Hero
                 CreateAttack(new Vector2Int(j, i), 1, AttackType.ElementalBurst, ElementType.Physics);
             }
         }
+        gameObject.GetComponent<AudioSource>().PlayOneShot(audios.Keqing_Burst);
         stamina--;
         return true;
     }

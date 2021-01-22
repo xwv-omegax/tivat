@@ -19,8 +19,8 @@ public class Noelle: Hero
             "Normal_Attack",
             "Normal_Attack",
             "Normal_Attack",
-            "Normal_Move",
-            "Normal_Move",
+            "Normal_Attack",
+            "Normal_Attack",
             "Normal_Defence",
             "Normal_Defence",
             "Normal_Defence",
@@ -106,6 +106,7 @@ public class Noelle: Hero
         SkillBonus = true;
         ShowNormalState();
         stamina--;
+        gameObject.GetComponent<AudioSource>().PlayOneShot(audios.Noelle_Skill);
         return true;
     }
 
@@ -165,6 +166,7 @@ public class Noelle: Hero
         BurstBonus = 2;
         ShowNormalState();
         stamina--;
+        gameObject.GetComponent<AudioSource>().PlayOneShot(audios.Noelle_Burst);
         return true;
     }
 

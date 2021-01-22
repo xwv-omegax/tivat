@@ -19,9 +19,11 @@ public class Lisa : Hero
             "Normal_Attack",
             "Normal_Attack",
             "Normal_Attack",
-            "Normal_Move",
+            
             "Normal_Burst",
             "Normal_Burst",
+
+            "Normal_Electro",
             "Normal_Electro",
             "Normal_Electro",
             "Normal_Electro",
@@ -98,7 +100,7 @@ public class Lisa : Hero
             foreach(Character character in characters)
             {
                 Vector2Int tpos =new Vector2Int(7,7)- character.position;
-                if ((tpos - pos).sqrMagnitude <= 2  && (tpos - pos).sqrMagnitude>0.2f)
+                if ((tpos - pos).sqrMagnitude <= 2.4f  && (tpos - pos).sqrMagnitude>0.2f)
                 {
                     getPos = true;
                     targ = tpos;
@@ -140,6 +142,7 @@ public class Lisa : Hero
                 CreateAttack(new Vector2Int(j, i), 1, AttackType.ElementalSkill, ElementType.Electro);
             }
         }
+        gameObject.GetComponent<AudioSource>().PlayOneShot(audios.Lisa_Skill);
         stamina--;
         return true;
     }
@@ -155,6 +158,7 @@ public class Lisa : Hero
                 CreateAttack(new Vector2Int(j, i), 1, AttackType.ElementalSkill, ElementType.Physics);
             }
         }
+        gameObject.GetComponent<AudioSource>().PlayOneShot(audios.Lisa_Skill);
         stamina--;
         return true;
     }
@@ -190,6 +194,7 @@ public class Lisa : Hero
     {
         if (stamina < 1) return false;
         if (!CreateRose(pos)) return false;
+        gameObject.GetComponent<AudioSource>().PlayOneShot(audios.Lisa_Burst);
         stamina--;
         return true;
     }

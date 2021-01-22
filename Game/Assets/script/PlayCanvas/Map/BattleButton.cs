@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public enum ButtonState {Normal, HighLight,OnCurse ,Selected,Disabled};
+public enum ButtonState {Normal, HighLight,OnCurse ,Selected,Disabled,NormalHighlighted };
 public class BattleButton : ButtonBase
 {
     public int row;//所在行数
@@ -71,6 +71,9 @@ public class BattleButton : ButtonBase
                 break;
             case ButtonState.OnCurse:
                 ChangeAnimatorState(3);
+                break;
+            case ButtonState.NormalHighlighted:
+                ChangeAnimatorState(4);
                 break;
             default:
                 ChangeAnimatorState(0);

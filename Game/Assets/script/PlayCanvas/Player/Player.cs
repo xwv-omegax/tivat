@@ -131,8 +131,12 @@ public class Player : MonoBehaviour//玩家类
             }
             Debug.Log("InitSuccess");
             hand.GetComponent<Hand>().Refresh();
+        if (isMyRound)
+        {
+            hand.GetComponent<Hand>().GetCard();
+        }
             return true;
-        
+       
     }
 
     // Start is called before the first frame update
@@ -298,8 +302,8 @@ public class Player : MonoBehaviour//玩家类
             {
                 Debug.Log("位置出错");
             }
-        ResetButtonDown();
         if (isCharacterSelected) selectedCharacter.ShowNormalState();
+        ResetButtonDown();
     }
 
     public void SendHash()
@@ -342,6 +346,7 @@ public class Player : MonoBehaviour//玩家类
                     return;
                 }
                 ChangeUseCardPositionState(useCard, ButtonState.Normal);
+                
             }
             else
             {
@@ -353,6 +358,10 @@ public class Player : MonoBehaviour//玩家类
                 ChangeUseCardPositionState(useCard, ButtonState.Normal);
             }
             isTargeting = false;
+        }
+        if (selectedCharacter != null)
+        {
+          ChangeAttackAreaState(selectedCharacter, ButtonState.Normal,isPlayer);
         }
         selectedCharacter = null;
         isCharacterSelected = false;
@@ -535,6 +544,11 @@ public class Player : MonoBehaviour//玩家类
             Hero select = GetCharacterWithPos(row, col);
             if (select != null)
             {
+                if (selectedCharacter != null)
+                {
+                    ChangeAttackAreaState(selectedCharacter, ButtonState.Normal,isPlayer);
+                }
+                ChangeAttackAreaState(select, ButtonState.NormalHighlighted,isPlayer);
                 selectedCharacter = select;
                 isCharacterSelected = true;
                 selectCharacterPosition = selectedCharacter.position;
@@ -546,6 +560,10 @@ public class Player : MonoBehaviour//玩家类
             else
             {
                 Hero selectEnemy = battleArea.GetComponent<BattleArea>().GetEnemyCharacterWithPos(row, col,isPlayer);
+                if (selectedCharacter != null)
+                {
+                    ChangeAttackAreaState(selectedCharacter, ButtonState.Normal,isPlayer);
+                }
                 selectedCharacter = null;
                 isCharacterSelected = false;
                 if (isPlayer)
@@ -555,7 +573,16 @@ public class Player : MonoBehaviour//玩家类
             }
         }
     }
-
+    public void ChangeAttackAreaState(Character character, ButtonState state,bool isPlayer) {
+        if (character == null) return;
+        int lenth = character.poses.Length;
+        Vector2Int[] areas = new Vector2Int[lenth];
+        for(int i = 0; i < lenth; i++)
+        {
+            areas[i] = character.poses[i]+character.position;
+        }
+        battleArea.GetComponent<BattleArea>().ButtonState(areas,  state , isPlayer);
+    }
     public bool Send(string msg)
     {
         return battleArea.GetComponent<BattleArea>().Send(msg);
@@ -651,7 +678,7 @@ public class Player : MonoBehaviour//玩家类
         if (!TryGetCharacter(pos, out Hero hero)) return false;
         if (hero.SunsettiaLimit > 0) return false;
 
-        hero.SelfHeal(1, 0);
+        hero.SelfHeal(2, 0);
         hero.AddSunsettiaLimit();
         return true;
     }
@@ -875,7 +902,7 @@ public class Player : MonoBehaviour//玩家类
         Hero hero = obj.GetComponent<Hero>();
         hero.Init(Hero.GetHeroWithString(name));
         hero.parent = this.gameObject;
-        hero.sprites = sprites;
+        hero.sprites = GameObject.Find("Sprites");
         hero.Heroinit();
         hero.transform.localPosition = new Vector3(pos.x - 3.5f, pos.y - 3.5f, -1.0f);
         hero.MoveTo(pos);

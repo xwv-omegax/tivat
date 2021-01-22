@@ -29,8 +29,8 @@ public class Jean : Hero
             "Normal_Attack",
             "Normal_Attack",
             "Normal_Attack",
-            "Normal_Move",
-            "Normal_Move",
+            "Normal_Attack",
+            "Normal_Attack",
             "Normal_Burst",
             "Normal_Heal",
             "Normal_Heal",
@@ -106,10 +106,7 @@ public class Jean : Hero
         {
             return false;
         }
-        pos += position;
-        GameObject obj = CreatObject<Attack>(parent);
-        Attack atk = obj.GetComponent<Attack>();
-        atk.Initial(pos, 2, AttackType.ElementalSkill, ElementType.Anemo, this);
+        CreateAttack(pos, 2, AttackType.ElementalSkill, ElementType.Anemo);
         stamina--;
         return true;
     }
@@ -120,10 +117,7 @@ public class Jean : Hero
         {
             return false;
         }
-        pos += position;
-        GameObject obj = CreatObject<Attack>(parent);
-        Attack atk = obj.GetComponent<Attack>();
-        atk.Initial(pos, 2, AttackType.ElementalSkill, ElementType.Physics, this);
+        CreateAttack(pos, 2, AttackType.ElementalSkill, ElementType.Physics);
         stamina--;
         return true;
     }
@@ -142,7 +136,7 @@ public class Jean : Hero
         {
             return false;
         }
-        pos += position;
+        pos = position;
         for(int i = -1; i < 2; i++)
         {
             for(int j = -1; j < 2; j++)
@@ -156,6 +150,7 @@ public class Jean : Hero
                 heal.Initial(new Vector2Int(i, j) + pos, 1, 0, HealType.Jean_Burst, this);
             }
         }
+        gameObject.GetComponent<AudioSource>().PlayOneShot(audios.Jean_Burst);
         stamina--;
         return true;
     }
@@ -166,7 +161,7 @@ public class Jean : Hero
         {
             return false;
         }
-        pos += position;
+        pos = position;
         for (int i = -1; i < 2; i++)
         {
             for (int j = -1; j < 2; j++)
@@ -180,6 +175,7 @@ public class Jean : Hero
                 heal.Initial(new Vector2Int(i, j) + pos, 1, 0, HealType.Jean_Burst, this);
             }
         }
+        gameObject.GetComponent<AudioSource>().PlayOneShot(audios.Jean_Burst);
         stamina--;
         return true;
     }

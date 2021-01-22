@@ -6,6 +6,8 @@ public class Character : GameBase
 {
     public virtual void Initial(string str, int maxhp, int maxshield)//初始化
     {
+        sprites = GameObject.Find("Sprites");
+        audios = GameObject.Find("Audio").GetComponent<AllAudio>();
         characterName = str;
         MAXHP = maxhp;
         MAXShield = maxshield;
@@ -50,7 +52,7 @@ public class Character : GameBase
     {
         stamina = MAXStamina;
     }
-
+    public AllAudio audios;
     public string characterName;//名字
     public Vector2Int position;//位置
     public Vector2Int oldPosition;
@@ -265,7 +267,7 @@ public class Character : GameBase
     public virtual void DefenceSettle(Attack atk) //受击结算
     {
         SelfDamege(atk.Damage);
-        if (atk.type != AttackType.ElementalReaction && atk.attackelemental != ElementType.Physics) //当攻击类型不是元素反应，且不是物理伤害时，触发元素反应与附着 
+        if (atk.attackelemental != ElementType.Physics) //当攻击类型不是元素反应，且不是物理伤害时，触发元素反应与附着 
         {
             if (affected != null) //当已有元素附着时，触发元素反应
             {
@@ -429,12 +431,12 @@ public class Character : GameBase
     //无图像
     public static void Swirl(Character target, Attack atkack)//扩散反应, 给自己和周围1个单位以内的角色附加元素
     {
-        ElementType type = atkack.attackelemental;
-        Vector2Int pos =  target.position;
+        ElementType type = target.affected.affectElemental;
+        Vector2Int pos =new Vector2Int(7,7)-  target.position;
         void Creat(Vector2Int position)
         {
-            GameObject obj = Attack.CreatObject<ElementalReaction>(target.parent);
-            ElementalReaction atk = obj.GetComponent<ElementalReaction>();
+            GameObject obj = Attack.CreatObject<Attack>(atkack.parent);
+            Attack atk = obj.GetComponent<Attack>();
             atk.target = position;
             atk.Damage = 0;
             atk.type = AttackType.ElementalReaction;
@@ -485,10 +487,10 @@ public class Character : GameBase
 
     public static void Overloaded(Character Target, Attack attack)//超载反应，自己以及周围一格所有角色受到1元素反应伤害
     {
-        Vector2Int pos = Target.position;
+        Vector2Int pos =new Vector2Int(7,7) - Target.position;
         void Creat(Vector2Int position)
         {
-            GameObject obj = CreatObject<ElementalReaction>(Target.parent);
+            GameObject obj = CreatObject<ElementalReaction>(attack.parent);
             ElementalReaction atk = obj.GetComponent<ElementalReaction>();
             atk.target = position;
             atk.Damage = 1;
@@ -875,12 +877,12 @@ public class Character : GameBase
     {
         EnemyPos = new Vector2Int(7, 7) - EnemyPos;
         Vector2Int target = new Vector2Int(position.x,position.y);
-        if (EnemyPos.y > position.y) target.y -= 2;
-        else if (EnemyPos.y < position.y) target.y += 2;
+        if (EnemyPos.y > position.y) target.y -= num;
+        else if (EnemyPos.y < position.y) target.y += num;
         else
         {
-            if (EnemyPos.x > position.x) target.x -= 2;
-            else target.x += 2;
+            if (EnemyPos.x > position.x) target.x -= num;
+            else target.x += num;
         }
         MoveTo(target);
     }//击退

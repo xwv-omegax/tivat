@@ -412,10 +412,10 @@ public class PlayCanvas : MonoBehaviour
             ChangeMessage("服务器出错，请退出重试");
         }
         /*if (ReadFile(out string[] str, "save/build/select")) InitPlayer(str, str);
+         player.GetComponent<Player>().hand.GetComponent<Hand>().GetCard("Normal_Burst");
+         player.GetComponent<Player>().hand.GetComponent<Hand>().GetCard("Normal_Anemo");
          player.GetComponent<Player>().hand.GetComponent<Hand>().GetCard("Item_Chill");
-         player.GetComponent<Player>().hand.GetComponent<Hand>().GetCard("Normal_Electro");
-         player.GetComponent<Player>().hand.GetComponent<Hand>().GetCard("Normal_Pyro");
-         player.GetComponent<Player>().hand.GetComponent<Hand>().GetCard("Normal_Attack");
+         player.GetComponent<Player>().hand.GetComponent<Hand>().GetCard("Normal_Geo");
         
         //ShowImage(player.GetComponent<Player>().sprites.GetComponent<AllSprites>().cardback_Anemo, new Vector3(0, 0,-1),1,1000);
         //ShowMessage("测试", new Vector3(0, 0, -1), 0.1f, 1000);*/

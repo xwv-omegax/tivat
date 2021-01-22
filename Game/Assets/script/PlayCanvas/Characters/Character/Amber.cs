@@ -23,9 +23,9 @@ public class Amber : Hero
             "Normal_Attack",
             "Normal_Attack",
             "Normal_Attack",
-            "Normal_Move",
-            "Normal_Move",
-            "Normal_Move",
+            "Normal_Attack",
+            "Normal_Attack",
+            "Normal_Attack",
             "Normal_Defence",
             "Normal_Burst",
             "Normal_Pyro",
@@ -116,7 +116,7 @@ public class Amber : Hero
         GameObject obj = Rabbit.CreatRabbit(parent, pos, this);
         rabbit = obj.GetComponent<Rabbit>();
         NormalEffects.Add("RabbitNewRount", RabbitNewRound);
-
+        gameObject.GetComponent<AudioSource>().PlayOneShot(audios.Amber_Skill);
         return true;
     }
 
@@ -206,6 +206,7 @@ public class Amber : Hero
         BurnTimeRemain = 3;
         NormalEffects.Add("BurstNewRoundBurn", BurstNewRoundBurn);
         stamina--;
+        gameObject.GetComponent<AudioSource>().PlayOneShot(audios.Amber_Burst);
         return true;
     }
 

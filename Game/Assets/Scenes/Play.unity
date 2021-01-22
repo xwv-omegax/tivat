@@ -243,6 +243,7 @@ MonoBehaviour:
   buttonDisabled: {fileID: 21300000, guid: 3952970a2abd25f48a37a1bb0e7eacc9, type: 3}
   isHighLighted: 0
   state: 0
+  isNormalHighLighted: 0
   row: 2
   col: 2
   battleArea: {fileID: 1024673728}
@@ -444,6 +445,7 @@ MonoBehaviour:
   buttonDisabled: {fileID: 21300000, guid: 3952970a2abd25f48a37a1bb0e7eacc9, type: 3}
   isHighLighted: 0
   state: 0
+  isNormalHighLighted: 0
   row: 6
   col: 1
   battleArea: {fileID: 1024673728}
@@ -609,6 +611,7 @@ MonoBehaviour:
   buttonDisabled: {fileID: 21300000, guid: 3952970a2abd25f48a37a1bb0e7eacc9, type: 3}
   isHighLighted: 0
   state: 0
+  isNormalHighLighted: 0
   row: 5
   col: 4
   battleArea: {fileID: 1024673728}
@@ -728,6 +731,7 @@ MonoBehaviour:
   buttonDisabled: {fileID: 21300000, guid: 3952970a2abd25f48a37a1bb0e7eacc9, type: 3}
   isHighLighted: 0
   state: 0
+  isNormalHighLighted: 0
   row: 5
   col: 5
   battleArea: {fileID: 1024673728}
@@ -929,6 +933,7 @@ MonoBehaviour:
   buttonDisabled: {fileID: 21300000, guid: 3952970a2abd25f48a37a1bb0e7eacc9, type: 3}
   isHighLighted: 0
   state: 0
+  isNormalHighLighted: 0
   row: 3
   col: 3
   battleArea: {fileID: 1024673728}
@@ -1132,6 +1137,7 @@ MonoBehaviour:
   buttonDisabled: {fileID: 21300000, guid: 3952970a2abd25f48a37a1bb0e7eacc9, type: 3}
   isHighLighted: 0
   state: 0
+  isNormalHighLighted: 0
   row: 2
   col: 3
   battleArea: {fileID: 1024673728}
@@ -1251,6 +1257,7 @@ MonoBehaviour:
   buttonDisabled: {fileID: 21300000, guid: 3952970a2abd25f48a37a1bb0e7eacc9, type: 3}
   isHighLighted: 0
   state: 0
+  isNormalHighLighted: 0
   row: 3
   col: 2
   battleArea: {fileID: 1024673728}
@@ -1546,6 +1553,7 @@ MonoBehaviour:
   buttonDisabled: {fileID: 21300000, guid: 3952970a2abd25f48a37a1bb0e7eacc9, type: 3}
   isHighLighted: 0
   state: 0
+  isNormalHighLighted: 0
   row: 2
   col: 4
   battleArea: {fileID: 1024673728}
@@ -1752,6 +1760,7 @@ MonoBehaviour:
   buttonDisabled: {fileID: 21300000, guid: 3952970a2abd25f48a37a1bb0e7eacc9, type: 3}
   isHighLighted: 0
   state: 0
+  isNormalHighLighted: 0
   row: 3
   col: 1
   battleArea: {fileID: 1024673728}
@@ -1963,6 +1972,7 @@ MonoBehaviour:
   buttonDisabled: {fileID: 21300000, guid: 3952970a2abd25f48a37a1bb0e7eacc9, type: 3}
   isHighLighted: 0
   state: 0
+  isNormalHighLighted: 0
   row: 3
   col: 5
   battleArea: {fileID: 1024673728}
@@ -2186,6 +2196,7 @@ MonoBehaviour:
   buttonDisabled: {fileID: 21300000, guid: 3952970a2abd25f48a37a1bb0e7eacc9, type: 3}
   isHighLighted: 0
   state: 0
+  isNormalHighLighted: 0
   row: 3
   col: 4
   battleArea: {fileID: 1024673728}
@@ -2417,6 +2428,7 @@ MonoBehaviour:
   buttonDisabled: {fileID: 21300000, guid: 3952970a2abd25f48a37a1bb0e7eacc9, type: 3}
   isHighLighted: 0
   state: 0
+  isNormalHighLighted: 0
   row: 1
   col: 5
   battleArea: {fileID: 1024673728}
@@ -3420,6 +3432,7 @@ MonoBehaviour:
   buttonDisabled: {fileID: 21300000, guid: 3952970a2abd25f48a37a1bb0e7eacc9, type: 3}
   isHighLighted: 0
   state: 0
+  isNormalHighLighted: 0
   row: 1
   col: 3
   battleArea: {fileID: 1024673728}
@@ -4086,6 +4099,7 @@ MonoBehaviour:
   buttonDisabled: {fileID: 21300000, guid: 3952970a2abd25f48a37a1bb0e7eacc9, type: 3}
   isHighLighted: 0
   state: 0
+  isNormalHighLighted: 0
   row: 5
   col: 2
   battleArea: {fileID: 1024673728}
@@ -4210,6 +4224,7 @@ MonoBehaviour:
   buttonDisabled: {fileID: 21300000, guid: 3952970a2abd25f48a37a1bb0e7eacc9, type: 3}
   isHighLighted: 0
   state: 0
+  isNormalHighLighted: 0
   row: 4
   col: 6
   battleArea: {fileID: 1024673728}
@@ -4863,6 +4878,7 @@ MonoBehaviour:
   buttonDisabled: {fileID: 21300000, guid: 3952970a2abd25f48a37a1bb0e7eacc9, type: 3}
   isHighLighted: 0
   state: 0
+  isNormalHighLighted: 0
   row: 4
   col: 1
   battleArea: {fileID: 1024673728}
@@ -5139,6 +5155,7 @@ MonoBehaviour:
   buttonDisabled: {fileID: 21300000, guid: 3952970a2abd25f48a37a1bb0e7eacc9, type: 3}
   isHighLighted: 0
   state: 0
+  isNormalHighLighted: 0
   row: 4
   col: 5
   battleArea: {fileID: 1024673728}
@@ -6184,6 +6201,7 @@ MonoBehaviour:
   buttonDisabled: {fileID: 21300000, guid: 3952970a2abd25f48a37a1bb0e7eacc9, type: 3}
   isHighLighted: 0
   state: 0
+  isNormalHighLighted: 0
   row: 4
   col: 3
   battleArea: {fileID: 1024673728}
@@ -6400,6 +6418,7 @@ MonoBehaviour:
   buttonDisabled: {fileID: 21300000, guid: 3952970a2abd25f48a37a1bb0e7eacc9, type: 3}
   isHighLighted: 0
   state: 0
+  isNormalHighLighted: 0
   row: 4
   col: 4
   battleArea: {fileID: 1024673728}
@@ -6716,6 +6735,7 @@ MonoBehaviour:
   buttonDisabled: {fileID: 0}
   isHighLighted: 0
   state: 0
+  isNormalHighLighted: 0
   cardName: FreeMove
   type: 0
   front: {fileID: 0}
@@ -6825,6 +6845,7 @@ MonoBehaviour:
   buttonDisabled: {fileID: 21300000, guid: 3952970a2abd25f48a37a1bb0e7eacc9, type: 3}
   isHighLighted: 0
   state: 0
+  isNormalHighLighted: 0
   row: 6
   col: 2
   battleArea: {fileID: 1024673728}
@@ -7471,6 +7492,7 @@ MonoBehaviour:
   buttonDisabled: {fileID: 21300000, guid: 3952970a2abd25f48a37a1bb0e7eacc9, type: 3}
   isHighLighted: 0
   state: 0
+  isNormalHighLighted: 0
   row: 6
   col: 5
   battleArea: {fileID: 1024673728}
@@ -7738,6 +7760,7 @@ MonoBehaviour:
   buttonDisabled: {fileID: 21300000, guid: 3952970a2abd25f48a37a1bb0e7eacc9, type: 3}
   isHighLighted: 0
   state: 0
+  isNormalHighLighted: 0
   row: 1
   col: 6
   battleArea: {fileID: 1024673728}
@@ -7857,6 +7880,7 @@ MonoBehaviour:
   buttonDisabled: {fileID: 21300000, guid: 3952970a2abd25f48a37a1bb0e7eacc9, type: 3}
   isHighLighted: 0
   state: 0
+  isNormalHighLighted: 0
   row: 2
   col: 6
   battleArea: {fileID: 1024673728}
@@ -8139,6 +8163,7 @@ MonoBehaviour:
   buttonDisabled: {fileID: 21300000, guid: 3952970a2abd25f48a37a1bb0e7eacc9, type: 3}
   isHighLighted: 0
   state: 0
+  isNormalHighLighted: 0
   row: 4
   col: 2
   battleArea: {fileID: 1024673728}
@@ -8393,6 +8418,7 @@ MonoBehaviour:
   buttonDisabled: {fileID: 21300000, guid: 3952970a2abd25f48a37a1bb0e7eacc9, type: 3}
   isHighLighted: 0
   state: 0
+  isNormalHighLighted: 0
   row: 2
   col: 1
   battleArea: {fileID: 1024673728}
@@ -8884,6 +8910,7 @@ MonoBehaviour:
   buttonDisabled: {fileID: 21300000, guid: 3952970a2abd25f48a37a1bb0e7eacc9, type: 3}
   isHighLighted: 0
   state: 0
+  isNormalHighLighted: 0
   row: 6
   col: 6
   battleArea: {fileID: 1024673728}
@@ -8954,6 +8981,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 962315925961236986, guid: 37f88322dfbacfc4794cdf1840d05df4, type: 3}
   m_PrefabInstance: {fileID: 962315924435793910}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1699649900
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1699649902}
+  - component: {fileID: 1699649901}
+  m_Layer: 0
+  m_Name: Audio
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1699649901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1699649900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83bb0a45e7f7fda4da85eb7ecf83ffa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Lisa_Skill: {fileID: 8300000, guid: b4acf6008380279468737cd41c3a0bff, type: 3}
+  Lisa_Burst: {fileID: 8300000, guid: 3c56bc2fc4e44d04e904b0928c5386d5, type: 3}
+  Ningguang_Skill: {fileID: 8300000, guid: 184e39a5644e78e459152a802998a128, type: 3}
+  Ningguang_Burst: {fileID: 8300000, guid: 463d5e0837bc1b4448fae25ac9b2d26c, type: 3}
+  Keqing_Skill: {fileID: 8300000, guid: 41c7f59c5446b1c4db8e4faa121b1e3a, type: 3}
+  Keqing_Burst: {fileID: 8300000, guid: f1d3ca1657dff9b40b9a0b69b6a6b231, type: 3}
+  Amber_Skill: {fileID: 8300000, guid: d13d4c4e2524e204f99428cdb0290640, type: 3}
+  Amber_Burst: {fileID: 8300000, guid: 8a697c31e68dcab4da281893dbb45900, type: 3}
+  Jean_Skill: {fileID: 8300000, guid: 6cffb07e60135584d8f1b64bdbd975a3, type: 3}
+  Jean_Burst: {fileID: 8300000, guid: 4798c1f611cea814dbe321a0c6f7ba2f, type: 3}
+  Noelle_Skill: {fileID: 8300000, guid: 548c125728702204d8be77684f54f149, type: 3}
+  Noelle_Burst: {fileID: 8300000, guid: d17495b646d42544aaff63c632523ce6, type: 3}
+  Diluc_Skill: {fileID: 8300000, guid: f6af9426c30548d4382f75391e06bc49, type: 3}
+  Diluc_Burst: {fileID: 8300000, guid: 39e8495b34f34e74892444104dfaabd6, type: 3}
+--- !u!4 &1699649902
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1699649900}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.254865, y: -2.2081556, z: -151.74167}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1715450278
 GameObject:
   m_ObjectHideFlags: 0
@@ -9653,6 +9737,7 @@ MonoBehaviour:
   buttonDisabled: {fileID: 21300000, guid: 3952970a2abd25f48a37a1bb0e7eacc9, type: 3}
   isHighLighted: 0
   state: 0
+  isNormalHighLighted: 0
   row: 2
   col: 5
   battleArea: {fileID: 1024673728}
@@ -9997,6 +10082,7 @@ MonoBehaviour:
   buttonDisabled: {fileID: 21300000, guid: 3952970a2abd25f48a37a1bb0e7eacc9, type: 3}
   isHighLighted: 0
   state: 0
+  isNormalHighLighted: 0
   row: 1
   col: 2
   battleArea: {fileID: 1024673728}
@@ -10318,6 +10404,7 @@ MonoBehaviour:
   buttonDisabled: {fileID: 21300000, guid: 3952970a2abd25f48a37a1bb0e7eacc9, type: 3}
   isHighLighted: 0
   state: 0
+  isNormalHighLighted: 0
   row: 5
   col: 3
   battleArea: {fileID: 1024673728}
@@ -10722,6 +10809,7 @@ MonoBehaviour:
   buttonDisabled: {fileID: 21300000, guid: 3952970a2abd25f48a37a1bb0e7eacc9, type: 3}
   isHighLighted: 0
   state: 0
+  isNormalHighLighted: 0
   row: 5
   col: 1
   battleArea: {fileID: 1024673728}
@@ -10988,6 +11076,7 @@ MonoBehaviour:
   buttonDisabled: {fileID: 21300000, guid: 3952970a2abd25f48a37a1bb0e7eacc9, type: 3}
   isHighLighted: 0
   state: 0
+  isNormalHighLighted: 0
   row: 5
   col: 6
   battleArea: {fileID: 1024673728}
@@ -11107,6 +11196,7 @@ MonoBehaviour:
   buttonDisabled: {fileID: 21300000, guid: 3952970a2abd25f48a37a1bb0e7eacc9, type: 3}
   isHighLighted: 0
   state: 0
+  isNormalHighLighted: 0
   row: 6
   col: 4
   battleArea: {fileID: 1024673728}
@@ -11395,6 +11485,7 @@ MonoBehaviour:
   buttonDisabled: {fileID: 21300000, guid: 3952970a2abd25f48a37a1bb0e7eacc9, type: 3}
   isHighLighted: 0
   state: 0
+  isNormalHighLighted: 0
   row: 1
   col: 4
   battleArea: {fileID: 1024673728}
@@ -11514,6 +11605,7 @@ MonoBehaviour:
   buttonDisabled: {fileID: 21300000, guid: 3952970a2abd25f48a37a1bb0e7eacc9, type: 3}
   isHighLighted: 0
   state: 0
+  isNormalHighLighted: 0
   row: 6
   col: 3
   battleArea: {fileID: 1024673728}
@@ -11638,6 +11730,7 @@ MonoBehaviour:
   buttonDisabled: {fileID: 21300000, guid: 3952970a2abd25f48a37a1bb0e7eacc9, type: 3}
   isHighLighted: 0
   state: 0
+  isNormalHighLighted: 0
   row: 3
   col: 6
   battleArea: {fileID: 1024673728}

@@ -88,7 +88,7 @@ public class Attack : GameBase//攻击类
         if (active == true)//如果激活
         {
             other.gameObject.TryGetComponent<Character>(out Character another);
-            if (another != null &&another.isTarget &&(another.parent != parent || type == AttackType.ElementalReaction))
+            if (another != null &&another.isTarget &&(another.parent != parent))
             {
                 another.OnAttack(this);
                 Destroy(this.gameObject);

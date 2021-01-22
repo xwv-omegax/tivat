@@ -23,8 +23,8 @@ public class Diluc : Hero
             "Normal_Attack",
             "Normal_Attack",
             "Normal_Attack",
-            "Normal_Move",
-            "Normal_Move",
+            "Normal_Attack",
+            "Normal_Attack",
             "Normal_Burst",
             "Normal_Burst",
             "Normal_Pyro",
@@ -156,6 +156,7 @@ public class Diluc : Hero
         AttackUsedCount ++;
         PyroUsedCount++;
         stamina--;
+        gameObject.GetComponent<AudioSource>().PlayOneShot(audios.Diluc_Skill);
         ShowNormalState();
         return true;
     }
@@ -174,6 +175,7 @@ public class Diluc : Hero
         SkillBonusCount = 2;
         AttackUsedCount++;
         stamina--;
+        gameObject.GetComponent<AudioSource>().PlayOneShot(audios.Diluc_Skill);
         ShowNormalState();
         return true;
     }
@@ -252,6 +254,7 @@ public class Diluc : Hero
         }
         BurstBonusCount = 3;
         PyroUsedCount++;
+        gameObject.GetComponent<AudioSource>().PlayOneShot(audios.Diluc_Burst);
         return true;
     }
 
@@ -269,6 +272,7 @@ public class Diluc : Hero
             CreateAttack( new Vector2Int(0, i), damage, AttackType.ElementalBurst, ElementType.Physics);
         }
         BurstBonusCount = 3;
+        gameObject.GetComponent<AudioSource>().PlayOneShot(audios.Diluc_Burst);
         return true;
     }
 

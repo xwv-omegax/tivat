@@ -52,7 +52,6 @@ public class BattleArea : MonoBehaviour
     public GameObject enemySelectButton = null;
     public void AreaSelect(int row, int column)//按钮选择
     {
-        playerObject.GetComponent<Player>().AreaButtonDown(row, column);
         if (selectButton == null)
         {
             selectButton = area[column - 1][row-1];
@@ -61,13 +60,13 @@ public class BattleArea : MonoBehaviour
             selectButton.GetComponent<BattleButton>().ChangeState(global::ButtonState.Normal);
             selectButton = area[column-1][row-1];
         }
+        playerObject.GetComponent<Player>().AreaButtonDown(row, column);
         char rowchar = (char)('0' + row);
         char columnchar =(char)('0' + column);
         Send("BAA" + rowchar+ columnchar);
         SendHash();
     }
     public void EnemyAreaSelect(int row, int column) {//敌方按钮选择
-        enemyPlayerObject.GetComponent<Player>().AreaButtonDown(row, column);
         if(enemySelectButton == null)
         {
             enemySelectButton = area[6-column ][6-row];
@@ -79,6 +78,7 @@ public class BattleArea : MonoBehaviour
             enemySelectButton = area[6-column ][6-row];
             enemySelectButton.GetComponent<BattleButton>().ChangeState(global::ButtonState.Selected);
         }
+        enemyPlayerObject.GetComponent<Player>().AreaButtonDown(row, column);
     }
     
     public void ButtonState(Vector2Int[] poses, ButtonState state,bool isPlayer)//批量更改按键状态
@@ -142,15 +142,9 @@ public class BattleArea : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetMouseButtonDown(1))
         {
-            if (canvasState == CanvasState.Main) {
-                ChangeCanvas(CanvasState.Esc);
-            }
-            else
-            {
-                ChangeCanvas(CanvasState.Main);
-            }
+            UIButtonClick(UIButtonType.Reset);
         }
     }
 

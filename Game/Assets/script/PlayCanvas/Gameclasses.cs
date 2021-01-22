@@ -87,6 +87,7 @@ using UnityEngine;
             charcter.transform.localRotation = new Quaternion(0, 0, 0, 0);
 
             charcter.AddComponent <T>();
+            charcter.AddComponent<AudioSource>().volume=0.2f;    
 
             SpriteRenderer render = charcter.AddComponent<SpriteRenderer>();
 

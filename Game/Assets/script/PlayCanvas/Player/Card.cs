@@ -17,6 +17,7 @@ public class ButtonBase:MonoBehaviour, IPointerEnterHandler,IPointerExitHandler,
     public bool isHighLighted;
     public ButtonState state;
 
+    public bool isNormalHighLighted=false;
     public virtual void ChangeState(ButtonState state) {
         this.state = state;
         switch (state)
@@ -24,6 +25,7 @@ public class ButtonBase:MonoBehaviour, IPointerEnterHandler,IPointerExitHandler,
             case ButtonState.Normal:
                 this.gameObject.GetComponent<Image>().sprite = buttonNormal;
                 isHighLighted = false;
+                isNormalHighLighted = false;
                 break;
             case ButtonState.OnCurse:
                 this.gameObject.GetComponent<Image>().sprite = buttonOncurse;
@@ -31,12 +33,18 @@ public class ButtonBase:MonoBehaviour, IPointerEnterHandler,IPointerExitHandler,
             case ButtonState.HighLight:
                 this.gameObject.GetComponent<Image>().sprite = buttonHighLight;
                 isHighLighted = true;
+                isNormalHighLighted = false;
                 break;
             case ButtonState.Selected:
                 this.gameObject.GetComponent<Image>().sprite = buttonSelect;
                 break;
             case ButtonState.Disabled:
                 this.gameObject.GetComponent<Image>().sprite = buttonDisabled;
+                break;
+            case ButtonState.NormalHighlighted:
+                this.gameObject.GetComponent<Image>().sprite = buttonHighLight;
+                isHighLighted = false;
+                isNormalHighLighted = true;
                 break;
             default:
                 break;
@@ -72,6 +80,10 @@ public class ButtonBase:MonoBehaviour, IPointerEnterHandler,IPointerExitHandler,
             {
                 ChangeState(ButtonState.HighLight);
             }
+            else if (isNormalHighLighted)
+            {
+                ChangeState(ButtonState.NormalHighlighted);
+            }
             else
             {
                 ChangeState(ButtonState.Normal);
@@ -86,7 +98,7 @@ public class ButtonBase:MonoBehaviour, IPointerEnterHandler,IPointerExitHandler,
         {
             ChangeState(ButtonState.OnCurse);
         }
-        else if(state == ButtonState.OnCurse || state == ButtonState.HighLight)
+        else if(state == ButtonState.OnCurse || state == ButtonState.HighLight ||state==ButtonState.NormalHighlighted)
         {
             ChangeState(ButtonState.Selected);
         }

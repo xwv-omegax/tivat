@@ -42,6 +42,7 @@ public class Ningguang : Hero
         screen.ShowNormalState();
         stamina--;
         GeoUsed();
+        gameObject.GetComponent<AudioSource>().PlayOneShot(audios.Ningguang_Skill);
         return true;
     }//创造璇玑屏
 
@@ -71,11 +72,12 @@ public class Ningguang : Hero
         {
             "Normal_Attack",
             "Normal_Attack",
-            "Normal_Move",
+      
             "Normal_Defence",
             "Normal_Defence",
             "Normal_Burst",
             "Normal_Burst",
+            "Normal_Geo",
             "Normal_Geo",
             "Normal_Geo",
             "Normal_Geo",
@@ -138,7 +140,7 @@ public class Ningguang : Hero
 
     public bool CanCharge()
     {
-        if (ChargeAttackLimit < 1) return true;
+        if (ChargeAttackLimit < 1 && stamina>0) return true;
         return false;
     }
     public bool ChargeAttack(Vector2Int pos)
@@ -205,6 +207,7 @@ public class Ningguang : Hero
             atk.ChangeApprence(sprites.GetComponent<AllSprites>().Attack_Ningguang_Normal);
             atk.activeSprite = sprites.GetComponent<AllSprites>().Attack_Ningguang_Normal_Actived;
         }
+        gameObject.GetComponent<AudioSource>().PlayOneShot(audios.Ningguang_Burst);
         stamina--;
         GeoUsed();
         return true;
@@ -306,6 +309,7 @@ public class Ningguang : Hero
             atk.ChangeApprence(sprites.GetComponent<AllSprites>().Attack_Ningguang_Normal);
             atk.activeSprite = sprites.GetComponent<AllSprites>().Attack_Ningguang_Normal_Actived;
         }
+        gameObject.GetComponent<AudioSource>().PlayOneShot(audios.Ningguang_Burst);
         stamina--;
         return true;
     }//用晶核的元素爆发
