@@ -54,13 +54,13 @@ public class BDButton: MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
         info.transform.parent = this.gameObject.transform;
         if (this.transform.localPosition.x >= 1000)
         {
-            info.transform.localPosition = new Vector3(-200, -70, -5);
+            info.transform.localPosition = new Vector3(-200, -180, -5);
         }
         else
         {
-            info.transform.localPosition = new Vector3(200, -70, -5);
+            info.transform.localPosition = new Vector3(200, -180, -5);
         }
-        info.transform.localScale = new Vector3(150, 150, 150);
+        info.transform.localScale = new Vector3(250, 250, 150);
 
         SpriteRenderer spr =  info.AddComponent<SpriteRenderer>();
         spr.sprite = Info;

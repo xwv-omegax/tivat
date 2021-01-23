@@ -16,12 +16,15 @@ public class MainMenuButton : MonoBehaviour,IPointerEnterHandler,IPointerExitHan
     }
 
     public GameObject text;
-
+    public SpriteRenderer render;
+    public Sprite normal;
+    public Sprite oncurse;
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (!isHighLighted)
         {
-            text.GetComponent<Text>().color = new Color(1, 1, 1);
+            if(text!=null)text.GetComponent<Text>().color = new Color(1, 1, 1);
+            if (render != null && oncurse != null) render.sprite = oncurse;
             isHighLighted = true;
         }
     }
@@ -30,7 +33,8 @@ public class MainMenuButton : MonoBehaviour,IPointerEnterHandler,IPointerExitHan
     {
         if (isHighLighted)
         {
-            text.GetComponent<Text>().color = new Color(0.8f, 0.8f, 0.8f);
+            if (text != null) text.GetComponent<Text>().color = new Color(0.8f, 0.8f, 0.8f);
+            if (render != null && normal != null) render.sprite = normal;
             isHighLighted = false;
         }
     }

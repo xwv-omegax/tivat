@@ -20,7 +20,7 @@ public class Save : MonoBehaviour//保存键
         }
         else
         {
-            Massage.CreateMsg("保存失败", new Vector3(0, 45, 0), gameObject, 1);
+            Massage.CreateMsg("请选满4+20张卡", new Vector3(0, 45, 0), gameObject, 1);
             Debug.LogError("保存失败");
         }
     }

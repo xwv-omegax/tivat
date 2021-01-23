@@ -10690,7 +10690,7 @@ MonoBehaviour:
   itemCard_Trap: {fileID: 21300000, guid: caecaaa820b271a4fba305dcb2100a1e, type: 3}
   itemCard_Polearm: {fileID: 21300000, guid: 389971ac76b2ce9479cc8a8d9f2f80a1, type: 3}
   itemCard_Sword: {fileID: 21300000, guid: 4a1ffd892689dab4189b323f203fee51, type: 3}
-  itemCard_Sunsettia: {fileID: 21300000, guid: 0c75607f56fb88c468d35b47c5288248, type: 3}
+  itemCard_Sunsettia: {fileID: 21300000, guid: 85e21f60289d7ec4398575d367cb02e6, type: 3}
   itemCard_CrystalCore: {fileID: 21300000, guid: 6932703de8da1334c836e8c53a4a9757, type: 3}
   itemCard_Advice: {fileID: 21300000, guid: 4856671cf2a944246af831a20bb11d98, type: 3}
   itemCard_Teaport: {fileID: 21300000, guid: 867937982f2ee934c8cc0f048870d139, type: 3}
@@ -10751,10 +10751,10 @@ MonoBehaviour:
   characterAvatar_Xiangling: {fileID: 21300000, guid: e990c83e2980ed549a91c2520d67c202, type: 3}
   characterInfo_Noelle: {fileID: 21300000, guid: 702b7d4cbeab5d443afeea457e9a38e1, type: 3}
   characterInfo_Diluc: {fileID: 21300000, guid: b73665fd77e4ef44cbdd4c17adbd4aa3, type: 3}
-  characterInfo_Lisa: {fileID: 21300000, guid: c19de7c25a8de6041bd2b2953930505b, type: 3}
+  characterInfo_Lisa: {fileID: 21300000, guid: 2e4a3ccd07c9388428fb8b218628ff72, type: 3}
   characterInfo_Ningguang: {fileID: 21300000, guid: 1e156b4273d487247988278251c61776, type: 3}
   characterInfo_Keaya: {fileID: 21300000, guid: 68829e54626e14c44a4bf69e8c478f72, type: 3}
-  characterInfo_Keqing: {fileID: 21300000, guid: 16dc0abe08eccb24a972e601eb1bf6e7, type: 3}
+  characterInfo_Keqing: {fileID: 21300000, guid: b0ead91d2bd3ba14bb073cfee56d2aca, type: 3}
   characterInfo_Amber: {fileID: 21300000, guid: d36e4d71b98609041891194850b1c321, type: 3}
   characterInfo_Jean: {fileID: 21300000, guid: cb5dc9b72f515964a877edfa51f21c7d, type: 3}
   Creator_Screen: {fileID: 21300000, guid: 32f86bca0b6652c419117a13b020e491, type: 3}
