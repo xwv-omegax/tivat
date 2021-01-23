@@ -470,6 +470,7 @@ public class Player : MonoBehaviour//玩家类
                 if (isPlayer) log += "玩家 ";
                 else log += "敌方玩家";
                 log += " 对 " + cha.characterName + " 使用了 " + "Item_Tea";
+                battleArea.GetComponent<BattleArea>().CardUsed("Item_Tea");
                 Log(log);
             }
             else
@@ -494,6 +495,16 @@ public class Player : MonoBehaviour//玩家类
         }
     }
 
+    public void LogCard()
+    {
+        string log = "当前手牌：#";
+        Hand ha = hand.GetComponent<Hand>();
+        for(int i = 0; i < ha.count; i++)
+        {
+            log += "+" + ha.cardObjects[i].GetComponent<Card>().cardName;
+        }
+        Log(log);
+    }
     public void NextRoundDown()//下一回合按下
     {
         if (isMyRound)
@@ -524,6 +535,7 @@ public class Player : MonoBehaviour//玩家类
                 round.GetComponent<Text>().text = "我的回合";
                 Log("=====================我的回合======================");
             }
+            LogCard();
             for(int i = 0; i < characterCount; i++)
             {
                 myCharacters[i].NewRoundSettle();
@@ -538,6 +550,11 @@ public class Player : MonoBehaviour//玩家类
 
     public void DeleteButtonDown()
     {
+        if (isTargeting)
+        {
+            ResetButtonDown();
+            return;
+        }
         UpdateCard();
         Debug.Log("DeleteButtonDown");
         for(int i = 0; i < cardCount; i++)

@@ -16,7 +16,6 @@ public class BuildCanvas : MonoBehaviour
         character.GetComponent<CardList>().ReadFile(characterPath);
         item.GetComponent<CardList>().ReadFile(itemPath);
         selected.GetComponent<CardList>().ReadFile(selectPath);
-
         item.GetComponent<CardList>().OnClick();
     }
 

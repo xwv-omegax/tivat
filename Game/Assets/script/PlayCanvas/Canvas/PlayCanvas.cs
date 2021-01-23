@@ -401,7 +401,7 @@ public class PlayCanvas : MonoBehaviour
     {
         client.Send("S");
         string path = logpath;
-        var filename = $"Log{System.DateTime.Now:yyyy-MM-dd HH}.txt";
+        var filename = $"Log{System.DateTime.Now:yyyy-MM-dd HH-mm}.txt";
         if (!Directory.Exists(path))
             Directory.CreateDirectory(path);
         TextWriter tw = new StreamWriter(Path.Combine(path, filename), true); //true在文件末尾添加数据

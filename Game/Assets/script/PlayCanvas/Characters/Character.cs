@@ -280,7 +280,7 @@ public class Character : GameBase
                 if (player.isPlayer) log += "友方 ";
                 else log+="敌方 ";
             }
-            log += heal.healOwner.characterName;
+            log += heal.healOwner.characterName + "(" + heal.healOwner.HP.ToString() + "," + heal.healOwner.shield.ToString() + ")";
         }
         if (heal.healTarget != null)
         {
@@ -290,7 +290,7 @@ public class Character : GameBase
                 if (player.isPlayer) log += "友方 ";
                 else log += "敌方 ";
             }
-            log +=  heal.healTarget.characterName;
+            log +=  heal.healTarget.characterName+ "(" + heal.healTarget.HP.ToString() + "," + heal.healTarget.shield.ToString() + ")";
         }
         if (heal.HPHeal > 0)
         {
@@ -313,7 +313,7 @@ public class Character : GameBase
                 if (player.isPlayer) log += "友方 ";
                 else log += "敌方 ";
             }
-            log += atk.attackOwner.characterName;
+            log += atk.attackOwner.characterName +"("+atk.attackOwner.HP.ToString()+","+atk.attackOwner.shield.ToString()+")";
         }
         log += " 使用 " + atk.type.ToString();
         if (atk.attackTarget != null)
@@ -324,7 +324,7 @@ public class Character : GameBase
                 if (player.isPlayer) log += "友方 ";
                 else log += "敌方 ";
             }
-            log += atk.attackTarget.characterName;
+            log += atk.attackTarget.characterName + "(" + atk.attackTarget.HP.ToString() + "," + atk.attackTarget.shield.ToString() + ")";
         }
         log += " 造成了 "+atk.Damage.ToString() + " 点 " + atk.attackelemental.ToString()+" 伤害";
         Log(log);

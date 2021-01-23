@@ -34,7 +34,10 @@ public class Lisa : Hero
             "Normal_Electro",
             "Normal_Electro"
         };
-
+        Vector2Int[] posdontneedtarg = new Vector2Int[]
+        {
+            new Vector2Int(-1,-1)
+        };
         AttackEffects.Add("CheckIsElectroAffect", CheckIsElectroAffect);
         AttackEffects.Add("ChargedAttackEffect", ChargedAttackEffect);
 
@@ -51,12 +54,12 @@ public class Lisa : Hero
         AddUseCard("#+Normal_Attack+Item_CrystalCore", CrystalCharged, poses);
         AddUseCard("#+Item_CrystalCore+Normal_Attack", CrystalCharged, poses);
 
-        AddUseCard("#+Normal_Electro+Normal_Electro", Skill, poses);
+        AddUseCard("#+Normal_Electro+Normal_Electro", Skill, posdontneedtarg,false);
         
-        AddUseCard("#+Normal_Electro+Item_CrystalCore", CrystalSkill, poses);
-        AddUseCard("#+Item_CrystalCore+Normal_Electro", CrystalSkill, poses);
+        AddUseCard("#+Normal_Electro+Item_CrystalCore", CrystalSkill, posdontneedtarg, false);
+        AddUseCard("#+Item_CrystalCore+Normal_Electro", CrystalSkill, posdontneedtarg, false);
 
-        AddUseCard("#+Item_CrystalCore+Item_CrystalCore", CrystalSkill, poses);
+        AddUseCard("#+Item_CrystalCore+Item_CrystalCore", CrystalSkill, posdontneedtarg, false);
 
         AddUseCard("#+Normal_Burst+Normal_Electro", Burst, poses);
         AddUseCard("#+Normal_Electro+Normal_Burst", Burst, poses);
@@ -135,9 +138,9 @@ public class Lisa : Hero
     {
         if (stamina < 1) return false;
 
-        for(int i = -2; i < 3; i++)
+        for(int i = -3; i < 4; i++)
         {
-            for(int j = 0; j < 3 - Abs(i); j++)
+            for(int j = Abs(i) - 3; j < 4 - Abs(i); j++)
             {
                 CreateAttack(new Vector2Int(j, i), 1, AttackType.ElementalSkill, ElementType.Electro);
             }
@@ -151,9 +154,9 @@ public class Lisa : Hero
     {
         if (stamina < 1) return false;
 
-        for (int i = -2; i < 3; i++)
+        for (int i = -3; i < 4; i++)
         {
-            for (int j = 0; j < 3 - Abs(i); j++)
+            for (int j = Abs(i)-3; j < 4 - Abs(i); j++)
             {
                 CreateAttack(new Vector2Int(j, i), 1, AttackType.ElementalSkill, ElementType.Physics);
             }

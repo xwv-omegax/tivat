@@ -105,6 +105,7 @@ public class Keqing : Hero
         CreateAttack(new Vector2Int(-1, 0), 1, AttackType.ElementalSkill, ElementType.Electro);
         CreateAttack(new Vector2Int(0, 1), 1, AttackType.ElementalSkill, ElementType.Electro);
         CreateAttack(new Vector2Int(0, -1), 1, AttackType.ElementalSkill, ElementType.Electro);
+        CreateAttack(new Vector2Int(0, 0), 1, AttackType.ElementalSkill, ElementType.Electro);
         isAfterAction = true;
         ShowNormalState();
         gameObject.GetComponent<AudioSource>().PlayOneShot(audios.Keqing_Skill);
@@ -122,6 +123,7 @@ public class Keqing : Hero
         CreateAttack(new Vector2Int(-1, 0), 1, AttackType.ElementalSkill, ElementType.Physics);
         CreateAttack(new Vector2Int(0, 1), 1, AttackType.ElementalSkill, ElementType.Physics);
         CreateAttack(new Vector2Int(0, -1), 1, AttackType.ElementalSkill, ElementType.Physics);
+        CreateAttack(new Vector2Int(0, 0), 1, AttackType.ElementalSkill, ElementType.Physics);
         isAfterAction = true;
         gameObject.GetComponent<AudioSource>().PlayOneShot(audios.Keqing_Skill);
         ShowNormalState();
