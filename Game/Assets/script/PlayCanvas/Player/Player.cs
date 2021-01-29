@@ -13,6 +13,8 @@ public class Player : MonoBehaviour//玩家类
 
     public GameObject InitialObject;//初始化所用对象
 
+    public int stamina;
+
     public string playerName;//名字
 
     public Sprite apperence;//头像
@@ -968,7 +970,8 @@ public class Player : MonoBehaviour//玩家类
 
     public string StringGet()
     {
-        return 'A'+hand.GetComponent<Hand>().StringGet()+','+'B'+deck.GetComponent<Deck>().StringGet()+',';
+        string sms = ""+statueEnergy + stamina;
+        return 'A'+hand.GetComponent<Hand>().StringGet()+','+'B'+deck.GetComponent<Deck>().StringGet()+','+'C'+sms;
     }
     public void StringSet(string msg)
     {
@@ -984,6 +987,10 @@ public class Player : MonoBehaviour//玩家类
                     break;
                 case 'B':
                     deck.GetComponent<Deck>().StringSet(str.Substring(1));
+                    break;
+                case 'C':
+                    statueEnergy = str[1];
+                    stamina = str[2];
                     break;
                 default:
                     break;

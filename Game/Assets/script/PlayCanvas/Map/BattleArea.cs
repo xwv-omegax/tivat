@@ -47,6 +47,8 @@ public class BattleArea : MonoBehaviour
         }
     }
 
+    public bool isMianPlayer=false;
+
     public GameObject playerObject;
     public GameObject enemyPlayerObject;
     public GameObject nuetralEnemyObject;

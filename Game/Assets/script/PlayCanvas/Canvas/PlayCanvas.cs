@@ -143,12 +143,14 @@ public class PlayCanvas : MonoBehaviour
                 SendInit();
                 if(msg[2] == 'A')
                 {
+                    battleArea.GetComponent<BattleArea>().isMianPlayer = true;
                     player.GetComponent<Player>().isMyRound = true;
                     ChangeMessage("我的回合");
                     enemyPlayer.GetComponent<Player>().NextRoundDown();
                 }
                 else if(msg[2] == 'B')
                 {
+                    battleArea.GetComponent<BattleArea>().isMianPlayer = false;
                     player.GetComponent<Player>().NextRoundDown();
                     enemyPlayer.GetComponent<Player>().isMyRound = true;
                 }

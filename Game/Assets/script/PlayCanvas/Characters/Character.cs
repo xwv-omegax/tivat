@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using System.IO;
 public enum CharacterName
 {
     Character_Ningguang,
@@ -853,6 +853,13 @@ public class Character : GameBase
 
     public int FreeMoveCount=1;
     public int MaxFreeMove = 1;
+
+    public int FreeNormalAttack = 1;
+    public int MaxNormalAttack = 1;
+
+    public int ChargedAttackCount = 1;
+    public int MaxCharged = 1;
+
     public void UpdateFreeMoveCount()
     {
         FreeMoveCount = MaxFreeMove;
@@ -1060,6 +1067,92 @@ public class Character : GameBase
         char target = (char)1;
         if (!isTarget) target = (char)0;
         return ""+(char)isplayer+(char)(int)type+ (char)position.x + (char)position.y + (char)HP + (char)shield+(char)stamina+(char)(int)state+(char)stateTimeRemain+affstr+target;
+    }
+
+    public MemoryStream StremGet()
+    {
+        MemoryStream stream = new MemoryStream();
+        BinaryWriter writer = new BinaryWriter(stream);
+        writer.Write(parent.GetComponent<Player>().isPlayer);
+        writer.Write((int)type);
+        writer.Write(position.x);
+        writer.Write(position.y);
+        writer.Write(HP);
+        writer.Write(shield);
+        writer.Write(stamina);
+        writer.Write((int)state);
+        writer.Write(stateTimeRemain);
+        if (affected != null)
+        {
+            writer.Write(true);
+            writer.Write((int)affected.affectElemental);
+            writer.Write(affected.AffectCount);
+        }
+        writer.Write(isTarget);
+        writer.Write(FreeMoveCount);
+        writer.Write(FreeNormalAttack);
+        writer.Write(ChargedAttackCount);
+        return stream;
+    }
+
+    public static void StaticStreamSet(MemoryStream stream)
+    {
+        BinaryReader reader = new BinaryReader(stream);
+        bool isplayer = reader.ReadBoolean();
+        Player player;
+        if (isplayer) player = BattleArea.player;
+        else player = BattleArea.enemy;
+
+        CharacterName type =(CharacterName)reader.ReadInt32();
+
+        Vector2Int pos = new Vector2Int(reader.ReadInt32(), reader.ReadInt32());
+        switch (type)
+        {
+            case CharacterName.Character_Amber:
+                player.PutAmber(pos);
+                break;
+            case CharacterName.Character_Diluc:
+                player.PutDiluc(pos);
+                break;
+            case CharacterName.Character_Jean:
+                player.PutJean(pos);
+                break;
+            case CharacterName.Character_Keqing:
+                player.PutKeqing(pos);
+                break;
+            case CharacterName.Character_Lisa:
+                player.PutLisa(pos);
+                break;
+            case CharacterName.Character_Ningguang:
+                player.PutNingguang(pos);
+                break;
+            case CharacterName.Character_Noelle:
+                player.PutNoelle(pos);
+                break;
+            default:
+                return;
+        }
+        player.myCharacters[player.characterCount - 1].StreamSet(stream);
+    }
+
+    public virtual void StreamSet(MemoryStream stream)
+    {
+        BinaryReader reader = new BinaryReader(stream);
+        HP = reader.ReadInt32();
+        shield = reader.ReadInt32();
+        stamina = reader.ReadInt32();
+        state = (CharacterState)reader.ReadInt32();
+        stateTimeRemain = reader.ReadInt32();
+        if (reader.ReadBoolean())
+        {
+            affected = new ElementalAffect();
+            affected.affectElemental = (ElementType)reader.ReadInt32();
+            affected.AffectCount = reader.ReadInt32();
+        }
+        isTarget = reader.ReadBoolean();
+        FreeMoveCount = reader.ReadInt32();
+        FreeNormalAttack = reader.ReadInt32();
+        ChargedAttackCount = reader.ReadInt32();
     }
 
     public virtual void StringSet(string msg)
