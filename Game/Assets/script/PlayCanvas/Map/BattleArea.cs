@@ -10,14 +10,22 @@ public class BattleArea : MonoBehaviour
 {
     public void Initial()//初始化
     {
-        area = new GameObject[6][];
-        for (int i = 0; i < 6; i++) area[i] = new GameObject[6];
+        area = new GameObject[xmax][];
+        for (int i = 0; i < xmax; i++) area[i] = new GameObject[ymax];
         string head = "MainCanvas/战斗区域/";
-        for(int i=1;i<7;i++)
-            for(int j = 1; j < 7; j++)
+        for(int i=1;i<xmax+1;i++)
+            for(int j = 1; j < ymax+1; j++)
             {
                 area[i-1][j-1] = GameObject.Find(head + "row" + j.ToString() + "/col" + i.ToString());
+                Debug.Log(i.ToString()+","+j.ToString());
             }
+        staticarea = area;
+        zeropos = transform.localPosition;
+        sprites = GameObject.Find("Sprites").GetComponent<AllSprites>();
+        audios = GameObject.Find("Audio").GetComponent<AllAudio>();
+        fonts = GameObject.Find("Fonts").GetComponent<AllFonts>();
+        player = playerObject.GetComponent<Player>();
+        enemy = enemyPlayerObject.GetComponent<Player>();
     }
 
     public void PlayerInitial(GameObject player,string[] set)//初始化玩家类
@@ -47,6 +55,15 @@ public class BattleArea : MonoBehaviour
 
     public GameObject[][] area;
 
+    public static readonly int xmax = 10;
+    public static readonly int ymax = 10;
+
+    public static AllSprites sprites;
+    public static AllAudio audios;
+    public static AllFonts fonts;
+    public static Player player;
+    public static Player enemy;
+
     public GameObject selectButton=null;
 
     public GameObject enemySelectButton = null;
@@ -69,13 +86,13 @@ public class BattleArea : MonoBehaviour
     public void EnemyAreaSelect(int row, int column) {//敌方按钮选择
         if(enemySelectButton == null)
         {
-            enemySelectButton = area[6-column ][6-row];
+            enemySelectButton = area[xmax-column ][ymax-row];
             enemySelectButton.GetComponent<BattleButton>().ChangeState(global::ButtonState.Selected);
         }
-        if (enemySelectButton != area[6-column][6-row])
+        if (enemySelectButton != area[xmax-column][ymax-row])
         {
             enemySelectButton.GetComponent<BattleButton>().ChangeState(global::ButtonState.Normal);
-            enemySelectButton = area[6-column ][6-row];
+            enemySelectButton = area[xmax-column ][ymax-row];
             enemySelectButton.GetComponent<BattleButton>().ChangeState(global::ButtonState.Selected);
         }
         enemyPlayerObject.GetComponent<Player>().AreaButtonDown(row, column);
@@ -88,7 +105,7 @@ public class BattleArea : MonoBehaviour
             Debug.Log(poses.Length);
             for (int i = 0; i < poses.Length; i++)
             {
-                if(poses[i].x>0&&poses[i].x<7&&poses[i].y>0&&poses[i].y<7)
+                if(poses[i].x>0&&poses[i].x<xmax+1&&poses[i].y>0&&poses[i].y<ymax+1)
                     area[poses[i].x - 1][poses[i].y - 1].GetComponent<BattleButton>().ChangeState(state);
             }
         }
@@ -96,8 +113,8 @@ public class BattleArea : MonoBehaviour
         {
             for (int i = 0; i < poses.Length; i++)
             {
-                if (poses[i].x > 0 && poses[i].x < 7 && poses[i].y > 0 && poses[i].y < 7)
-                    area[6-poses[i].x ][6-poses[i].y].GetComponent<BattleButton>().ChangeState(state);
+                if (poses[i].x > 0 && poses[i].x < xmax+1 && poses[i].y > 0 && poses[i].y < ymax+1)
+                    area[xmax-poses[i].x ][ymax-poses[i].y].GetComponent<BattleButton>().ChangeState(state);
             }
         }
     }
@@ -115,12 +132,42 @@ public class BattleArea : MonoBehaviour
                 area[6-pos.x ][6-pos.y ].GetComponent<BattleButton>().ChangeState(state);
         }
     }
+
+    public static Vector2 zeropos;
+    public static GameObject[][] staticarea;
+    public static Vector3 GetLocalPosition(Vector2Int pos) {
+        return new Vector3(pos.x-5.5f,pos.y-5.5f,0);
+    }
+    public static Vector3 GetLocalPosition(Vector2 pos)
+    {
+        return GetLocalPosition(new Vector2Int((int)pos.x,(int)pos.y));
+    }
+    public static Vector2Int GetReverse(Vector2Int pos)
+    {
+        return new Vector2Int(xmax - pos.x+1, ymax - pos.y+1);
+    }
+
+    public static Vector2Int GetPos(Vector2 pos)
+    {
+        return new Vector2Int((int)pos.x,(int)pos.y);
+    }
+
     void Start()
     {
         Initial();
     }
 
     public GameObject mainCamera;
+
+    public string GetArea()
+    {
+        return "";
+    }
+
+    public void SetArea(string msg)
+    {
+
+    }
 
     public void Log(string msg)
     {
@@ -152,13 +199,14 @@ public class BattleArea : MonoBehaviour
 
     public Hero GetEnemyCharacterWithPos(int row, int column,bool isPlayer)//获取敌方是否在该位置有角色
     {
+        Vector2Int pos = GetReverse(new Vector2Int(column, row));
         if (isPlayer)
         {
-            return enemyPlayerObject.GetComponent<Player>().GetCharacterWithPos(7 - row, 7 - column);
+            return enemyPlayerObject.GetComponent<Player>().GetCharacterWithPos(pos.y,pos.x);
         }
         else
         {
-            return playerObject.GetComponent<Player>().GetCharacterWithPos(7-row, 7-column);
+            return playerObject.GetComponent<Player>().GetCharacterWithPos(pos.y, pos.x);
         }
     }
 
@@ -313,6 +361,11 @@ public class BattleArea : MonoBehaviour
         return playCanvas.GetComponent<PlayCanvas>().client.Send(msg);
     }
 
+    public void SendBE()
+    {
+        Send("BE");
+    }
+
     public bool IsHashRight(string msg)
     {
         uint hash = (uint)(msg[9] - '0');
@@ -368,13 +421,13 @@ public class BattleArea : MonoBehaviour
     public void Defeat()
     {
         Send("AD");
-        ShowMessage("Defeat", new Vector3(0, 5, -1), new Color(1, 0.5f, 0), 0.02f, 2);
+        ShowMessage("Defeat", new Vector3(0, 0, -1), new Color(1, 0.5f, 0), 0.06f, 2);
         Invoke("ExitGame", 2);
     }
 
     public void Win()
     {
-        ShowMessage("Win", new Vector3(0, 5, -1), new Color(1,0.5f,0),0.02f, 2);
+        ShowMessage("Win", new Vector3(0, 0, -1), new Color(1,0.5f,0),0.06f, 2);
         Invoke("ExitGame", 2);
     }
 }//战斗区域类

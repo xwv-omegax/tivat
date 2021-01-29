@@ -1,0 +1,8 @@
+
+ 玩家:  使用了卡  #+Character_Keqing
+ 玩家:  使用了卡  #+Character_Noelle
+ 玩家:  使用了卡  #+Normal_Geo+Normal_Burst
+ 我方 Character_Noelle 移动到 (7, 3)
+ 玩家:  使用了卡  #+FreeMove
+ 玩家:  使用了卡  #
+ 玩家:  使用了卡  #

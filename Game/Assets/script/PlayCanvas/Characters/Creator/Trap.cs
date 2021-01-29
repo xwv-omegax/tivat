@@ -7,7 +7,7 @@ public class Trap : GameBase
     public static GameObject CreatTrap(GameObject parent, Vector2Int pos)
     {
         GameObject obj = CreatObject<Trap>(parent);
-        obj.transform.localPosition = new Vector3(pos.x - 3.5f, pos.y - 3.5f, -1.0f);
+        obj.transform.localPosition = BattleArea.GetLocalPosition(pos);
         obj.transform.localRotation = new Quaternion(0, 0, 0, 0);
         obj.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
         Trap trap = obj.GetComponent<Trap>();

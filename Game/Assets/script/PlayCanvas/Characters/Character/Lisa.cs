@@ -207,6 +207,29 @@ public class Lisa : Hero
         return Burst(pos);
     }
 
+    public override string StringGet()
+    {
+        string rm;
+        if (rose != null)
+        {
+            rm = (char)1 + rose.StringGet();
+        }
+        else
+        {
+            rm = (char)0 + "1111";
+        }
+        return base.StringGet()+rm;
+    }
+
+    public override void StringSet(string msg)
+    {
+        base.StringSet(msg);
+        if (msg[13] == 1)
+        {
+            rose = Rose.CreatRose(new Vector2Int(msg[16], msg[17]),this).GetComponent<Rose>();
+            rose.StringSet(msg.Substring(14, 4));
+        }
+    }
 
     // Start is called before the first frame update
     void Start()

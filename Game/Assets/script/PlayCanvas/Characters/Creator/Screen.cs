@@ -14,7 +14,7 @@ public class Screen : Creator
 
 
     public Ningguang owner;
-
+    public Vector2Int position;
     public void NewRound()
     {
         remainTime--;
@@ -73,6 +73,19 @@ public class Screen : Creator
                 ShowNormalState();
             }
         }
+    }
+
+
+    public string StringGet()
+    {
+        return "" + remainTime + blood + position.x + position.y;
+    }
+
+    public void StringSet(string msg)
+    {
+        remainTime = msg[0];
+        blood = msg[1];
+        position = new Vector2Int(msg[2], msg[3]);
     }
 
     // Start is called before the first frame update

@@ -116,6 +116,27 @@ public class Deck : MonoBehaviour
         return true;
     }//删除index的牌，并返回删除了什么
 
+    public string StringGet()
+    {
+        string msg = "";
+        for(int i = 0; i < count; i++)
+        {
+            msg += cards[i] + '+';
+        }
+        return msg;
+    }
+    public void StringSet(string msg)
+    {
+        count = 0;
+        string[] msgs = msg.Split('+');
+        Debug.Log("hand        " + msgs.Length.ToString());
+        foreach (string str in msgs)
+        {
+            if (str.Length < 1) return;
+            PutCard(str);
+        }
+        UpdateText();
+    }
 
     public void PutCard(string name)
     {

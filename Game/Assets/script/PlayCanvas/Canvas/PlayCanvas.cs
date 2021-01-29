@@ -288,11 +288,68 @@ public class PlayCanvas : MonoBehaviour
             case 'D':
                 HashCompare(msg);
                 break;
+            case 'E':
+                SendString();
+                break;
+            case 'F':
+                SetString(msg.Substring(2));
+                break;
             default:
                 break;
         }
 
     }//客户端信号/敌方操作
+
+    public void SendString() {
+        string msg = "D";
+        client.Send("BF" + msg);
+        Thread.Sleep(100);
+        msg =""+ 'A' + BattleArea.player.StringGet();
+        client.Send("BF" + msg);
+        for (int i = 0; i < BattleArea.player.characterCount; i++)
+        {
+            Thread.Sleep(100);
+            msg = ""+'C' + BattleArea.player.myCharacters[i].StringGet();
+            client.Send("BF" + msg);
+        }
+        Thread.Sleep(100);
+        msg = ""+'B' + BattleArea.enemy.StringGet();
+        client.Send("BF" + msg);
+        for (int i = 0; i < BattleArea.enemy.characterCount; i++)
+        {
+            Thread.Sleep(100);
+            msg =""+ 'C' + BattleArea.enemy.myCharacters[i].StringGet();
+            client.Send("BF" + msg);
+        }
+        Thread.Sleep(100);
+        client.Send("BFE");
+    }
+    public void SetString(string msg)
+    {
+        Debug.Log("canvas        ");
+            if (msg.Length < 1) return;
+            Debug.Log("canvasstr      " + msg);
+            switch (msg[0])
+            {
+                case 'B':
+                    BattleArea.player.StringSet(msg.Substring(1));
+                    break;
+                case 'A':
+                    BattleArea.enemy.StringSet(msg.Substring(1));
+                    break;
+                case 'C':
+                    Character.StaticStringSet(msg.Substring(1));
+                    break;
+            case 'D':
+                BattleArea.player.DestroyAll();
+                BattleArea.enemy.DestroyAll();
+                break;
+            case 'E':
+                break;
+                default:
+                    break;
+            }
+    }
 
     public bool hashIncorrect = false;
     public void HashCompare(string msg)

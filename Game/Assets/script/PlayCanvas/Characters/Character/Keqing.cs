@@ -218,6 +218,26 @@ public class Keqing : Hero
         }
     }
 
+    public override string StringGet()
+    {
+        string km="";
+        if (isAfterAction)
+        {
+            km += 1;
+        }
+        else km += 0;
+        if (isBurstBonus) km += 1;
+        else km += 0;
+        return base.StringGet()+km;
+    }
+
+    public override void StringSet(string msg)
+    {
+        base.StringSet(msg);
+        if (msg[13] == 1) isAfterAction = true;
+        if (msg[14] == 1) isBurstBonus = true;
+    }
+
     // Start is called before the first frame update
     void Start()
     {

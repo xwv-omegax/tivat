@@ -36,7 +36,8 @@ public class Ningguang : Hero
         else if (pos.x > 5) pos.x = 5;
         GameObject obj =  Screen.CreatScreen(parent,this);
         screen = obj.GetComponent<Screen>();
-        obj.transform.localPosition = new Vector3(-3.5f + pos.x, -3.5f + pos.y, -1.0f);
+        obj.transform.localPosition = BattleArea.GetLocalPosition(pos);
+        screen.position = pos;
         screen.ChangeApprence(parent.GetComponent<Player>().sprites.GetComponent<AllSprites>().Creator_Screen);
         screen.Init();
         screen.ShowNormalState();
@@ -320,6 +321,31 @@ public class Ningguang : Hero
         obj.transform.localPosition = new Vector3(0.5f, 0.5f, 0.0f);
         obj.transform.localRotation = new Quaternion(0, 0, 0, 0);
         return obj;
+    }
+
+    public override string StringGet()
+    {
+        string smsg;
+        if (screen != null)
+        {
+            smsg = (char)1 + screen.StringGet();
+        }
+        else
+        {
+            smsg = (char)0 + "1111";
+        }
+        return base.StringGet()+smsg;
+    }
+
+    public override void StringSet(string msg)
+    {
+        base.StringSet(msg);
+        if (msg[13] == 1)
+        {
+            stamina++;
+            ScreenCreate(new Vector2Int(msg[16], msg[17]));
+            screen.StringSet(msg.Substring(14, 4));
+        }
     }
 
     void Start()

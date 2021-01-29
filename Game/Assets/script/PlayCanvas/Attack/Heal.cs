@@ -27,7 +27,7 @@ public class Heal : GameBase //治疗
 
     private void Update()
     {
-        Vector3 tar = new Vector3(target.x - 3.5f, target.y - 3.5f, -1.0f);
+        Vector3 tar = BattleArea.GetLocalPosition(target);
         Vector3 dis = tar - transform.localPosition;
         if (dis.sqrMagnitude > 0.001)
         {

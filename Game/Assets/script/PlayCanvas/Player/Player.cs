@@ -640,32 +640,32 @@ public class Player : MonoBehaviour//玩家类
 
     public void InitUseCard()
     {
-        Vector2Int[] Poses = new Vector2Int[12];
+        Vector2Int[] Poses = new Vector2Int[20];
         for(int i =1; i < 3; i++)
         {
-            for(int j = 1; j < 7; j++)
+            for(int j = 1; j < 11; j++)
             {
-                Poses[(i - 1) * 6 + j - 1] = new Vector2Int(j, i);
+                Poses[(i - 1) * 10 + j - 1] = new Vector2Int(j, i);
             }
         }
 
-        Vector2Int[] AllPosition = new Vector2Int[37];
+        Vector2Int[] AllPosition = new Vector2Int[101];
 
-        for(int i = 1; i < 7; i++)
+        for(int i = 1; i < 11; i++)
         {
-            for(int j = 1; j < 7; j++)
+            for(int j = 1; j < 11; j++)
             {
-                AllPosition[(i - 1) * 6 + j - 1] = new Vector2Int(j, i);
+                AllPosition[(i - 1) * 10 + j - 1] = new Vector2Int(j, i);
             }
         }
-        AllPosition[36] = new Vector2Int(-1, -1);
+        AllPosition[100] = new Vector2Int(-1, -1);
 
-        Vector2Int[] NeutalPositions = new Vector2Int[24];
-        for (int i = 1; i < 5; i++)
+        Vector2Int[] NeutalPositions = new Vector2Int[50];
+        for (int i = 1; i < 6; i++)
         {
-            for (int j = 1; j < 7; j++)
+            for (int j = 1; j < 11; j++)
             {
-                NeutalPositions[(i - 1) * 6 + j - 1] = new Vector2Int(j, i);
+                NeutalPositions[(i - 1) * 10 + j - 1] = new Vector2Int(j, i);
             }
         }
 
@@ -966,6 +966,30 @@ public class Player : MonoBehaviour//玩家类
         return true;
     }
 
+    public string StringGet()
+    {
+        return 'A'+hand.GetComponent<Hand>().StringGet()+','+'B'+deck.GetComponent<Deck>().StringGet()+',';
+    }
+    public void StringSet(string msg)
+    {
+        if (msg.Length < 2) return;
+        string[] msgs = msg.Split(',');
+        foreach (string str in msgs)
+        {
+            if (str.Length < 1) continue;
+            switch (str[0])
+            {
+                case 'A':
+                    hand.GetComponent<Hand>().StringSet(str.Substring(1));
+                    break;
+                case 'B':
+                    deck.GetComponent<Deck>().StringSet(str.Substring(1));
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
     public void PutHero(Vector2Int pos, string name, GameObject obj)
     {
         obj.transform.parent = this.gameObject.transform;
@@ -975,7 +999,7 @@ public class Player : MonoBehaviour//玩家类
         hero.parent = this.gameObject;
         hero.sprites = GameObject.Find("Sprites");
         hero.Heroinit();
-        hero.transform.localPosition = new Vector3(pos.x - 3.5f, pos.y - 3.5f, -1.0f);
+        hero.transform.localPosition = BattleArea.GetLocalPosition(pos);
         hero.MoveTo(pos);
         SpriteRenderer rend = obj.GetComponent<SpriteRenderer>();
         rend.sprite = hero.appearance;
@@ -983,6 +1007,15 @@ public class Player : MonoBehaviour//玩家类
         obj.transform.localRotation = new Quaternion(0, 0, 0, 0);
         AddCharacter(obj);
         hero.ShowNormalState();
+    }
+
+    public void DestroyAll()
+    {
+        for(int i = 0; i < characterCount; i++)
+        {
+            Destroy(myCharacters[i].gameObject);
+        }
+        characterCount = 0;
     }
 
     public uint MyHash()

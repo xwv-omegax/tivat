@@ -6,6 +6,52 @@ using UnityEngine.EventSystems;
 
 public enum CardType { Normal, Item, Reward, Character, Monster }//卡牌类型
 
+public enum CardName
+{
+    Move,
+    NormalAttack,
+    ChargedAttack,
+    Run,
+
+    Character_Ningguang,
+    Character_Keqing,
+    Character_Diluc,
+    Character_Noelle,
+    Character_Jean,
+    Character_Amber,
+    Character_Lisa,
+
+    Normal_Attack,
+    Normal_Defence,
+    Normal_Heal,
+    Normal_Burst,
+    Normal_Control,
+
+    Normal_Geo,
+    Normal_Anemo,
+    Normal_Electro,
+    Normal_Hydro,
+    Normal_Pyro,
+    Normal_Cryo,
+    Normal_Dendro,
+
+    Item_Clock,
+    Item_Tea,
+    Item_Book,
+    Item_Trap,
+    Item_Polearm,
+    Item_Sword,
+    Item_Sunsettia,
+    Item_CrystalCore,
+    Item_Advice,
+    Item_Teaport,
+    Item_Bow,
+    Item_Sigil,
+    Item_Ore,
+    Item_Chill,
+    Item_Claymore
+}
+
 public class ButtonBase:MonoBehaviour, IPointerEnterHandler,IPointerExitHandler,IPointerClickHandler//按键基类
 {
     public Sprite buttonNormal;

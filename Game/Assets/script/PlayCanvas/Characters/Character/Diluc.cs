@@ -276,6 +276,21 @@ public class Diluc : Hero
         return true;
     }
 
+    public override string StringGet()
+    {
+        return base.StringGet()+(char)AttackUsedCount+(char)PyroUsedCount+(char)BurstBonusCount+(char)SkillBonusCount+(char)SkillBonusPos.x+(char)SkillBonusPos.y;
+    }
+
+    public override void StringSet(string msg)
+    {
+        base.StringSet(msg);
+        AttackUsedCount = msg[13];
+        PyroUsedCount = msg[14];
+        BurstBonusCount = msg[15];
+        SkillBonusCount = msg[16];
+        SkillBonusPos = new Vector2Int(msg[17], msg[18]);
+    }
+
     void Start()
     {
         //Heroinit();

@@ -60,6 +60,16 @@ public class Hand : MonoBehaviour
     {
     }
 
+    public void ClearAll()
+    {
+        for(int i = 0; i < count; i++)
+        {
+            Destroy(cardObjects[i].gameObject);
+        }
+        count = 0;
+        selectCount = 0;
+    }
+
     public int FindCard(string name)
     {
         int index = count - 1;
@@ -123,11 +133,33 @@ public class Hand : MonoBehaviour
         float interval = 0.6f;
         for(int i = count-1; i >=0; i--)
         {
-            cardObjects[i].transform.localPosition = new Vector3(8.5f - i * interval, -3.5f,  - i/10.0f-0.1f);
+            cardObjects[i].transform.localPosition = new Vector3(- i * interval, 0,  - i/10.0f-0.1f);
             cardObjects[i].GetComponent<Card>().NormalPos = cardObjects[i].transform.localPosition;
             if(cardObjects[i].GetComponent<Card>().state != ButtonState.Disabled) 
                 cardObjects[i].GetComponent<Card>().ForceChangeState(ButtonState.Normal);
         }
+    }
+
+    public string StringGet()
+    {
+        string msg = "";
+        for(int i = 0; i < count; i++)
+        {
+            msg += cardObjects[i].GetComponent<Card>().cardName + '+';
+        }
+        return msg;
+    }
+    public void StringSet(string msg)
+    {
+        string[] cards = msg.Split('+');
+        Debug.Log("hand        " + cards.Length.ToString());
+        ClearAll();
+        foreach(string str in cards)
+        {
+            if (str.Length < 1) continue;
+            AddCard(str);
+        }
+        Refresh();
     }
 
     public void AddCard(Card card)//往手牌中增加一张牌

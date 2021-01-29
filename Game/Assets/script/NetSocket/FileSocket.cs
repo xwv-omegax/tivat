@@ -58,7 +58,7 @@ public class FileSocket
         int lenth;
         while (reciveFlag && (lenth = sock.Receive(buffer)) > 0)
         {
-                string content = Encoding.UTF8.GetString(buffer, 0, lenth);
+                string content = Encoding.ASCII.GetString(buffer, 0, lenth);
                 if (reciveCount < MAXCOUNT)
                 {
                     recivedMsgs[reciveCount++] = content;
@@ -71,7 +71,7 @@ public class FileSocket
     {
         msg += '\0';
         byte[] buffer;
-        buffer = Encoding.UTF8.GetBytes(msg);
+        buffer = Encoding.ASCII.GetBytes(msg);
         if (socket != null)
         {
             socket.Send(buffer);

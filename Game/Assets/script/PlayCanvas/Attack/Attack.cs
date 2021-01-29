@@ -59,12 +59,12 @@ public class Attack : GameBase//攻击类
     }
     private void Update()
     {
-        Vector3 tar = new Vector3(target.x - 3.5f, target.y - 3.5f, -1.0f);
+        Vector3 tar = BattleArea.GetLocalPosition(new Vector2Int((int)target.x,(int)target.y));
+        tar.z = -1;
         Vector3 dis = tar - transform.localPosition;
         if (dis.sqrMagnitude > 0.001)
         {//如果没到目的地，则运动
             float delta = Time.deltaTime;
-            dis.Normalize();
             dis *= speed * delta;
             transform.localPosition += dis;
         }

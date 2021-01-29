@@ -15,7 +15,7 @@ public class Rose : Creator
     public static GameObject CreatRose(Vector2Int pos ,Lisa lisa)
     {
         GameObject obj = GameBase.CreatObject<Rose>(lisa.parent);
-        obj.transform.localPosition = new Vector3(pos.x - 3.5f, pos.y - 3.5f, -1);
+        obj.transform.localPosition = BattleArea.GetLocalPosition(pos);
         SpriteRenderer render = obj.GetComponent<SpriteRenderer>();
         render.sprite = lisa.parent.GetComponent<Player>().sprites.GetComponent<AllSprites>().Creator_Rose;
         Rose rose = obj.GetComponent<Rose>();
@@ -23,11 +23,12 @@ public class Rose : Creator
         rose.Init();
         rose.lisa = lisa;
         rose.ShowNormalState();
+        rose.positon = pos;
         return obj;
     }
 
     public Lisa lisa;
-
+    public Vector2Int positon;
     public void newRound()
     {
         remainTime--;
@@ -79,6 +80,16 @@ public class Rose : Creator
         }
     }
 
+    public string StringGet()
+    {
+        return "" + blood + remainTime + positon.x + positon.y;
+    }
+    public void StringSet(string msg)
+    {
+        blood = msg[0];
+        remainTime = msg[1];
+        positon = new Vector2Int(msg[2], msg[3]);
+    }
 
     // Start is called before the first frame update
     void Start()

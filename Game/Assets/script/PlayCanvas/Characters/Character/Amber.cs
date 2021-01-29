@@ -36,6 +36,8 @@ public class Amber : Hero
         };
 
         NormalEffects.Add("InitMovingEffect", InitMovingEffect);
+        NormalEffects.Add("BurstNewRoundBurn", BurstNewRoundBurn);
+        NormalEffects.Add("RabbitNewRount", RabbitNewRound);
         DefenceEffects.Add("CheckIsTarget", CheckIsTarget);
 
         AddUseCard("#+Normal_Attack", NormalAttack, poses);
@@ -105,7 +107,6 @@ public class Amber : Hero
         {
             Destroy(rabbit.gameObject);
             rabbit = null;
-            NormalEffects.Remove("RabbitNewRount");
         }
     }
 
@@ -115,7 +116,6 @@ public class Amber : Hero
         pos += position;
         GameObject obj = Rabbit.CreatRabbit(parent, pos, this);
         rabbit = obj.GetComponent<Rabbit>();
-        NormalEffects.Add("RabbitNewRount", RabbitNewRound);
         gameObject.GetComponent<AudioSource>().PlayOneShot(audios.Amber_Skill);
         return true;
     }
@@ -181,30 +181,34 @@ public class Amber : Hero
         return true;
     }
 
-    public int BurnTimeRemain = 0;
-    public Vector2Int BurnPos;
 
     public void BurstNewRoundBurn()
     {
-        BurnTimeRemain--;
-        if (BurnTimeRemain < 1)
+        if (burstburn != null)
         {
-            NormalEffects.Remove("BurstNewRoundBurn");
+            burstburn.newRound();
         }
-        else
-        {
-            BurstBurn(BurnPos);
-        }
+    }
+    public AmberBurst burstburn=null;
+    public void CreateBurstBurn(Vector2Int pos)
+    {
+        if (burstburn != null) DestroyBurstBurn();
+        burstburn =  AmberBurst.CreateSelf(pos, this);
+    }
+
+    public void DestroyBurstBurn()
+    {
+        if (burstburn == null) return;
+        Destroy(burstburn.gameObject);
+        burstburn = null;
     }
 
     public bool Burst(Vector2Int pos)
     {
-        if (stamina < 1 || BurnTimeRemain>0) return false;
+        if (stamina < 1 || burstburn!=null) return false;
         pos += position;
         BurstBurn(pos);
-        BurnPos = pos;
-        BurnTimeRemain = 3;
-        NormalEffects.Add("BurstNewRoundBurn", BurstNewRoundBurn);
+        CreateBurstBurn(pos);
         stamina--;
         gameObject.GetComponent<AudioSource>().PlayOneShot(audios.Amber_Burst);
         return true;
@@ -284,6 +288,46 @@ public class Amber : Hero
     void Update()
     {
         NewFrameSettle();
+    }
+
+    public override string StringGet()
+    {
+
+        string rmsg;
+        if (rabbit != null)
+        {
+            rmsg = (char)1 + rabbit.StringGet();
+        }
+        else
+        {
+            rmsg = (char)0+"111";
+        }
+        string bmsg;
+        if (burstburn != null)
+        {
+            bmsg = (char)1 + burstburn.StringGet();
+        }
+        else
+        {
+            bmsg = (char)0 + "111";
+        }
+        return base.StringGet()+rmsg+bmsg;
+    }
+
+    public override void StringSet(string msg)
+    {
+        base.StringSet(msg);
+        if (msg[13] == 1)
+        {
+            GameObject obj = Rabbit.CreatRabbit(parent, new Vector2Int(msg[15], msg[16]), this);
+            rabbit = obj.GetComponent<Rabbit>();
+            rabbit.StringSet(msg.Substring(14, 3));
+        }
+        if (msg[17] == 1)
+        {
+            burstburn = AmberBurst.CreateSelf(new Vector2Int(msg[19], msg[20]),this);
+            burstburn.StringSet(msg.Substring(18, 3));
+        }
     }
 
     public override void ShowNormalState()

@@ -2,6 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
+public enum CharacterName
+{
+    Character_Ningguang,
+    Character_Lisa,
+    Character_Diluc,
+    Character_Amber,
+    Character_Noelle,
+    Character_Keqing,
+    Character_Jean
+}
+
 public class Character : GameBase
 {
     public virtual void Initial(string str, int maxhp, int maxshield)//初始化
@@ -9,6 +21,7 @@ public class Character : GameBase
         sprites = GameObject.Find("Sprites");
         audios = GameObject.Find("Audio").GetComponent<AllAudio>();
         characterName = str;
+        type = (CharacterName)System.Enum.Parse(typeof(CharacterName), str);
         MAXHP = maxhp;
         MAXShield = maxshield;
         HP = maxhp;
@@ -21,6 +34,8 @@ public class Character : GameBase
         ShowNormalState();
         InitBaseUseCard();
     }
+
+    public CharacterName type;
 
     public override void Initial()
     {
@@ -724,10 +739,10 @@ public class Character : GameBase
     public bool IsMoving = false;
     public virtual void MoveTo(Vector2Int target)
     {
-        if (target.x > 6) target.x = 6;
-        if (target.y > 6) target.y = 6;
-        if (target.x < 1) target.x = 1;
-        if (target.y < 1) target.y = 1;
+        if (target.x > BattleArea.xmax) target.x = BattleArea.xmax;
+        if (target.y > BattleArea.ymax) target.y = BattleArea.ymax;
+        if (target.x < 0) target.x = 0;
+        if (target.y < 0) target.y = 0;
         oldPosition = position;
         position = target;
         if (IsMoving) return;
@@ -737,11 +752,11 @@ public class Character : GameBase
 
     public void Moving()
     {
-        Vector3 target = new Vector3(position.x-3.5f, position.y-3.5f, -1.0f);
+        Vector3 target = BattleArea.GetLocalPosition(position);
+        target.z = -1;
         Vector3 dir = target - gameObject.transform.localPosition;
         if (dir.sqrMagnitude > 0.001)
         {
-            dir.Normalize();
             gameObject.transform.localPosition += dir * Time.deltaTime*10;
         }
         else
@@ -850,18 +865,19 @@ public class Character : GameBase
     public virtual bool FreeMove(Vector2Int pos)
     {
         if (FreeMoveCount < 1) return false;
-        pos += position;
-        MoveTo(pos);
-        FreeMoveCount--;
         string log = "";
-        if(parent.TryGetComponent(out Player player))
+        if (parent.TryGetComponent(out Player player))
         {
             if (player.isPlayer) log += " 我方 ";
             else log += " 敌方 ";
+            player.ResetButtonDown();
         }
         log += characterName;
         log += " 移动到 " + pos.ToString();
         Log(log);
+        pos += position;
+        MoveTo(pos);
+        FreeMoveCount--;
         return true;
     }
 
@@ -967,7 +983,7 @@ public class Character : GameBase
     {
         Vector2Int dir = position - oldPosition;
 
-        Vector2Int currentPos = new Vector2Int((int)(transform.localPosition.x + 3.5f + 1), (int)(transform.localPosition.y + 3.5f + 1));
+        Vector2Int currentPos = BattleArea.GetPos(transform.localPosition);
         if (dir.x >= 0) currentPos.x--;
         if (dir.y >= 0) currentPos.y--;
 
@@ -1030,6 +1046,77 @@ public class Character : GameBase
         {
             MovingBack();
         }
+    }
+
+    public virtual string StringGet()
+    {
+        int isplayer = 0;
+        if (parent.GetComponent<Player>().isPlayer) isplayer = 1;
+        string affstr = ""+(char)255+ (char)255+ (char)255;
+        if (affected != null)
+        {
+            affstr = ""+(char)1+(char)affected.affectElemental + (char)affected.AffectCount;
+        }
+        char target = (char)1;
+        if (!isTarget) target = (char)0;
+        return ""+(char)isplayer+(char)(int)type+ (char)position.x + (char)position.y + (char)HP + (char)shield+(char)stamina+(char)(int)state+(char)stateTimeRemain+affstr+target;
+    }
+
+    public virtual void StringSet(string msg)
+    {
+        HP = msg[4];
+        shield = msg[5];
+        stamina = msg[6];
+        state = (CharacterState)msg[7];
+        stateTimeRemain = msg[8];
+        if (msg[9] == 1)
+        {
+            ElementType typ = (ElementType)msg[10];
+            affected = new ElementalAffect();
+            affected.affectElemental = typ;
+            affected.AffectCount = msg[11];
+        }
+        if (msg[12] == 0)
+        {
+            isTarget = false;
+        }
+        ShowNormalState();
+    }
+    public static  void StaticStringSet(string msg)
+    {
+        int isplayer = msg[0];
+        CharacterName type = (CharacterName)msg[1];
+        Vector2Int pos = new Vector2Int(msg[2], msg[3]);
+        Player player;
+        if (isplayer == 0) player = BattleArea.player;
+        else player = BattleArea.enemy;
+        switch (type)
+        {
+            case CharacterName.Character_Amber:
+                player.PutAmber(pos);
+                break;
+            case CharacterName.Character_Diluc:
+                player.PutDiluc(pos);
+                break;
+            case CharacterName.Character_Jean:
+                player.PutJean(pos);
+                break;
+            case CharacterName.Character_Keqing:
+                player.PutKeqing(pos);
+                break;
+            case CharacterName.Character_Lisa:
+                player.PutLisa(pos);
+                break;
+            case CharacterName.Character_Ningguang:
+                player.PutNingguang(pos);
+                break;
+            case CharacterName.Character_Noelle:
+                player.PutNoelle(pos);
+                break;
+            default:
+                return;
+        }
+        player.myCharacters[player.characterCount - 1].StringSet(msg);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

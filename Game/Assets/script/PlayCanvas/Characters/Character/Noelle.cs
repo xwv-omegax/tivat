@@ -220,6 +220,25 @@ public class Noelle: Hero
         return true;
     }
 
+    public override string StringGet()
+    {
+        string msg = "";
+        if (SkillBonus) msg += (char)1;
+        else msg += (char)0;
+        msg += (char)BurstBonus;
+        return base.StringGet()+msg;
+    }
+
+    public override void StringSet(string msg)
+    {
+        base.StringSet(msg);
+        if (msg[13] == 1)
+        {
+            SkillBonus = true;
+        }
+        BurstBonus = msg[14];
+    }
+
     // Start is called before the first frame update
     void Update()
     {

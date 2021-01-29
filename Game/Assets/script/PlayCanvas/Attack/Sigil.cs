@@ -32,12 +32,11 @@ public class Sigil : GameBase
     // Update is called once per frame
     private void Update()
     {
-        Vector3 tar = new Vector3(target.x - 3.5f, target.y - 3.5f, -1.0f);
+        Vector3 tar = BattleArea.GetLocalPosition(target);
         Vector3 dis = tar - transform.localPosition;
         if (dis.sqrMagnitude > 0.001)
         {//如果没到目的地，则运动
             float delta = Time.deltaTime;
-            dis.Normalize();
             dis *= speed * delta;
             transform.localPosition += dis;
         }

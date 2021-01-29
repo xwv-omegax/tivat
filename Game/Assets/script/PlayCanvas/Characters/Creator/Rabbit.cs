@@ -11,7 +11,7 @@ public class Rabbit : GameBase
     public static GameObject CreatRabbit(GameObject parent, Vector2Int pos, Amber owner)
     {
         GameObject obj = CreatObject<Rabbit>(parent);
-        obj.transform.localPosition = new Vector3(pos.x - 3.5f, pos.y - 3.5f, -1.0f);
+        obj.transform.localPosition = BattleArea.GetLocalPosition(pos);
         obj.transform.localRotation = new Quaternion(0, 0, 0, 0);
         obj.transform.localScale = new Vector3(1f, 1f, 1f);
 
@@ -42,9 +42,19 @@ public class Rabbit : GameBase
                 GameObject obj = CreatObject<Attack>(parent);
                 Attack atk = obj.GetComponent<Attack>();
                 atk.Initial(new Vector2Int(i,j)+ position, 2, AttackType.ElementalSkill, ElementType.Pyro, amber);
-                atk.transform.localPosition = new Vector3(position.x-3.5f, position.y-3.5f, -1);
+                atk.transform.localPosition = BattleArea.GetLocalPosition(position);
             }
         }
+    }
+
+    public string StringGet()
+    {
+        return "" + (char)timeRemain + (char)position.x + (char)position.y;
+    }
+    public void StringSet(string msg)
+    {
+        timeRemain = msg[0];
+        position = new Vector2Int(msg[1], msg[2]);
     }
 
     // Start is called before the first frame update
