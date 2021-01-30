@@ -40,13 +40,14 @@ public class AmberBurst : Creator
 
     public string StringGet()
     {
-        return "" + (char)remainTime + (char)burnPos.x + (char)burnPos.y;
+        return ""  + (char)burnPos.x + (char)burnPos.y + (char)remainTime;
     }
 
-    public void StringSet(string msg)
+    public int StringSet(string msg,int pos)
     {
-        remainTime = msg[0];
-        burnPos = new Vector2Int(msg[1], msg[2]);
+        burnPos = new Vector2Int(msg[pos++], msg[pos++]);
+        remainTime = msg[pos++];
+        return pos;
     }
 
     // Start is called before the first frame update

@@ -223,19 +223,20 @@ public class Keqing : Hero
         string km="";
         if (isAfterAction)
         {
-            km += 1;
+            km += (char)1;
         }
-        else km += 0;
-        if (isBurstBonus) km += 1;
-        else km += 0;
+        else km += (char)0;
+        if (isBurstBonus) km += (char)1;
+        else km += (char)0;
         return base.StringGet()+km;
     }
 
-    public override void StringSet(string msg)
+    public override int StringSet(string msg,int pos)
     {
-        base.StringSet(msg);
-        if (msg[13] == 1) isAfterAction = true;
-        if (msg[14] == 1) isBurstBonus = true;
+        pos = base.StringSet(msg,pos);
+        if (msg[pos ++] == 1) isAfterAction = true;
+        if (msg[pos ++] == 1) isBurstBonus = true;
+        return pos;
     }
 
     // Start is called before the first frame update

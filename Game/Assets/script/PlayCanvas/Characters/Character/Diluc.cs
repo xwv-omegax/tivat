@@ -281,14 +281,15 @@ public class Diluc : Hero
         return base.StringGet()+(char)AttackUsedCount+(char)PyroUsedCount+(char)BurstBonusCount+(char)SkillBonusCount+(char)SkillBonusPos.x+(char)SkillBonusPos.y;
     }
 
-    public override void StringSet(string msg)
+    public override int StringSet(string msg,int pos)
     {
-        base.StringSet(msg);
-        AttackUsedCount = msg[13];
-        PyroUsedCount = msg[14];
-        BurstBonusCount = msg[15];
-        SkillBonusCount = msg[16];
-        SkillBonusPos = new Vector2Int(msg[17], msg[18]);
+        pos =  base.StringSet(msg,pos);
+        AttackUsedCount = msg[pos++];
+        PyroUsedCount = msg[pos++];
+        BurstBonusCount = msg[pos++];
+        SkillBonusCount = msg[pos++];
+        SkillBonusPos = new Vector2Int(msg[pos++], msg[pos++]);
+        return pos;
     }
 
     void Start()

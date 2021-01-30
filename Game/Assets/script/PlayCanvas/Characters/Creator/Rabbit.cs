@@ -49,12 +49,13 @@ public class Rabbit : GameBase
 
     public string StringGet()
     {
-        return "" + (char)timeRemain + (char)position.x + (char)position.y;
+        return "" + (char)position.x + (char)position.y + (char)timeRemain;
     }
-    public void StringSet(string msg)
+    public int StringSet(string msg, int pos)
     {
-        timeRemain = msg[0];
-        position = new Vector2Int(msg[1], msg[2]);
+        position = new Vector2Int(msg[pos++], msg[pos++]);
+        timeRemain = msg[pos++];
+        return pos;
     }
 
     // Start is called before the first frame update

@@ -59,7 +59,7 @@ public class Player : MonoBehaviour//玩家类
         if (State != null) DeleteState();
         State = new GameObject();
         State.transform.parent = transform;
-        State.transform.localPosition = new Vector3(-1.7f, -3.3f, 0);
+        State.transform.localPosition = new Vector3(-1.7f, -5.3f, 0);
         State.transform.localRotation = new Quaternion(0, 0, 0, 0);
         State.transform.localScale = new Vector3(0.8f, 0.8f, 1);
 
@@ -970,13 +970,13 @@ public class Player : MonoBehaviour//玩家类
 
     public string StringGet()
     {
-        string sms = ""+statueEnergy + stamina;
-        return 'A'+hand.GetComponent<Hand>().StringGet()+','+'B'+deck.GetComponent<Deck>().StringGet()+','+'C'+sms;
+        string sms = ""+ (char)statueEnergy + (char)stamina /100+ (char)stamina %100;
+        return 'A'+hand.GetComponent<Hand>().StringGet()+'|'+'B'+deck.GetComponent<Deck>().StringGet()+'|'+'C'+sms;
     }
     public void StringSet(string msg)
     {
         if (msg.Length < 2) return;
-        string[] msgs = msg.Split(',');
+        string[] msgs = msg.Split('|');
         foreach (string str in msgs)
         {
             if (str.Length < 1) continue;
@@ -990,7 +990,7 @@ public class Player : MonoBehaviour//玩家类
                     break;
                 case 'C':
                     statueEnergy = str[1];
-                    stamina = str[2];
+                    stamina = str[2]*100+str[3];
                     break;
                 default:
                     break;

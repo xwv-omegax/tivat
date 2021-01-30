@@ -229,14 +229,15 @@ public class Noelle: Hero
         return base.StringGet()+msg;
     }
 
-    public override void StringSet(string msg)
+    public override int StringSet(string msg,int pos)
     {
-        base.StringSet(msg);
-        if (msg[13] == 1)
+        pos =  base.StringSet(msg,pos);
+        if (msg[pos++] == 1)
         {
             SkillBonus = true;
         }
-        BurstBonus = msg[14];
+        BurstBonus = msg[pos++];
+        return pos;
     }
 
     // Start is called before the first frame update

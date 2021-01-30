@@ -332,20 +332,21 @@ public class Ningguang : Hero
         }
         else
         {
-            smsg = (char)0 + "1111";
+            smsg =""+ (char)0;
         }
         return base.StringGet()+smsg;
     }
 
-    public override void StringSet(string msg)
+    public override int StringSet(string msg,int pos)
     {
-        base.StringSet(msg);
-        if (msg[13] == 1)
+        pos =  base.StringSet(msg,pos);
+        if (msg[pos++] == 1)
         {
             stamina++;
-            ScreenCreate(new Vector2Int(msg[16], msg[17]));
-            screen.StringSet(msg.Substring(14, 4));
+            ScreenCreate(new Vector2Int(msg[pos], msg[pos+1]));
+            pos =  screen.StringSet(msg,pos);
         }
+        return pos;
     }
 
     void Start()

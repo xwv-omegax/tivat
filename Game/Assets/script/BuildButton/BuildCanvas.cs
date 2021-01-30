@@ -1,22 +1,45 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System.IO;
 public class BuildCanvas : MonoBehaviour
 {
     public GameObject character;
     public GameObject item;
     public GameObject selected;
-    public string characterPath = "save/build/characters";
-    public string itemPath = "save/build/item";
-    public string selectPath = "save/build/select";
+    public string datadir;
+    public string characterPath;
+    public string itemPath;
+    public string selectPath;
 
     public void Init()//从本地文件初始化build界面
     {
-        character.GetComponent<CardList>().ReadFile(characterPath);
-        item.GetComponent<CardList>().ReadFile(itemPath);
-        selected.GetComponent<CardList>().ReadFile(selectPath);
-        item.GetComponent<CardList>().OnClick();
+        if (Application.platform.Equals(RuntimePlatform.WindowsEditor) || Application.platform.Equals(RuntimePlatform.WindowsPlayer))
+        {
+            datadir = "save/build";
+            characterPath = "save/build/characters";
+            itemPath = "save/build/item";
+            selectPath = "save/build/select";
+        }
+        else
+        {
+            datadir = Application.persistentDataPath + "save/build";
+            characterPath =Application.persistentDataPath +"save/build/characters";
+            itemPath = Application.persistentDataPath+ "save/build/item";
+            selectPath = Application.persistentDataPath+ "save/build/select";
+        }
+        if (!Directory.Exists(datadir))
+        {
+            Directory.CreateDirectory(datadir);
+            Default();
+        }
+        else
+        {
+            character.GetComponent<CardList>().ReadFile(characterPath);
+            item.GetComponent<CardList>().ReadFile(itemPath);
+            selected.GetComponent<CardList>().ReadFile(selectPath);
+            item.GetComponent<CardList>().OnClick();
+        }
     }
 
     public void Default()

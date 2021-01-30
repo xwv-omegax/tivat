@@ -1,7 +1,0 @@
-
- 玩家:  使用了卡  #+Character_Keqing
- 我方 Character_Keqing 移动到 (3, 1)
- 玩家:  使用了卡  #+FreeMove
- 玩家:  使用了卡  #+Character_Lisa
- 我方 Character_Lisa 移动到 (5, 3)
- 玩家:  使用了卡  #+FreeMove

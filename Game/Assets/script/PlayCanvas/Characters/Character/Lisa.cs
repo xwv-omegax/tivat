@@ -216,19 +216,20 @@ public class Lisa : Hero
         }
         else
         {
-            rm = (char)0 + "1111";
+            rm = ""+(char)0;
         }
         return base.StringGet()+rm;
     }
 
-    public override void StringSet(string msg)
+    public override int StringSet(string msg,int pos)
     {
-        base.StringSet(msg);
-        if (msg[13] == 1)
+        pos = base.StringSet(msg,pos);
+        if (msg[pos ++] == 1)
         {
-            rose = Rose.CreatRose(new Vector2Int(msg[16], msg[17]),this).GetComponent<Rose>();
-            rose.StringSet(msg.Substring(14, 4));
+            rose = Rose.CreatRose(new Vector2Int(msg[pos], msg[pos+1]),this).GetComponent<Rose>();
+            pos = rose.StringSet(msg,pos);
         }
+        return pos;
     }
 
     // Start is called before the first frame update

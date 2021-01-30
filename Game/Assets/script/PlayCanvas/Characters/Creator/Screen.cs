@@ -78,14 +78,15 @@ public class Screen : Creator
 
     public string StringGet()
     {
-        return "" + remainTime + blood + position.x + position.y;
+        return "" +(char) position.x + (char)position.y + (char)remainTime + (char)(blood/100)+(char)(blood%100) ;
     }
 
-    public void StringSet(string msg)
+    public int StringSet(string msg,int pos)
     {
-        remainTime = msg[0];
-        blood = msg[1];
-        position = new Vector2Int(msg[2], msg[3]);
+        position = new Vector2Int(msg[pos++], msg[pos++]);
+        remainTime = msg[pos++];
+        blood = msg[pos++]*100+msg[pos++];
+        return pos;
     }
 
     // Start is called before the first frame update

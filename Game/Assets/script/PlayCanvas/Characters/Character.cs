@@ -63,9 +63,15 @@ public class Character : GameBase
         AddUseCard("#+FreeMove", FreeMove, posesMove, CanFreeMove);
     }
 
-    public virtual void InitStamina()//体力初始化
+    public virtual void InitStamina()//体力初始化,护盾衰减
     {
         stamina = MAXStamina;
+        if (shield > 0)
+        {
+            int reduce = shield / 2;
+            if (reduce == 0) reduce = 1;
+            shield -= reduce;
+        }
     }
     public AllAudio audios;
     public string characterName;//名字
@@ -142,9 +148,12 @@ public class Character : GameBase
     {
         if (normalState != null) DeleteNormalState();
 
+        float scale = 6.0f / (HP + shield);
+        if (scale > 1) scale = 1;
+
         normalState = new GameObject();
         normalState.transform.parent = transform;
-        normalState.transform.localPosition = new Vector3(-0.4f, -0.4f, -3);
+        normalState.transform.localPosition = new Vector3(-(0.35f + scale * 0.075f), -(0.4f), -3);
         normalState.transform.localRotation = new Quaternion(0, 0, 0, 0);
         normalState.transform.localScale = new Vector3(0.15f, 0.25f, 1);
 
@@ -152,19 +161,19 @@ public class Character : GameBase
         {
             GameObject obj = new GameObject();
             obj.transform.parent = normalState.transform;
-            obj.transform.localScale = new Vector3(1, 1, 1);
+            obj.transform.localScale = new Vector3(scale, 1, 1);
             obj.transform.localRotation = new Quaternion(0, 0, 0, 0);
             obj.AddComponent<SpriteRenderer>().sprite = sprites.GetComponent<AllSprites>().Bar_Red;
-            obj.transform.localPosition = new Vector3(i, 0);
+            obj.transform.localPosition = new Vector3((i+0.5f)*scale, 0);
         }
         for (int i = 0; i < shield; i++)
         {
             GameObject obj = new GameObject();
             obj.transform.parent = normalState.transform;
-            obj.transform.localScale = new Vector3(1, 1, 1);
+            obj.transform.localScale = new Vector3(scale, 1, 1);
             obj.transform.localRotation = new Quaternion(0, 0, 0, 0);
             obj.AddComponent<SpriteRenderer>().sprite = sprites.GetComponent<AllSprites>().Bar_Yellow;
-            obj.transform.localPosition = new Vector3(i + HP, 0);
+            obj.transform.localPosition = new Vector3((i + HP+0.5f)*scale, 0);
         }
         
 
@@ -465,10 +474,6 @@ public class Character : GameBase
     public virtual void SelfHeal(int Hp, int Shield)
     {
         shield += Shield;
-        if (shield > MAXShield)
-        {
-            shield = MAXShield;
-        }
         for(int i = 0; i < shield; i++)
         {
             ShowImgDefault(sprites.GetComponent<AllSprites>().Num_Yellow_Add_1);
@@ -1066,10 +1071,10 @@ public class Character : GameBase
         }
         char target = (char)1;
         if (!isTarget) target = (char)0;
-        return ""+(char)isplayer+(char)(int)type+ (char)position.x + (char)position.y + (char)HP + (char)shield+(char)stamina+(char)(int)state+(char)stateTimeRemain+affstr+target;
+        return ""+(char)isplayer+(char)(((int)type)/100)+ (char)(((int)type)%100)+ (char)position.x + (char)position.y + (char)(HP/100)+ (char)(HP %100) + (char)(shield/100)+ (char)(shield %100)+(char)stamina+(char)(int)state+(char)stateTimeRemain+affstr+target;
     }
 
-    public MemoryStream StremGet()
+    public virtual MemoryStream StremGet()
     {
         MemoryStream stream = new MemoryStream();
         BinaryWriter writer = new BinaryWriter(stream);
@@ -1104,7 +1109,7 @@ public class Character : GameBase
         else player = BattleArea.enemy;
 
         CharacterName type =(CharacterName)reader.ReadInt32();
-
+        Debug.Log("type"+type.ToString());
         Vector2Int pos = new Vector2Int(reader.ReadInt32(), reader.ReadInt32());
         switch (type)
         {
@@ -1155,31 +1160,36 @@ public class Character : GameBase
         ChargedAttackCount = reader.ReadInt32();
     }
 
-    public virtual void StringSet(string msg)
+    public virtual int StringSet(string msg,int pos)
     {
-        HP = msg[4];
-        shield = msg[5];
-        stamina = msg[6];
-        state = (CharacterState)msg[7];
-        stateTimeRemain = msg[8];
-        if (msg[9] == 1)
+        HP = msg[pos++]*100+msg[pos++];
+        Debug.Log("HP:" + HP.ToString());
+        shield = msg[pos++] * 100 + msg[pos++];
+        Debug.Log("SHED:"+ shield.ToString());
+        stamina = msg[pos++];
+        state = (CharacterState)msg[pos++];
+        stateTimeRemain = msg[pos++];
+        if (msg[pos++] == 1)
         {
-            ElementType typ = (ElementType)msg[10];
+            ElementType typ = (ElementType)msg[pos++];
             affected = new ElementalAffect();
             affected.affectElemental = typ;
-            affected.AffectCount = msg[11];
+            affected.AffectCount = msg[pos++];
         }
-        if (msg[12] == 0)
+        if (msg[pos++] == 0)
         {
             isTarget = false;
         }
         ShowNormalState();
+        return pos;
     }
     public static  void StaticStringSet(string msg)
     {
-        int isplayer = msg[0];
-        CharacterName type = (CharacterName)msg[1];
-        Vector2Int pos = new Vector2Int(msg[2], msg[3]);
+        int msgpos = 0;
+        int isplayer = msg[msgpos++];
+        CharacterName type = (CharacterName)(msg[msgpos++]*100+msg[msgpos++]);
+        Debug.Log(type.ToString());
+        Vector2Int pos = new Vector2Int(msg[msgpos++], msg[msgpos++]);
         Player player;
         if (isplayer == 0) player = BattleArea.player;
         else player = BattleArea.enemy;
@@ -1209,7 +1219,7 @@ public class Character : GameBase
             default:
                 return;
         }
-        player.myCharacters[player.characterCount - 1].StringSet(msg);
+        player.myCharacters[player.characterCount - 1].StringSet(msg,msgpos);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

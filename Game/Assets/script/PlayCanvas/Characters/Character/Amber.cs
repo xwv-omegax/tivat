@@ -300,7 +300,7 @@ public class Amber : Hero
         }
         else
         {
-            rmsg = (char)0+"111";
+            rmsg = ""+(char)0;
         }
         string bmsg;
         if (burstburn != null)
@@ -309,25 +309,26 @@ public class Amber : Hero
         }
         else
         {
-            bmsg = (char)0 + "111";
+            bmsg = ""+(char)0;
         }
         return base.StringGet()+rmsg+bmsg;
     }
 
-    public override void StringSet(string msg)
+    public override int StringSet(string msg,int pos)
     {
-        base.StringSet(msg);
-        if (msg[13] == 1)
+        pos = base.StringSet(msg,pos);
+        if (msg[pos++] == 1)
         {
-            GameObject obj = Rabbit.CreatRabbit(parent, new Vector2Int(msg[15], msg[16]), this);
+            GameObject obj = Rabbit.CreatRabbit(parent, new Vector2Int(msg[pos], msg[pos+1]), this);
             rabbit = obj.GetComponent<Rabbit>();
-            rabbit.StringSet(msg.Substring(14, 3));
+            pos = rabbit.StringSet(msg,pos);
         }
-        if (msg[17] == 1)
+        if (msg[pos++] == 1)
         {
-            burstburn = AmberBurst.CreateSelf(new Vector2Int(msg[19], msg[20]),this);
-            burstburn.StringSet(msg.Substring(18, 3));
+            burstburn = AmberBurst.CreateSelf(new Vector2Int(msg[pos], msg[pos+1]),this);
+            pos = burstburn.StringSet(msg,pos);
         }
+        return pos;
     }
 
     public override void ShowNormalState()

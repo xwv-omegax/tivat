@@ -82,13 +82,14 @@ public class Rose : Creator
 
     public string StringGet()
     {
-        return "" + blood + remainTime + positon.x + positon.y;
+        return "" + (char)positon.x + (char)positon.y + (char)(blood/100)+(char)(blood%100) + (char)remainTime;
     }
-    public void StringSet(string msg)
+    public int StringSet(string msg,int pos)
     {
-        blood = msg[0];
-        remainTime = msg[1];
-        positon = new Vector2Int(msg[2], msg[3]);
+        positon = new Vector2Int(msg[pos++], msg[pos++]);
+        blood = msg[pos++]*100+msg[pos++];
+        remainTime = msg[pos++];
+        return pos;
     }
 
     // Start is called before the first frame update

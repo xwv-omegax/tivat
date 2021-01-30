@@ -311,7 +311,7 @@ public class PlayCanvas : MonoBehaviour
         for (int i = 0; i < BattleArea.player.characterCount; i++)
         {
             Thread.Sleep(100);
-            msg = ""+'C' + BattleArea.player.myCharacters[i].StringGet();
+            msg = "C" + BattleArea.player.myCharacters[i].StringGet();
             client.Send("BF" + msg);
         }
         Thread.Sleep(100);
@@ -320,7 +320,7 @@ public class PlayCanvas : MonoBehaviour
         for (int i = 0; i < BattleArea.enemy.characterCount; i++)
         {
             Thread.Sleep(100);
-            msg =""+ 'C' + BattleArea.enemy.myCharacters[i].StringGet();
+            msg = "C" + BattleArea.enemy.myCharacters[i].StringGet();
             client.Send("BF" + msg);
         }
         Thread.Sleep(100);
@@ -340,7 +340,8 @@ public class PlayCanvas : MonoBehaviour
                     BattleArea.enemy.StringSet(msg.Substring(1));
                     break;
                 case 'C':
-                    Character.StaticStringSet(msg.Substring(1));
+                    string str = msg.Substring(1);
+                Character.StaticStringSet(str);
                     break;
             case 'D':
                 BattleArea.player.DestroyAll();
@@ -403,7 +404,7 @@ public class PlayCanvas : MonoBehaviour
 
     public bool SendInit()
     {
-        if( ReadFile(out string[] vs, "save/build/select"))
+        if( ReadFile(out string[] vs, playerPath))
         {
             string msg = "BC";
             msg += vs[0];
@@ -449,23 +450,31 @@ public class PlayCanvas : MonoBehaviour
     {
         player.GetComponent<Player>().round.GetComponent<Text>().text = msg;
     }
-
-    public string log;
     public string logpath;
+    public string filename;
+    public FileStream logStream;
     public void Log(string msg) {
-        log += '\n'+msg;
+        TextWriter writer = null;
+        while (writer == null)
+        {
+            try
+            {
+                writer = File.AppendText(Path.Combine(logpath, filename));
+            }
+            catch
+            {
+                writer = null;
+                Thread.Sleep(100);
+            }
+        }
+        writer.Write(msg);
+        writer.Write('\n');
+        writer.Close();
+        writer.Dispose();
     }
-
     ~PlayCanvas()
     {
         client.Send("S");
-        string path = logpath;
-        var filename = $"Log{System.DateTime.Now:yyyy-MM-dd HH-mm}.txt";
-        if (!Directory.Exists(path))
-            Directory.CreateDirectory(path);
-        TextWriter tw = new StreamWriter(Path.Combine(path, filename), true); //true在文件末尾添加数据
-        tw.WriteLine(log);
-        tw.Close();
     }
 
     public void ExitScene()
@@ -476,18 +485,31 @@ public class PlayCanvas : MonoBehaviour
 
     private void Start()
     {
-        log = "";
+        if(Application.platform.Equals(RuntimePlatform.WindowsEditor) || Application.platform.Equals(RuntimePlatform.WindowsPlayer))
+        {
+            logpath = "save/log";
+            playerPath = "save/build/select";
+        }
+        else
+        {
+            logpath = Application.persistentDataPath + "save/log";
+            playerPath = Application.persistentDataPath + "save/build/select";
+        }
+        filename = $"Log{System.DateTime.Now:yyyy-MM-dd HH-mm}.txt";
+        if (!Directory.Exists(logpath))
+            Directory.CreateDirectory(logpath);
+        Version = "1001";
         try
         {
             client = new FileSocket();
-            client.Connect(client.serverIP, 12346);
+            client.Connect(client.serverIP, 12345);
             client.Send("AA"+Version);
         }
         catch
         {
             ChangeMessage("服务器出错，请退出重试");
         }
-         /*if (ReadFile(out string[] str, "save/build/select")) InitPlayer(str, str);
+        /* if (ReadFile(out string[] str, "save/build/select")) InitPlayer(str, str);
          player.GetComponent<Player>().hand.GetComponent<Hand>().GetCard("Normal_Burst");
          player.GetComponent<Player>().hand.GetComponent<Hand>().GetCard("Normal_Pyro");
          player.GetComponent<Player>().hand.GetComponent<Hand>().GetCard("Item_Clock");

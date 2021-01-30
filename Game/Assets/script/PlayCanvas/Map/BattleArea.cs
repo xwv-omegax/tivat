@@ -17,7 +17,6 @@ public class BattleArea : MonoBehaviour
             for(int j = 1; j < ymax+1; j++)
             {
                 area[i-1][j-1] = GameObject.Find(head + "row" + j.ToString() + "/col" + i.ToString());
-                Debug.Log(i.ToString()+","+j.ToString());
             }
         staticarea = area;
         zeropos = transform.localPosition;
@@ -423,13 +422,13 @@ public class BattleArea : MonoBehaviour
     public void Defeat()
     {
         Send("AD");
-        ShowMessage("Defeat", new Vector3(0, 0, -1), new Color(1, 0.5f, 0), 0.06f, 2);
+        ShowMessage("Defeat", new Vector3(4, 0, -1), new Color(1, 0.5f, 0), 0.06f, 2);
         Invoke("ExitGame", 2);
     }
 
     public void Win()
     {
-        ShowMessage("Win", new Vector3(0, 0, -1), new Color(1,0.5f,0),0.06f, 2);
+        ShowMessage("Win", new Vector3(4, 0, -1), new Color(1,0.5f,0),0.06f, 2);
         Invoke("ExitGame", 2);
     }
 }//战斗区域类
