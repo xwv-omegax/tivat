@@ -23,10 +23,10 @@ public class BuildCanvas : MonoBehaviour
         }
         else
         {
-            datadir = Application.persistentDataPath + "save/build";
-            characterPath =Application.persistentDataPath +"save/build/characters";
-            itemPath = Application.persistentDataPath+ "save/build/item";
-            selectPath = Application.persistentDataPath+ "save/build/select";
+            datadir = Application.persistentDataPath + "/save/build";
+            characterPath =Application.persistentDataPath +"/save/build/characters";
+            itemPath = Application.persistentDataPath+ "/save/build/item";
+            selectPath = Application.persistentDataPath+ "/save/build/select";
         }
         if (!Directory.Exists(datadir))
         {
