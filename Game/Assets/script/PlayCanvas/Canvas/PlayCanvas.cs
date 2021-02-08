@@ -252,7 +252,7 @@ public class PlayCanvas : MonoBehaviour
     public void InitialMsg(string msg) {
         msg =  msg.Remove(0, 2);
         string[] enemy = msg.Split('+');
-        if (ReadFile(out string[] player, "save/build/select")) InitPlayer(player, enemy);
+        if (ReadFile(out string[] player, playerPath)) InitPlayer(player, enemy);
     }
 
     public void MessageTypeB(string msg) {
@@ -492,8 +492,8 @@ public class PlayCanvas : MonoBehaviour
         }
         else
         {
-            logpath = Application.persistentDataPath + "save/log";
-            playerPath = Application.persistentDataPath + "save/build/select";
+            logpath = Application.persistentDataPath + "/save/log";
+            playerPath = Application.persistentDataPath + "/save/build/select";
         }
         filename = $"Log{System.DateTime.Now:yyyy-MM-dd HH-mm}.txt";
         if (!Directory.Exists(logpath))
