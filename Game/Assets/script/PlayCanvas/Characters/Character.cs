@@ -1251,6 +1251,7 @@ public class Hero : Character//可控制角色基类
         Info = other.Info;
         BasicCards = other.BasicCards;
         BasicCardsCount = other.BasicCardsCount;
+        InitPos();
     }
 
     public override void DeathSettle()
@@ -1273,14 +1274,14 @@ public class Hero : Character//可控制角色基类
         return obj.GetComponent<Hero>();
     }
 
-    public Vector2Int[] posSword = new Vector2Int[]
+    public static Vector2Int[] posSword = new Vector2Int[]
     {
         new Vector2Int(-1,-1),new Vector2Int(0,-1),new Vector2Int(1,-1),
         new Vector2Int(-1,0),new Vector2Int(1,0),
         new Vector2Int(-1,1),new Vector2Int(0,1),new Vector2Int(1,1)
     };
 
-    public Vector2Int[] posMage=
+    public static Vector2Int[] posMage=
         {
             new Vector2Int(1,0), new Vector2Int(-1,0),
             new Vector2Int(1,1),new Vector2Int(0,1), new Vector2Int(-1,1),
@@ -1288,14 +1289,14 @@ public class Hero : Character//可控制角色基类
             new Vector2Int(0,3)
         };
 
-    public Vector2Int[] posClayMore =
+    public static Vector2Int[] posClayMore =
     {
         new Vector2Int(1,0),new Vector2Int(-1,0),
         new Vector2Int(1,1),new Vector2Int(-1,1),new Vector2Int(0,1),
         new Vector2Int(0,2)
     };
 
-    public Vector2Int[] posBow =
+    public static Vector2Int[] posBow =
     {
         new Vector2Int(-2,0),new Vector2Int(-1,0),new Vector2Int(1,0),new Vector2Int(2,0),
         new Vector2Int(-1,1),new Vector2Int(0,1),new Vector2Int(1,1),
@@ -1304,7 +1305,7 @@ public class Hero : Character//可控制角色基类
         new Vector2Int(0,4)
     };
 
-    public Vector2Int[] posPolearm =
+    public static Vector2Int[] posPolearm =
     {
         new Vector2Int(-2,0),new Vector2Int(-1,0),new Vector2Int(1,0),new Vector2Int(2,0),
         new Vector2Int(0,1),
@@ -1312,7 +1313,7 @@ public class Hero : Character//可控制角色基类
         new Vector2Int(0,3)
     };
 
-    public Vector2Int[] posAll =
+    public static Vector2Int[] posAll =
     {
         new Vector2Int(-5,-1),new Vector2Int(-4,-1),new Vector2Int(-3,-1),new Vector2Int(-2,-1),new Vector2Int(-1,-1),new Vector2Int(0,-1),new Vector2Int(1,-1),new Vector2Int(2,-1),new Vector2Int(3,-1),new Vector2Int(4,-1),new Vector2Int(5,-1),
         new Vector2Int(-5,-2),new Vector2Int(-4,-2),new Vector2Int(-3,-2),new Vector2Int(-2,-2),new Vector2Int(-1,-2),new Vector2Int(0,-2),new Vector2Int(1,-2),new Vector2Int(2,-2),new Vector2Int(3,-2),new Vector2Int(4,-2),new Vector2Int(5,-2),
@@ -1326,5 +1327,23 @@ public class Hero : Character//可控制角色基类
         new Vector2Int(-5,4),new Vector2Int(-4,4),new Vector2Int(-3,4),new Vector2Int(-2,4),new Vector2Int(-1,4),new Vector2Int(0,4),new Vector2Int(1,4),new Vector2Int(2,4),new Vector2Int(3,4),new Vector2Int(4,4),new Vector2Int(5,4),
         new Vector2Int(-5,5),new Vector2Int(-4,5),new Vector2Int(-3,5),new Vector2Int(-2,5),new Vector2Int(-1,5),new Vector2Int(0,5),new Vector2Int(1,5),new Vector2Int(2,5),new Vector2Int(3,5),new Vector2Int(4,5),new Vector2Int(5,5)
     };
+
+
+    public static bool isPosiInitied=false;
+
+    public bool InitPos(){
+        if(isPosiInitied)return false;
+        isPosiInitied=true;
+        posAll = new Vector2Int[400];
+        for(int i=-9;i<11;i++){
+            for(int j=-9;j<11;j++){
+                posAll[(i+9)*20+j+9] = new Vector2Int(i,j);
+            }
+        }
+        return true;
+    }
+
+
+
 
 }

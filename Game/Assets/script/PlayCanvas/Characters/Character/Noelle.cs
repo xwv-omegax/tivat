@@ -76,21 +76,30 @@ public class Noelle: Hero
         if (BurstBonus > 0) return true;
         return false;
     }
-
+    public int ShieldEmptyCount=0;
     public void SheildBonus()
     {
         if (shield == 0)
         {
-            SelfHeal(0, 1);
-            if(parent.TryGetComponent(out Player player))
+            if(ShieldEmptyCount<1)ShieldEmptyCount++;
+            else
             {
-                string log = "";
-                if (player.isPlayer) log += "友方 ";
-                else log += " 敌方 ";
-                log += characterName;
-                log += " 被动 恢复 1 护盾";
-                player.Log(log);
+                ShieldEmptyCount=0;
+                SelfHeal(0, 1);
+                if(parent.TryGetComponent(out Player player))
+                {
+                    string log = "";
+                    if (player.isPlayer) log += "友方 ";
+                    else log += " 敌方 ";
+                    log += characterName;
+                    log += " 被动 恢复 1 护盾";
+                    player.Log(log);
+                }
             }
+        }
+        else
+        {
+            ShieldEmptyCount=0;
         }
     }
 

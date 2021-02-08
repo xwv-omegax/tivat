@@ -55,7 +55,7 @@ public class Rose : Creator
                 }
             }
         }
-        Attack.CreateAttack(parent, new Vector2Int(7, 7) - cha.position, 1, AttackType.ElementalBurst, ElementType.Electro, lisa).transform.localPosition = transform.localPosition;
+        Attack.CreateAttack(parent, BattleArea.GetReverse( cha.position), 1, AttackType.ElementalBurst, ElementType.Electro, lisa).transform.localPosition = transform.localPosition;
         ShowNormalState();
     }
 

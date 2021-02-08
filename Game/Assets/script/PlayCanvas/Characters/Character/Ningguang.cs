@@ -202,7 +202,7 @@ public class Ningguang : Hero
             Vector2Int position = sorted[tar].position;
             GameObject obj = CreatObject<Attack>(parent);
             Attack atk = obj.GetComponent<Attack>();
-            Vector2Int posi = new Vector2Int(7 - position.x, 7 - position.y);
+            Vector2Int posi = BattleArea.GetReverse(position);
             atk.Initial(posi, 1, AttackType.ElementalBurst, ElementType.Geo, this);
             atk.ChangeApprence(sprites.GetComponent<AllSprites>().Attack_Ningguang_Normal);
             atk.activeSprite = sprites.GetComponent<AllSprites>().Attack_Ningguang_Normal_Actived;
@@ -226,7 +226,7 @@ public class Ningguang : Hero
 
             GameObject obj = CreatObject<Attack>(parent);
             Attack atk = obj.GetComponent<Attack>();
-            atk.Initial(new Vector2Int(7,7)- pos, 1, AttackType.NormalAttack, ElementType.Geo, this);
+            atk.Initial(BattleArea.GetReverse(pos), 1, AttackType.NormalAttack, ElementType.Geo, this);
             atk.ChangeApprence(sprites.GetComponent<AllSprites>().Attack_Ningguang_Normal);
             atk.activeSprite = sprites.GetComponent<AllSprites>().Attack_Ningguang_Normal_Actived;
         }
